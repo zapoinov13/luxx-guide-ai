@@ -45,7 +45,7 @@ const roomOptions = [
   "Пока не решил(а)",
 ] as const;
 
-/** Цена в сутки по варианту из формы (SITE.factsUpdated). Койко-место — за место, номера — за номер. */
+/** Цена по варианту из формы (SITE.factsUpdated). Койко-место — за место, номера — за номер. */
 const priceByOption: Record<string, number> = {
   [roomOptions[0]]: 6000,
   [roomOptions[1]]: 6000,
@@ -64,8 +64,9 @@ const nightsBetween = (from: string, to: string) => {
 const pluralDays = (n: number) => {
   const m10 = n % 10;
   const m100 = n % 100;
-  if (m10 === 1 && m100 !== 11) return `${n} сутки`;
-  return `${n} суток`;
+  if (m10 === 1 && m100 !== 11) return `${n} день`;
+  if (m10 >= 2 && m10 <= 4 && (m100 < 10 || m100 >= 20)) return `${n} дня`;
+  return `${n} дней`;
 };
 
 const fmt = (n: number) => n.toLocaleString("ru-RU");
@@ -148,7 +149,7 @@ function BookingPage() {
     <ContentPage
       eyebrow="Бронирование"
       title="Забронировать хостел в Алматы напрямую"
-      intro={`Заполните форму — заявка откроется готовым сообщением в WhatsApp. Администратор подтвердит свободные места и способ оплаты. Койко-место ${SITE.priceFrom.toLocaleString("ru-RU")} ₸, одноместный номер от 10 000 ₸, двухместный 15 000 ₸ в сутки. Предоплаты нет, отвечаем круглосуточно. Быстрее позвонить: ${SITE.phoneDisplay}.`}
+      intro={`Заполните форму — заявка откроется готовым сообщением в WhatsApp. Администратор подтвердит свободные места и способ оплаты. Койко-место ${SITE.priceFrom.toLocaleString("ru-RU")} ₸, одноместный номер от 10 000 ₸, двухместный 15 000 ₸. Предоплаты нет, отвечаем круглосуточно. Быстрее позвонить: ${SITE.phoneDisplay}.`}
       photo={PHOTOS.privateRoom}
     >
       <AnswerSection title="Как отправить заявку?">
@@ -256,7 +257,7 @@ function BookingPage() {
             ) : (
               <p className="text-muted-foreground">
                 Укажите даты и формат — покажем ориентировочную стоимость по базовым ценам:
-                койко-место 6 000 ₸, одноместный 10 000–11 000 ₸, двухместный 15 000 ₸ в сутки.
+                койко-место 6 000 ₸, одноместный 10 000–11 000 ₸, двухместный 15 000 ₸.
               </p>
             )}
           </div>

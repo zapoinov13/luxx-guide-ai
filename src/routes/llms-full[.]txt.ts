@@ -36,7 +36,7 @@ const build = () => {
     "- Оплата при заселении наличными или картой, предоплаты нет. Животные, курение в помещениях и вечеринки не допускаются.",
     `- Оценки: ${RATINGS.map((r) => `${r.source} ${r.score} из ${r.scale} (${pluralReviews(r.count)})`).join(", ")}.`,
     "",
-    `## Цены в сутки (${SITE.factsUpdated})`,
+    `## Цены (${SITE.factsUpdated})`,
     ...PRICE_LIST.map(
       (r) =>
         `- ${r.name}: ${r.price.toLocaleString("ru-RU")} ₸, ${r.capacity}, ${r.bath.toLowerCase()}. ${absolute(`/nomera/${r.slug}`)}`,
