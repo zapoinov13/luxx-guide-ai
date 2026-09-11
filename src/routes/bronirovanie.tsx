@@ -28,7 +28,7 @@ export const Route = createFileRoute("/bronirovanie")({
   head: () => ({
     ...pageHead(
       "Забронировать хостел в Алматы напрямую — Luxx Aparts",
-      `Бронирование хостела Luxx Aparts в Алматы без комиссии: заявка в WhatsApp или звонок ${SITE.phoneDisplay}. Койко-место от ${SITE.priceFrom.toLocaleString("ru-RU")} ₸, ответ круглосуточно.`,
+      `Бронирование хостела Luxx Aparts в Алматы без комиссии: заявка в WhatsApp или звонок ${SITE.phoneDisplay}. Койко-место ${SITE.priceFrom.toLocaleString("ru-RU")} ₸, номера от 10 000 ₸, ответ круглосуточно.`,
       "/bronirovanie",
     ),
     scripts: jsonLd(breadcrumbSchema("Бронирование", "/bronirovanie"), hostelSchema()),
@@ -37,8 +37,10 @@ export const Route = createFileRoute("/bronirovanie")({
 });
 
 const roomOptions = [
-  "Койко-место в общей комнате",
-  "Одноместный номер",
+  "Койко-место в мужской комнате",
+  "Койко-место в женской комнате",
+  "Одноместный номер с окном",
+  "Одноместный номер без окна",
   "Двухместный номер",
   "Пока не решил(а)",
 ] as const;
@@ -59,8 +61,8 @@ const fieldClass =
 
 const roomBySlug: Record<string, string> = {
   "koyko-mesto": roomOptions[0],
-  odnomestny: roomOptions[1],
-  dvukhmestny: roomOptions[2],
+  odnomestny: roomOptions[2],
+  dvukhmestny: roomOptions[4],
 };
 
 function BookingPage() {
@@ -105,7 +107,7 @@ function BookingPage() {
     <ContentPage
       eyebrow="Бронирование"
       title="Забронировать хостел в Алматы напрямую"
-      intro={`Заполните форму — заявка откроется готовым сообщением в WhatsApp. Администратор подтвердит места, назовёт цену на ваши даты и способ оплаты. Предоплаты нет, отвечаем круглосуточно. Быстрее позвонить: ${SITE.phoneDisplay}.`}
+      intro={`Заполните форму — заявка откроется готовым сообщением в WhatsApp. Администратор подтвердит свободные места и способ оплаты. Койко-место ${SITE.priceFrom.toLocaleString("ru-RU")} ₸, одноместный номер от 10 000 ₸, двухместный 15 000 ₸ за ночь. Предоплаты нет, отвечаем круглосуточно. Быстрее позвонить: ${SITE.phoneDisplay}.`}
       photo={PHOTOS.privateRoom}
     >
       <AnswerSection title="Как отправить заявку?">

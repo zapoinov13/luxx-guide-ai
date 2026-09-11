@@ -4,13 +4,21 @@ import { Button } from "@/components/ui/button";
 import { AnswerSection, ContentPage } from "@/components/content-page";
 import { Photo } from "@/components/photo";
 import { PHOTOS, roomCover } from "@/lib/photos";
-import { ROOM_TYPES, SITE, breadcrumbSchema, hostelSchema, jsonLd, pageHead } from "@/lib/site";
+import {
+  PRICE_LIST,
+  ROOM_TYPES,
+  SITE,
+  breadcrumbSchema,
+  hostelSchema,
+  jsonLd,
+  pageHead,
+} from "@/lib/site";
 
 export const Route = createFileRoute("/nomera/")({
   head: () => ({
     ...pageHead(
       `Цены хостела Luxx Aparts в Алматы: койко-место от ${SITE.priceFrom.toLocaleString("ru-RU")} ₸`,
-      `Сколько стоит хостел в Алматы: капсульные койко-места от ${SITE.priceFrom.toLocaleString("ru-RU")} ₸ за ночь, одноместные и двухместные номера Economy, скидки на месяц. Что входит в цену.`,
+      `Сколько стоит хостел в Алматы: койко-место ${SITE.priceFrom.toLocaleString("ru-RU")} ₸, одноместный номер от 10 000 ₸, двухместный 15 000 ₸ за ночь. Что входит в цену, скидки на месяц.`,
       "/nomera",
     ),
     scripts: jsonLd(breadcrumbSchema("Номера и цены", "/nomera"), hostelSchema()),
@@ -24,11 +32,46 @@ function RoomsPage() {
     <ContentPage
       eyebrow="Номера и цены"
       title="Номера и цены хостела Luxx Aparts в Алматы"
-      intro={`Койко-место в хостеле Luxx Aparts стоит от ${price} ₸ за ночь. Всего ${SITE.rooms} номера трёх форматов: капсульные кровати в мужских и женских комнатах, одноместные и двухместные номера Economy с окном. Санузел общий на этаже. В цену входят бельё, Wi-Fi, кухня и стирка; точную стоимость на ваши даты назовёт администратор.`}
+      intro={`Ночь в хостеле Luxx Aparts стоит от ${price} до ${SITE.priceTo.toLocaleString("ru-RU")} ₸: койко-место в мужской или женской комнате ${price} ₸, одноместный номер 10 000 ₸ без окна и 11 000 ₸ с окном, двухместный номер 15 000 ₸ за номер. Всего ${SITE.rooms} номера, санузел общий на этаже. В цену входят бельё, Wi-Fi, кухня и стирка.`}
       updated={SITE.factsUpdated}
       photo={PHOTOS.dorm}
     >
       <AnswerSection title="Какие номера есть и сколько стоят?">
+        <div className="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Размещение</th>
+                <th>Вместимость</th>
+                <th>Санузел</th>
+                <th>Цена за ночь</th>
+              </tr>
+            </thead>
+            <tbody>
+              {PRICE_LIST.map((row) => (
+                <tr key={row.name}>
+                  <td>
+                    <Link to="/nomera/$type" params={{ type: row.slug }}>
+                      {row.name}
+                    </Link>
+                  </td>
+                  <td>{row.capacity}</td>
+                  <td>{row.bath}</td>
+                  <td>
+                    <strong>{row.price.toLocaleString("ru-RU")} ₸</strong>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p>
+          Цены от хостела на {SITE.factsUpdated}: койко-место — за место, номера — за номер целиком.
+          В стоимость входят бельё, Wi-Fi, кухня и стирка.
+        </p>
+      </AnswerSection>
+
+      <AnswerSection title="Чем отличаются форматы?">
         <div className="space-y-5">
           {ROOM_TYPES.map((r) => (
             <article
@@ -74,12 +117,12 @@ function RoomsPage() {
           ))}
         </div>
         <p>
-          Цены зависят от дат и срока проживания. Напишите даты и формат — в ответ придёт точная
-          стоимость.
+          Для срока от недели и от месяца цена считается индивидуально. Напишите даты и формат — в
+          ответ придёт подтверждение и точная стоимость.
         </p>
         <Button asChild className="mt-2">
           <Link to="/bronirovanie">
-            Узнать цену на свои даты
+            Забронировать
             <ArrowRight />
           </Link>
         </Button>
@@ -103,8 +146,9 @@ function RoomsPage() {
 
       <AnswerSection title="Есть ли скидки при длительном проживании?">
         <p>
-          Да, для срока от недели и от месяца, а также для студентов и групп. Назовите срок и число
-          гостей, и администратор посчитает индивидуально.
+          Да, для срока от недели и от месяца, а также для студентов и групп. Базовые цены выше
+          указаны за одну ночь; назовите срок и число гостей, и администратор посчитает
+          индивидуально.
         </p>
       </AnswerSection>
 

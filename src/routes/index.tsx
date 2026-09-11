@@ -257,9 +257,9 @@ function HomePage() {
           </Link>
         </div>
         <p className="mt-4 max-w-2xl text-muted-foreground">
-          Койко-место в капсуле от {price} ₸ за ночь, отдельные одноместные и двухместные номера —
-          по запросу. Цена зависит от дат и срока: напишите даты, и администратор ответит точной
-          суммой.
+          Койко-место в капсуле {price} ₸ за ночь, одноместный номер от 10 000 ₸, двухместный 15 000
+          ₸ за номер (цены на {SITE.factsUpdated}). Для срока от недели и от месяца администратор
+          считает индивидуально.
         </p>
         <div className="mt-8 grid gap-5 md:grid-cols-3">
           {ROOM_TYPES.map((r) => (
@@ -288,7 +288,7 @@ function HomePage() {
                 </p>
                 <Button asChild variant="outline" className="mt-5 w-full sm:w-auto">
                   <Link to="/bronirovanie" search={{ room: r.slug }}>
-                    Узнать цену на даты
+                    Забронировать
                   </Link>
                 </Button>
               </div>

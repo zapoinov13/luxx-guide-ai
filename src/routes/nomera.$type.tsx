@@ -65,6 +65,16 @@ function RoomTypePage() {
         <div className="rounded-2xl border border-border bg-secondary/60 p-5">
           <p className="font-display text-2xl font-bold text-foreground">{room.price}</p>
           {room.priceNote && <p className="mt-1 text-sm">{room.priceNote}</p>}
+          {room.variants.length > 1 && (
+            <ul className="mt-3 list-none grid gap-1 p-0 text-sm">
+              {room.variants.map((v) => (
+                <li key={v.name} className="flex justify-between gap-4">
+                  <span>{v.name}</span>
+                  <strong className="text-foreground">{v.price.toLocaleString("ru-RU")} ₸</strong>
+                </li>
+              ))}
+            </ul>
+          )}
           <dl className="mt-4 grid gap-3 sm:grid-cols-3">
             {specs.map(({ icon: Icon, label, value }) => (
               <div key={label} className="flex gap-3">
