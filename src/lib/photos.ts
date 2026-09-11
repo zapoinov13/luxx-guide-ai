@@ -16,7 +16,8 @@ const p = (id: string, alt: string, [width, height]: readonly [number, number] =
 });
 
 export const PHOTOS = {
-  hero: p(
+  hero: p("03", "Стойка регистрации хостела Luxx Aparts с логотипом L.A, Алматы"),
+  loungeSofa: p(
     "17",
     "Лаундж и коворкинг хостела Luxx Aparts в Алматы: диван и рабочие места",
     [1600, 1122],
@@ -39,7 +40,7 @@ export const PHOTOS = {
 
 /** Галерея на главной. */
 export const GALLERY: PhotoRef[] = [
-  PHOTOS.reception,
+  PHOTOS.loungeSofa,
   PHOTOS.dorm,
   PHOTOS.privateRoom,
   PHOTOS.kitchenSink,
