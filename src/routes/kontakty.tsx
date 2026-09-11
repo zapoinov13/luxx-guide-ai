@@ -61,7 +61,7 @@ function ContactsPage() {
               аэропорта — на странице <Link to="/kak-dobratsya">«Как добраться»</Link>.
             </p>
           </div>
-          <MapEmbed className="lg:min-h-[280px]" />
+          <MapEmbed className="h-[300px] lg:h-[360px]" />
         </AnswerSection>
 
         <AnswerSection title="Когда работает стойка?">

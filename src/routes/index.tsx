@@ -375,7 +375,7 @@ function HomePage() {
               Маршруты от вокзала и аэропорта <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
           </div>
-          <MapEmbed className="lg:h-full lg:min-h-[420px]" />
+          <MapEmbed className="h-[300px] lg:h-[460px]" />
         </div>
       </section>
 
