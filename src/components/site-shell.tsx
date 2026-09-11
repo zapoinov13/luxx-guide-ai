@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, Phone, X } from "lucide-react";
+import { Mail, Menu, MessageCircle, Phone, X } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { goalForLink, trackGoal } from "@/lib/analytics";
@@ -116,88 +116,78 @@ export function SiteShell({ children }: { children: ReactNode }) {
       {children}
 
       <footer className="border-t border-border bg-secondary">
-        <div className="mx-auto grid max-w-6xl gap-8 px-5 py-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:px-8">
-          <div>
-            <p className="font-display text-lg font-bold">Luxx Aparts</p>
-            <p className="mt-3 max-w-xs text-sm leading-6 text-muted-foreground">
-              {SITE.tagline}: {SITE.rooms} номера, кухня, коворкинг, стойка круглосуточно.
-            </p>
-            <address className="mt-4 text-sm not-italic leading-6 text-muted-foreground">
-              {SITE.address}
-              <br />
-              {SITE.complex}, индекс {SITE.postalCode}
-            </address>
+        <div className="mx-auto max-w-6xl px-5 py-10 lg:px-8 lg:py-12">
+          <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:gap-12">
+            <div>
+              <p className="font-display text-lg font-bold">Luxx Aparts</p>
+              <address className="mt-2 text-sm not-italic leading-6 text-muted-foreground">
+                {SITE.address}, {SITE.complex}
+                <br />
+                Заезд {SITE.checkIn.from}–{SITE.checkIn.to}, выезд до {SITE.checkOut}, стойка
+                круглосуточно
+              </address>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <Button asChild size="sm">
+                  <a href={SITE.whatsapp} target="_blank" rel="noreferrer">
+                    <MessageCircle />
+                    WhatsApp
+                  </a>
+                </Button>
+                <Button asChild size="sm" variant="outline" className="bg-background">
+                  <a href={`tel:${SITE.phoneHref}`}>
+                    <Phone />
+                    {SITE.phoneDisplay}
+                  </a>
+                </Button>
+                <Button asChild size="sm" variant="outline" className="bg-background">
+                  <a href={`mailto:${SITE.email}`}>
+                    <Mail />
+                    {SITE.email}
+                  </a>
+                </Button>
+              </div>
+            </div>
+            <div>
+              <p className="text-sm font-semibold">Мы на площадках</p>
+              <ul className="mt-3 flex flex-wrap gap-2">
+                {[
+                  ["Booking", SITE.links.booking],
+                  ["Яндекс Карты", SITE.links.yandexMaps],
+                  ["2GIS", SITE.links.twoGis],
+                  ["Instagram", SITE.links.instagram],
+                  ["Hostelworld", SITE.links.hostelworld],
+                  ["Ostrovok", SITE.links.ostrovok],
+                ].map(([label, href]) => (
+                  <li key={label}>
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center rounded-full border border-border bg-background px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground"
+                    >
+                      {label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-          <div>
-            <p className="text-sm font-semibold">Разделы</p>
-            <nav aria-label="Разделы сайта" className="mt-3 flex flex-col gap-2">
-              {[...NAV, ...EXTRA_NAV].map(([to, label]) => (
-                <Link
-                  key={to}
-                  to={to}
-                  className="text-sm text-muted-foreground hover:text-foreground"
-                >
+          <div className="mt-8 flex flex-col gap-2 border-t border-border/70 pt-5 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+            <p>
+              © {new Date().getFullYear()} Luxx Aparts, Алматы. Цены и условия актуальны на{" "}
+              {SITE.factsUpdated}.
+            </p>
+            <p className="flex flex-wrap gap-x-4 gap-y-1">
+              {EXTRA_NAV.map(([to, label]) => (
+                <Link key={to} to={to} className="hover:text-foreground">
                   {label}
                 </Link>
               ))}
-              <Link to="/bronirovanie" className="text-sm font-semibold text-primary">
+              <Link to="/bronirovanie" className="font-semibold text-primary">
                 Забронировать напрямую
               </Link>
-            </nav>
-          </div>
-          <div>
-            <p className="text-sm font-semibold">Связаться</p>
-            <div className="mt-3 flex flex-col gap-2 text-sm text-muted-foreground">
-              <a className="hover:text-foreground" href={`tel:${SITE.phoneHref}`}>
-                {SITE.phoneDisplay}
-              </a>
-              <a
-                className="hover:text-foreground"
-                href={SITE.whatsapp}
-                target="_blank"
-                rel="noreferrer"
-              >
-                WhatsApp
-              </a>
-              <a className="hover:text-foreground" href={`mailto:${SITE.email}`}>
-                {SITE.email}
-              </a>
-              <p>
-                Заезд {SITE.checkIn.from}–{SITE.checkIn.to}, выезд до {SITE.checkOut}
-              </p>
-            </div>
-          </div>
-          <div>
-            <p className="text-sm font-semibold">Мы на площадках</p>
-            <div className="mt-3 flex flex-col gap-2 text-sm text-muted-foreground">
-              {[
-                ["Booking", SITE.links.booking],
-                ["Яндекс Карты", SITE.links.yandexMaps],
-                ["2GIS", SITE.links.twoGis],
-                ["Instagram", SITE.links.instagram],
-                ["Hostelworld", SITE.links.hostelworld],
-                ["Ostrovok", SITE.links.ostrovok],
-              ].map(([label, href]) => (
-                <a
-                  key={label}
-                  className="hover:text-foreground"
-                  href={href}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {label}
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div className="border-t border-border/70">
-          <div className="mx-auto flex max-w-6xl flex-col gap-2 px-5 py-5 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between lg:px-8">
-            <p>© {new Date().getFullYear()} Luxx Aparts, Алматы</p>
-            <p>
-              Цены и условия актуальны на {SITE.factsUpdated}.{" "}
               <a href="/blog/rss.xml" className="hover:text-foreground">
-                RSS блога
+                RSS
               </a>
             </p>
           </div>
