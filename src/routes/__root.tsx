@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteShell } from "../components/site-shell";
+import { SITE } from "../lib/site";
 
 function NotFoundComponent() {
   return (
@@ -76,27 +77,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Luxx Aparts — хостел в Алматы" },
-      {
-        name: "description",
-        content:
-          "Общие и отдельные комнаты Luxx Aparts в Алматы: Wi-Fi, коворкинг-зона и заселение 24/7.",
-      },
-      { name: "author", content: "Luxx Aparts" },
-      { property: "og:title", content: "Luxx Aparts — хостел в Алматы" },
-      {
-        property: "og:description",
-        content: "Общие и отдельные комнаты, Wi-Fi, коворкинг-зона и заселение 24/7.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
+      { title: `${SITE.name} — хостел и апартаменты в Алматы` },
+      { name: "description", content: SITE.whoWeAre },
+      { name: "author", content: SITE.name },
+      { name: "theme-color", content: "#1c1f2b" },
     ],
     links: [
+      { rel: "stylesheet", href: appCss },
+      { rel: "icon", href: "/favicon.png", type: "image/png" },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: appCss,
+        href: "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap",
       },
-      { rel: "icon", href: "/favicon.png", type: "image/png" },
     ],
   }),
   shellComponent: RootShell,

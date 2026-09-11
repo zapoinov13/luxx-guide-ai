@@ -10,15 +10,23 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BronirovanieRouteImport } from './routes/bronirovanie'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as KakDobratsyaRouteImport } from './routes/kak-dobratsya'
 import { Route as KontaktyRouteImport } from './routes/kontakty'
 import { Route as NomeraRouteImport } from './routes/nomera'
 import { Route as PravilaRouteImport } from './routes/pravila'
+import { Route as RyadomRouteImport } from './routes/ryadom'
+import { Route as UdobstvaRouteImport } from './routes/udobstva'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BronirovanieRoute = BronirovanieRouteImport.update({
+  id: '/bronirovanie',
+  path: '/bronirovanie',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FaqRoute = FaqRouteImport.update({
@@ -46,55 +54,97 @@ const PravilaRoute = PravilaRouteImport.update({
   path: '/pravila',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RyadomRoute = RyadomRouteImport.update({
+  id: '/ryadom',
+  path: '/ryadom',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UdobstvaRoute = UdobstvaRouteImport.update({
+  id: '/udobstva',
+  path: '/udobstva',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/bronirovanie': typeof BronirovanieRoute
   '/faq': typeof FaqRoute
   '/kak-dobratsya': typeof KakDobratsyaRoute
   '/kontakty': typeof KontaktyRoute
   '/nomera': typeof NomeraRoute
   '/pravila': typeof PravilaRoute
+  '/ryadom': typeof RyadomRoute
+  '/udobstva': typeof UdobstvaRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/bronirovanie': typeof BronirovanieRoute
   '/faq': typeof FaqRoute
   '/kak-dobratsya': typeof KakDobratsyaRoute
   '/kontakty': typeof KontaktyRoute
   '/nomera': typeof NomeraRoute
   '/pravila': typeof PravilaRoute
+  '/ryadom': typeof RyadomRoute
+  '/udobstva': typeof UdobstvaRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/bronirovanie': typeof BronirovanieRoute
   '/faq': typeof FaqRoute
   '/kak-dobratsya': typeof KakDobratsyaRoute
   '/kontakty': typeof KontaktyRoute
   '/nomera': typeof NomeraRoute
   '/pravila': typeof PravilaRoute
+  '/ryadom': typeof RyadomRoute
+  '/udobstva': typeof UdobstvaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/faq' | '/kak-dobratsya' | '/kontakty' | '/nomera' | '/pravila'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/faq' | '/kak-dobratsya' | '/kontakty' | '/nomera' | '/pravila'
-  id:
-    | '__root__'
     | '/'
+    | '/bronirovanie'
     | '/faq'
     | '/kak-dobratsya'
     | '/kontakty'
     | '/nomera'
     | '/pravila'
+    | '/ryadom'
+    | '/udobstva'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/bronirovanie'
+    | '/faq'
+    | '/kak-dobratsya'
+    | '/kontakty'
+    | '/nomera'
+    | '/pravila'
+    | '/ryadom'
+    | '/udobstva'
+  id:
+    | '__root__'
+    | '/'
+    | '/bronirovanie'
+    | '/faq'
+    | '/kak-dobratsya'
+    | '/kontakty'
+    | '/nomera'
+    | '/pravila'
+    | '/ryadom'
+    | '/udobstva'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BronirovanieRoute: typeof BronirovanieRoute
   FaqRoute: typeof FaqRoute
   KakDobratsyaRoute: typeof KakDobratsyaRoute
   KontaktyRoute: typeof KontaktyRoute
   NomeraRoute: typeof NomeraRoute
   PravilaRoute: typeof PravilaRoute
+  RyadomRoute: typeof RyadomRoute
+  UdobstvaRoute: typeof UdobstvaRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -104,6 +154,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bronirovanie': {
+      id: '/bronirovanie'
+      path: '/bronirovanie'
+      fullPath: '/bronirovanie'
+      preLoaderRoute: typeof BronirovanieRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faq': {
@@ -141,16 +198,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PravilaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ryadom': {
+      id: '/ryadom'
+      path: '/ryadom'
+      fullPath: '/ryadom'
+      preLoaderRoute: typeof RyadomRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/udobstva': {
+      id: '/udobstva'
+      path: '/udobstva'
+      fullPath: '/udobstva'
+      preLoaderRoute: typeof UdobstvaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BronirovanieRoute: BronirovanieRoute,
   FaqRoute: FaqRoute,
   KakDobratsyaRoute: KakDobratsyaRoute,
   KontaktyRoute: KontaktyRoute,
   NomeraRoute: NomeraRoute,
   PravilaRoute: PravilaRoute,
+  RyadomRoute: RyadomRoute,
+  UdobstvaRoute: UdobstvaRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

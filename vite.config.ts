@@ -5,6 +5,7 @@
 //     React/TanStack dedupe, error logger plugins, and sandbox detection (port/host/strictPort).
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+import { SITE_URL } from "./src/lib/site";
 
 export default defineConfig({
   tanstackStart: {
@@ -12,13 +13,18 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
     pages: [
-      { path: "/" },
-      { path: "/nomera" },
-      { path: "/kak-dobratsya" },
-      { path: "/pravila" },
-      { path: "/faq" },
-      { path: "/kontakty" },
+      { path: "/", sitemap: { priority: 1, changefreq: "weekly" } },
+      { path: "/nomera", sitemap: { priority: 0.9, changefreq: "weekly" } },
+      { path: "/bronirovanie", sitemap: { priority: 0.9, changefreq: "monthly" } },
+      { path: "/udobstva", sitemap: { priority: 0.8, changefreq: "monthly" } },
+      { path: "/kak-dobratsya", sitemap: { priority: 0.8, changefreq: "monthly" } },
+      { path: "/ryadom", sitemap: { priority: 0.7, changefreq: "monthly" } },
+      { path: "/pravila", sitemap: { priority: 0.8, changefreq: "monthly" } },
+      { path: "/faq", sitemap: { priority: 0.8, changefreq: "monthly" } },
+      { path: "/kontakty", sitemap: { priority: 0.8, changefreq: "monthly" } },
     ],
+    // Адрес сайта задаётся в одном месте — src/lib/site.ts (SITE_URL).
+    sitemap: { enabled: true, host: SITE_URL },
     prerender: { enabled: true, autoStaticPathsDiscovery: false },
   },
 });

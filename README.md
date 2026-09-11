@@ -9,7 +9,7 @@
 - TanStack Start + TanStack Router (файловый роутинг в `src/routes/`)
 - React 19, TypeScript, Vite 8
 - Tailwind CSS 4, shadcn/ui (компоненты в `src/components/ui/`)
-- Пререндер всех страниц в статический HTML (`vite.config.ts`, блок `prerender`)
+- Пререндер всех страниц в статический HTML и генерация `sitemap.xml` (`vite.config.ts`)
 - Пакетный менеджер — Bun (`bun.lock`)
 
 ## Команды
@@ -28,17 +28,31 @@ bun run format       # prettier --write .
 
 ```
 src/
-  routes/            страницы: /, /nomera, /kak-dobratsya, /pravila, /faq, /kontakty
-  routes/__root.tsx  общий каркас, базовая мета, страницы 404 и ошибки
+  routes/            страницы (см. таблицу ниже)
+  routes/__root.tsx  общий каркас, базовая мета, шрифт, страницы 404 и ошибки
   components/        site-shell (шапка, футер, мобильная панель), content-page (шаблон внутренней страницы)
-  lib/site.ts        единые реквизиты: название, телефон, WhatsApp, адрес, индекс; хелперы для мета и BreadcrumbList
-  styles.css         дизайн-токены Tailwind 4
+  lib/site.ts        ЕДИНЫЙ ИСТОЧНИК ФАКТОВ: адрес сайта, название, телефон, адрес, заезд/выезд,
+                     удобства, навигация; хелперы для мета, Hostel, FAQPage, BreadcrumbList
+  styles.css         дизайн-токены Tailwind 4 (палитра, шрифт, hero-группа, prose-copy)
 public/
-  robots.txt         ИИ-боты разрешены
+  robots.txt         ИИ-боты разрешены, ссылка на sitemap
   llms.txt           краткое описание сайта для ИИ-краулеров
+  og-image.png       картинка 1200×630 для соцсетей и мессенджеров
 docs/
   tz-sait-luxx-aparts.md   ТЗ заказчика
 ```
+
+| URL              | Страница                                                   | JSON-LD                         |
+| ---------------- | ---------------------------------------------------------- | ------------------------------- |
+| `/`              | Главная                                                    | Hostel, WebSite, FAQPage        |
+| `/nomera`        | Номера и цены                                              | BreadcrumbList, Hostel          |
+| `/bronirovanie`  | Прямое бронирование (форма → готовое сообщение в WhatsApp) | BreadcrumbList, Hostel          |
+| `/udobstva`      | Удобства и услуги                                          | BreadcrumbList, Hostel, FAQPage |
+| `/kak-dobratsya` | Как добраться                                              | BreadcrumbList, Hostel          |
+| `/ryadom`        | Что рядом                                                  | BreadcrumbList, ItemList        |
+| `/pravila`       | Правила заселения и проживания                             | BreadcrumbList, FAQPage         |
+| `/faq`           | Вопросы и ответы (17 вопросов)                             | BreadcrumbList, FAQPage         |
+| `/kontakty`      | Контакты                                                   | BreadcrumbList, Hostel          |
 
 ## Правила для контента
 
@@ -46,18 +60,25 @@ docs/
 
 - Заголовки разделов формулируются как вопрос гостя, первый абзац под ними — прямой ответ.
 - Название всегда «Luxx Aparts», адрес всегда «ул. Толе би 286/8, 2 этаж, Алматы».
-- Никаких неподтверждённых цифр: цены, маршруты и расстояния появляются на сайте только после подтверждения заказчиком.
-- Реквизиты меняются в одном месте — `src/lib/site.ts`.
+- Никаких неподтверждённых цифр: цены, номера автобусов и точные расстояния появляются на сайте только после подтверждения заказчиком. Там, где факта нет, текст честно отправляет к администратору.
+- Реквизиты и факты меняются в одном месте — `src/lib/site.ts`. Адрес сайта — константа `SITE_URL` там же.
+
+## Как переехать на свой домен
+
+1. Поменять `SITE_URL` в `src/lib/site.ts`.
+2. Поменять домен в `public/robots.txt` и `public/llms.txt`.
+3. Собрать проект: canonical, og:url, sitemap.xml и JSON-LD подхватят новый адрес сами.
 
 ## Что ещё не сделано по ТЗ
 
-Сайт закрывает базовую часть ТЗ: шесть страниц на русском, мета, JSON-LD (Hostel, WebSite, FAQPage, BreadcrumbList), robots.txt и llms.txt, кнопки WhatsApp и телефона на каждом экране. Ждут данных от заказчика или отдельной итерации:
+Ждут данных от заказчика (раздел 9 ТЗ) или отдельной итерации:
 
-- Домен: canonical, og:url и ссылки в JSON-LD пока относительные. После выбора домена вынести его в `SITE.url` и сделать абсолютными.
-- `sitemap.xml` (нужен домен), `og:image` 1200×630.
-- Цены, типы номеров и страницы `/nomera/<тип>`, время заезда и выезда в разметке (`checkinTime`, `checkoutTime`, `priceRange`, `geo`).
-- Страницы `/udobstva`, `/ryadom`, `/otzyvy`, `/bronirovanie`, блог, английская версия с `hreflang`.
-- Форма заявки и аналитика (GA4 или Метрика) с целями на клик WhatsApp и звонок.
+- Цены и таблица типов номеров, страницы `/nomera/<тип>` с фото, `priceRange` и `makesOffer` в разметке.
+- Геокоординаты (`geo` в Hostel), e-mail, ссылки на 2GIS, Google Maps, Instagram (`sameAs`).
+- Номера автобусов и стоимость такси на странице «Как добраться».
+- `/otzyvy` (нужны реальные отзывы со ссылками), блог, английская версия с `hreflang`.
+- Аналитика (GA4 или Метрика) с целями на клик WhatsApp, звонок и отправку формы.
+- Фото хостела в WebP.
 
 ## Lovable
 
