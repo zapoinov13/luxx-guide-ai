@@ -65,7 +65,7 @@ export function ContentPage({ title, eyebrow, intro, updated, photo, children }:
           <div>
             <h2 className="font-display text-2xl font-bold">Остались вопросы?</h2>
             <p className="mt-2 text-sm text-ink-muted">
-              Администратор Luxx Aparts на связи круглосуточно.
+              Напишите или позвоните, отвечаем круглосуточно.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">

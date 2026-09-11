@@ -100,64 +100,89 @@ export function SiteShell({ children }: { children: ReactNode }) {
       {children}
 
       <footer className="border-t border-border bg-secondary pb-20 lg:pb-0">
-        <div className="mx-auto grid max-w-6xl gap-8 px-5 py-12 md:grid-cols-4 lg:px-8">
+        <div className="mx-auto grid max-w-6xl gap-8 px-5 py-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:px-8">
           <div>
             <p className="font-display text-lg font-bold">Luxx Aparts</p>
             <p className="mt-3 max-w-xs text-sm leading-6 text-muted-foreground">
-              {SITE.tagline}. {SITE.rooms} номера, общая кухня, круглосуточная стойка, Wi-Fi.
+              {SITE.tagline}: {SITE.rooms} номера, кухня, коворкинг, стойка круглосуточно.
             </p>
-          </div>
-          <div>
-            <p className="text-sm font-semibold">Адрес</p>
-            <address className="mt-3 text-sm not-italic leading-6 text-muted-foreground">
+            <address className="mt-4 text-sm not-italic leading-6 text-muted-foreground">
               {SITE.address}
               <br />
               {SITE.complex}, индекс {SITE.postalCode}
             </address>
           </div>
           <div>
-            <p className="text-sm font-semibold">Связаться</p>
-            <a
-              className="mt-3 block text-sm text-muted-foreground hover:text-foreground"
-              href={`tel:${SITE.phoneHref}`}
-            >
-              {SITE.phoneDisplay}
-            </a>
-            <a
-              className="mt-2 block text-sm text-muted-foreground hover:text-foreground"
-              href={SITE.whatsapp}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Написать в WhatsApp
-            </a>
-            <a
-              className="mt-2 block text-sm text-muted-foreground hover:text-foreground"
-              href={`mailto:${SITE.email}`}
-            >
-              {SITE.email}
-            </a>
-          </div>
-          <div>
-            <p className="text-sm font-semibold">Заезд и выезд</p>
-            <p className="mt-3 text-sm leading-6 text-muted-foreground">
-              Заезд с {SITE.checkIn.from} до {SITE.checkIn.to}
-              <br />
-              Выезд до {SITE.checkOut}
-              <br />
-              Стойка работает круглосуточно
-            </p>
-            <nav aria-label="Ссылки в подвале" className="mt-4 flex flex-col gap-1">
-              <Link to="/pravila" className="text-sm text-muted-foreground hover:text-foreground">
-                Правила проживания
-              </Link>
-              <Link
-                to="/bronirovanie"
-                className="text-sm text-muted-foreground hover:text-foreground"
-              >
+            <p className="text-sm font-semibold">Разделы</p>
+            <nav aria-label="Разделы сайта" className="mt-3 flex flex-col gap-2">
+              {NAV.map(([to, label]) => (
+                <Link
+                  key={to}
+                  to={to}
+                  className="text-sm text-muted-foreground hover:text-foreground"
+                >
+                  {label}
+                </Link>
+              ))}
+              <Link to="/bronirovanie" className="text-sm font-semibold text-primary">
                 Забронировать напрямую
               </Link>
             </nav>
+          </div>
+          <div>
+            <p className="text-sm font-semibold">Связаться</p>
+            <div className="mt-3 flex flex-col gap-2 text-sm text-muted-foreground">
+              <a className="hover:text-foreground" href={`tel:${SITE.phoneHref}`}>
+                {SITE.phoneDisplay}
+              </a>
+              <a
+                className="hover:text-foreground"
+                href={SITE.whatsapp}
+                target="_blank"
+                rel="noreferrer"
+              >
+                WhatsApp
+              </a>
+              <a className="hover:text-foreground" href={`mailto:${SITE.email}`}>
+                {SITE.email}
+              </a>
+              <p>
+                Заезд {SITE.checkIn.from}–{SITE.checkIn.to}, выезд до {SITE.checkOut}
+              </p>
+            </div>
+          </div>
+          <div>
+            <p className="text-sm font-semibold">Мы на площадках</p>
+            <div className="mt-3 flex flex-col gap-2 text-sm text-muted-foreground">
+              {[
+                ["Booking", SITE.links.booking],
+                ["Яндекс Карты", SITE.links.yandexMaps],
+                ["2GIS", SITE.links.twoGis],
+                ["Hostelworld", SITE.links.hostelworld],
+                ["Ostrovok", SITE.links.ostrovok],
+              ].map(([label, href]) => (
+                <a
+                  key={label}
+                  className="hover:text-foreground"
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {label}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="border-t border-border/70">
+          <div className="mx-auto flex max-w-6xl flex-col gap-2 px-5 py-5 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between lg:px-8">
+            <p>© {new Date().getFullYear()} Luxx Aparts, Алматы</p>
+            <p>
+              Цены и условия актуальны на {SITE.factsUpdated}.{" "}
+              <a href="/blog/rss.xml" className="hover:text-foreground">
+                RSS блога
+              </a>
+            </p>
           </div>
         </div>
       </footer>

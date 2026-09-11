@@ -28,7 +28,7 @@ function ContactsPage() {
     <ContentPage
       eyebrow="Контакты"
       title="Контакты Luxx Aparts"
-      intro={`Позвоните по номеру ${SITE.phoneDisplay} или напишите в WhatsApp, чтобы узнать свободные комнаты и цену на ваши даты. Адрес хостела: ${SITE.address}, ${SITE.complex}. Стойка регистрации работает круглосуточно, заезд с ${SITE.checkIn.from} до ${SITE.checkIn.to}.`}
+      intro={`Свободные места и цену на ваши даты быстрее всего узнать в WhatsApp или по телефону ${SITE.phoneDisplay}. Адрес: ${SITE.address}, ${SITE.complex}. На связи круглосуточно.`}
       photo={PHOTOS.reception}
     >
       <div className="grid gap-4 sm:grid-cols-3">
@@ -56,8 +56,8 @@ function ContactsPage() {
             <p>
               <strong>{SITE.address}</strong>
               <br />
-              {SITE.complex}, почтовый индекс {SITE.postalCode}. Хостел на втором этаже. Подробные
-              маршруты — на странице <Link to="/kak-dobratsya">«Как добраться»</Link>.
+              {SITE.complex}, второй этаж, индекс {SITE.postalCode}. Маршруты от вокзалов и
+              аэропорта — на странице <Link to="/kak-dobratsya">«Как добраться»</Link>.
             </p>
           </div>
           <div className="overflow-hidden rounded-2xl border border-border">
@@ -77,16 +77,16 @@ function ContactsPage() {
             <Clock3 className="mt-1 size-5 shrink-0 text-primary" aria-hidden="true" />
             <p>
               Круглосуточно, без выходных. Заезд с {SITE.checkIn.from} до {SITE.checkIn.to}, выезд
-              до {SITE.checkOut}. Ночной заезд согласуйте с администратором заранее. Персонал
-              говорит по-русски и по-английски.
+              до {SITE.checkOut}; поздний заезд согласуйте заранее. Персонал говорит по-русски и
+              по-английски.
             </p>
           </div>
         </AnswerSection>
 
         <AnswerSection title="Где ещё есть Luxx Aparts?">
           <p>
-            Карточки хостела есть на картах и площадках бронирования. Условия агрегаторов могут
-            отличаться от прямого бронирования.
+            Карточки хостела на картах и площадках бронирования. Цены и условия там могут отличаться
+            от прямых.
           </p>
           <div className="flex flex-wrap gap-3">
             {[

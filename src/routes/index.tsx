@@ -1,15 +1,21 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight,
+  Backpack,
   BedDouble,
+  Briefcase,
+  Check,
   Clock3,
   ExternalLink,
+  GraduationCap,
   MapPin,
   MessageCircle,
   Star,
+  Users,
   Wifi,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Gallery } from "@/components/gallery";
 import { Photo } from "@/components/photo";
 import { GALLERY, PHOTOS } from "@/lib/photos";
 import {
@@ -23,6 +29,7 @@ import {
   hostelSchema,
   jsonLd,
   mapEmbedUrl,
+  mapLinkUrl,
   pageHead,
   pluralReviews,
   webSiteSchema,
@@ -71,6 +78,31 @@ const facts = [
   { icon: MapPin, value: "7 км", label: "до вокзала Алматы-2" },
 ] as const;
 
+const trust = ["Без предоплаты", "Без комиссии агрегаторов", "Ответ круглосуточно"] as const;
+
+const audiences = [
+  {
+    icon: GraduationCap,
+    title: "Студентам и на месяц",
+    text: "Кухня, стирка, коворкинг и условия на длительный срок по договорённости.",
+  },
+  {
+    icon: Briefcase,
+    title: "Командировочным",
+    text: "Отдельная комната на одну-три ночи, быстрый Wi-Fi, стол для работы.",
+  },
+  {
+    icon: Users,
+    title: "Семьям и группам",
+    text: "Отдельные комнаты, общая кухня, детская площадка и настольные игры.",
+  },
+  {
+    icon: Backpack,
+    title: "Транзитным гостям",
+    text: "Автовокзал рядом, камера хранения, заселение и выезд в любое время суток.",
+  },
+] as const;
+
 const steps = [
   ["Напишите или позвоните", "Даты, число гостей, формат: койко-место или отдельная комната."],
   ["Получите подтверждение", "Администратор проверит места и назовёт цену на ваши даты."],
@@ -79,60 +111,74 @@ const steps = [
 
 const roomPhotos = [PHOTOS.dorm, PHOTOS.single, PHOTOS.privateRoom] as const;
 
+const shortSource: Record<string, string> = { "Яндекс Карты": "Яндекс" };
+
 function HomePage() {
   const price = SITE.priceFrom.toLocaleString("ru-RU");
   return (
     <main className="pb-20 lg:pb-0">
+      {/* Первый экран */}
       <section className="bg-sand">
-        <div className="mx-auto grid max-w-6xl items-center gap-6 px-5 py-6 lg:grid-cols-[1fr_1.05fr] lg:gap-10 lg:px-8 lg:py-20">
+        <div className="mx-auto grid max-w-6xl items-center gap-6 px-5 py-5 lg:grid-cols-[1fr_1.05fr] lg:gap-12 lg:px-8 lg:py-20">
           <div className="relative order-first lg:order-none">
             <Photo
               photo={PHOTOS.hero}
               sizes="(min-width: 1024px) 50vw, 100vw"
-              className="aspect-[4/3] w-full rounded-2xl object-cover shadow-photo lg:rounded-3xl"
+              className="aspect-[4/3] w-full rounded-2xl object-cover shadow-photo lg:rounded-[1.75rem]"
               priority
             />
-            <div className="absolute bottom-3 left-3 rounded-xl bg-background/95 px-3 py-2 shadow-card backdrop-blur lg:bottom-4 lg:left-4 lg:rounded-2xl lg:px-4 lg:py-3">
-              <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
-                Койко-место
-              </p>
-              <p className="font-display text-lg font-bold lg:text-xl">
-                от {price} ₸{" "}
-                <span className="text-sm font-medium text-muted-foreground">/ ночь</span>
-              </p>
+            <div
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 rounded-b-2xl bg-gradient-to-t from-black/45 to-transparent lg:rounded-b-[1.75rem]"
+              aria-hidden="true"
+            />
+            <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-3 text-white">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-white/75">
+                  Койко-место
+                </p>
+                <p className="font-display text-2xl font-bold leading-none lg:text-3xl">
+                  от {price} ₸ <span className="text-sm font-medium text-white/75">за ночь</span>
+                </p>
+              </div>
+              <span className="hidden rounded-full bg-white/15 px-3 py-1.5 text-xs font-semibold backdrop-blur sm:inline-flex">
+                Стойка 24/7
+              </span>
             </div>
           </div>
+
           <div className="lg:order-first">
-            <ul
-              className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-sm"
-              aria-label="Оценки на площадках"
-            >
+            <ul className="flex flex-wrap items-center gap-2" aria-label="Оценки на площадках">
               {RATINGS.slice(0, 3).map((r) => (
                 <li key={r.source}>
                   <a
                     href={r.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 lg:rounded-full lg:bg-background lg:px-3 lg:py-1.5 lg:shadow-card"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-background px-3 py-1.5 text-xs shadow-card transition-colors hover:border-primary/40 sm:text-sm"
                   >
-                    <Star className="size-4 fill-primary text-primary" aria-hidden="true" />
+                    <Star
+                      className="size-3.5 fill-primary text-primary sm:size-4"
+                      aria-hidden="true"
+                    />
                     <strong>{r.score}</strong>
                     <span className="text-muted-foreground">
-                      {r.source}
-                      <span className="hidden sm:inline">, {pluralReviews(r.count)}</span>
+                      <span className="sm:hidden">{shortSource[r.source] ?? r.source}</span>
+                      <span className="hidden sm:inline">
+                        {r.source}, {pluralReviews(r.count)}
+                      </span>
                     </span>
                   </a>
                 </li>
               ))}
             </ul>
-            <h1 className="mt-4 font-display text-[2rem] font-bold leading-[1.1] sm:text-5xl lg:mt-6 lg:text-[3rem] lg:leading-[1.08]">
+            <h1 className="mt-5 font-display text-[2rem] font-bold leading-[1.1] sm:text-5xl lg:mt-6 lg:text-[3rem] lg:leading-[1.08]">
               Хостел и апартаменты Luxx Aparts в Алматы
             </h1>
             <p className="mt-4 max-w-xl text-base leading-7 text-muted-foreground lg:mt-6 lg:text-lg lg:leading-8">
-              Luxx Aparts — хостел и апартаменты на улице Толе би 286/8 в Алматы. {SITE.rooms}{" "}
-              номера: койко-места от {price} ₸ и отдельные комнаты, общая кухня, стиральная машина,
-              Wi-Fi, круглосуточная стойка. {SITE.distanceToStation}, автовокзал Сайран на той же
-              улице. Бронируйте напрямую по WhatsApp без комиссии агрегаторов.
+              Luxx Aparts — хостел и апартаменты на улице Толе би 286/8 в Алматы: {SITE.rooms}{" "}
+              номера, койко-места от {price} ₸ и отдельные комнаты. Общая кухня, стирка, Wi-Fi,
+              стойка работает круглосуточно. {SITE.distanceToStation}, автовокзал Сайран на той же
+              улице. Бронируйте напрямую в WhatsApp.
             </p>
             <div className="mt-6 grid gap-3 sm:flex sm:flex-wrap lg:mt-8">
               <Button asChild size="lg" className="w-full sm:w-auto">
@@ -145,7 +191,15 @@ function HomePage() {
                 <Link to="/nomera">Номера и цены</Link>
               </Button>
             </div>
-            <p className="mt-5 flex items-start gap-2 text-sm text-muted-foreground lg:mt-6">
+            <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-sm text-muted-foreground">
+              {trust.map((t) => (
+                <li key={t} className="inline-flex items-center gap-1.5">
+                  <Check className="size-4 text-primary" aria-hidden="true" />
+                  {t}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-5 flex items-start gap-2 text-sm text-muted-foreground">
               <MapPin className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
               <span>
                 {SITE.address}, {SITE.complex}
@@ -155,6 +209,7 @@ function HomePage() {
         </div>
       </section>
 
+      {/* Факты */}
       <section className="border-b border-border">
         <ul className="mx-auto grid max-w-6xl grid-cols-2 gap-px bg-border lg:grid-cols-4">
           {facts.map(({ icon: Icon, value, label }) => (
@@ -167,6 +222,7 @@ function HomePage() {
         </ul>
       </section>
 
+      {/* Галерея */}
       <section className="mx-auto max-w-6xl px-5 pt-12 lg:px-8 lg:pt-20">
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
@@ -176,22 +232,16 @@ function HomePage() {
             </h2>
           </div>
           <p className="max-w-md text-sm text-muted-foreground">
-            Капсульные койко-места со шторками, отдельные комнаты с окном, кухня, коворкинг и
-            санузлы. Фото с карточки хостела, {SITE.factsUpdated}.
+            Капсулы со шторками, комнаты с окном, кухня, коворкинг и санузлы. Нажмите на фото, чтобы
+            открыть крупнее.
           </p>
         </div>
-        <ul className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4">
-          {GALLERY.map((photo, i) => (
-            <li key={photo.id} className={i === 0 ? "col-span-2 row-span-2" : ""}>
-              <Photo
-                photo={photo}
-                sizes="(min-width: 768px) 25vw, 50vw"
-                className="h-full w-full rounded-2xl object-cover"
-              />
-            </li>
-          ))}
-        </ul>
+        <div className="mt-6 lg:mt-8">
+          <Gallery photos={GALLERY} />
+        </div>
       </section>
+
+      {/* Номера */}
       <section className="mx-auto max-w-6xl px-5 py-12 lg:px-8 lg:py-20">
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
@@ -208,22 +258,21 @@ function HomePage() {
           </Link>
         </div>
         <p className="mt-4 max-w-2xl text-muted-foreground">
-          Койко-место в общей комнате от {price} ₸ за ночь по данным площадок на {SITE.factsUpdated}
-          . Отдельные комнаты — цену на ваши даты называет администратор. Прямое бронирование без
-          комиссии.
+          Койко-место от {price} ₸ за ночь. Стоимость отдельных комнат зависит от дат: напишите
+          даты, и администратор назовёт точную цену.
         </p>
         <div className="mt-8 grid gap-5 md:grid-cols-3">
           {ROOM_TYPES.map((r, i) => (
             <article
               key={r.slug}
-              className="overflow-hidden rounded-3xl border border-border bg-card shadow-card"
+              className="flex flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-card transition-all hover:-translate-y-0.5 hover:shadow-photo"
             >
               <Photo
                 photo={roomPhotos[i] ?? PHOTOS.detail}
                 sizes="(min-width: 768px) 33vw, 100vw"
                 className="aspect-[4/3] w-full object-cover"
               />
-              <div className="p-6">
+              <div className="flex flex-1 flex-col p-6">
                 <h3 className="font-display text-xl font-bold">{r.name}</h3>
                 <p className="mt-1 text-sm text-muted-foreground">{r.short}</p>
                 <p className="mt-4 font-semibold">{r.price}</p>
@@ -231,33 +280,38 @@ function HomePage() {
                 <p className="mt-3 text-sm text-muted-foreground">
                   {r.capacity} · {r.bath}
                 </p>
+                <Button asChild variant="outline" className="mt-5 w-full sm:w-auto">
+                  <Link to="/bronirovanie" search={{ room: r.slug }}>
+                    Узнать цену на даты
+                  </Link>
+                </Button>
               </div>
             </article>
           ))}
         </div>
       </section>
 
+      {/* Удобства */}
       <section className="bg-secondary">
-        <div className="mx-auto grid max-w-6xl gap-10 px-5 py-16 lg:grid-cols-[0.9fr_1.1fr] lg:px-8 lg:py-20">
+        <div className="mx-auto grid max-w-6xl gap-8 px-5 py-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-10 lg:px-8 lg:py-20">
           <div>
             <p className="text-sm font-semibold text-primary">Удобства</p>
             <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl lg:text-4xl">
               Что есть в хостеле?
             </h2>
             <p className="mt-4 text-muted-foreground">
-              Общая кухня с посудой и чайником, стиральная машина, Wi-Fi, коворкинг, камера
-              хранения, кондиционер и отопление. Стойка и охрана работают круглосуточно, комнаты
-              звукоизолированы, у каждой кровати розетка и лампа.
+              Всё для ночёвки и для работы: от кухни до коворкинга. Комнаты звукоизолированы, у
+              каждой кровати розетка и лампа для чтения.
             </p>
             <Photo
               photo={PHOTOS.kitchen}
               sizes="(min-width: 1024px) 40vw, 100vw"
-              className="mt-8 aspect-[4/3] w-full rounded-3xl object-cover shadow-card"
+              className="mt-6 aspect-[4/3] w-full rounded-3xl object-cover shadow-card lg:mt-8"
             />
           </div>
           <ul className="grid gap-3 sm:grid-cols-2">
             {AMENITIES.map((a) => (
-              <li key={a.name} className="rounded-2xl bg-background p-5 shadow-card">
+              <li key={a.name} className="rounded-2xl bg-background p-4 shadow-card lg:p-5">
                 <p className="font-semibold">{a.name}</p>
                 <p className="mt-1 text-sm text-muted-foreground">{a.detail}</p>
               </li>
@@ -266,28 +320,43 @@ function HomePage() {
         </div>
       </section>
 
+      {/* Расположение */}
       <section className="mx-auto max-w-6xl px-5 py-12 lg:px-8 lg:py-20">
-        <div className="grid gap-10 lg:grid-cols-2">
+        <div className="grid gap-8 lg:grid-cols-2 lg:gap-10">
           <div>
             <p className="text-sm font-semibold text-primary">Расположение</p>
             <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl lg:text-4xl">
               Где находится и как добраться?
             </h2>
             <p className="mt-4 text-muted-foreground">
-              {SITE.address}, {SITE.complex}. Автовокзал Сайран на той же улице, метро «Сайран» в
-              1,9 км. Расстояния указаны хостелом в карточке на Hostelworld.
+              {SITE.address}, {SITE.complex}, второй этаж. Автовокзал Сайран на той же улице, метро
+              «Сайран» в 1,9 км.
             </p>
             <dl className="mt-6 divide-y divide-border rounded-2xl border border-border">
               {DISTANCES.map((d) => (
                 <div
                   key={d.name}
-                  className="flex items-baseline justify-between gap-4 px-5 py-3 text-sm"
+                  className="flex items-baseline justify-between gap-4 px-4 py-3 text-sm lg:px-5"
                 >
                   <dt className="text-muted-foreground">{d.name}</dt>
                   <dd className="text-right font-semibold">{d.value}</dd>
                 </div>
               ))}
             </dl>
+            <div className="mt-5 flex flex-wrap gap-2">
+              {[
+                ["2GIS", SITE.links.twoGis],
+                ["Яндекс Карты", SITE.links.yandexMaps],
+                ["Google Карты", mapLinkUrl],
+              ].map(([label, href]) => (
+                <Button key={label} asChild size="sm" variant="outline">
+                  <a href={href} target="_blank" rel="noreferrer">
+                    {label}
+                    <ExternalLink />
+                  </a>
+                </Button>
+              ))}
+            </div>
             <Link
               to="/kak-dobratsya"
               className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary"
@@ -299,7 +368,7 @@ function HomePage() {
             <iframe
               title="Luxx Aparts на карте: ул. Толе би 286/8, Алматы"
               src={mapEmbedUrl}
-              className="h-full min-h-[360px] w-full"
+              className="h-[300px] w-full lg:h-full lg:min-h-[380px]"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               allowFullScreen
@@ -308,30 +377,24 @@ function HomePage() {
         </div>
       </section>
 
+      {/* Кому подходит + бронирование */}
       <section className="bg-secondary">
-        <div className="mx-auto grid max-w-6xl gap-10 px-5 py-16 lg:grid-cols-2 lg:px-8 lg:py-20">
+        <div className="mx-auto grid max-w-6xl gap-10 px-5 py-12 lg:grid-cols-2 lg:px-8 lg:py-20">
           <div>
             <p className="text-sm font-semibold text-primary">Кому подходит</p>
             <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl lg:text-4xl">
               Кому подходит Luxx Aparts?
             </h2>
-            <ul className="mt-6 space-y-3 text-muted-foreground">
-              <li>
-                <strong className="text-foreground">Студентам и тем, кто приехал надолго.</strong>{" "}
-                Кухня, стирка, коворкинг и условия на месяц по договорённости.
-              </li>
-              <li>
-                <strong className="text-foreground">Командировочным на одну-три ночи.</strong>{" "}
-                Отдельная комната, быстрый Wi-Fi, стол для работы.
-              </li>
-              <li>
-                <strong className="text-foreground">Семьям и группам.</strong> Отдельные комнаты,
-                общая кухня, детская площадка.
-              </li>
-              <li>
-                <strong className="text-foreground">Транзитным гостям.</strong> Автовокзал рядом,
-                камера хранения, стойка работает круглосуточно.
-              </li>
+            <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+              {audiences.map(({ icon: Icon, title, text }) => (
+                <li key={title} className="rounded-2xl bg-background p-5 shadow-card">
+                  <span className="grid size-10 place-items-center rounded-xl bg-brand-soft text-primary">
+                    <Icon className="size-5" aria-hidden="true" />
+                  </span>
+                  <h3 className="mt-3 font-semibold">{title}</h3>
+                  <p className="mt-1 text-sm text-muted-foreground">{text}</p>
+                </li>
+              ))}
             </ul>
           </div>
           <div>
@@ -339,7 +402,7 @@ function HomePage() {
             <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl lg:text-4xl">
               Как забронировать напрямую?
             </h2>
-            <ol className="mt-6 space-y-4">
+            <ol className="mt-6 space-y-3">
               {steps.map(([title, text], i) => (
                 <li key={title} className="flex gap-4 rounded-2xl bg-background p-5 shadow-card">
                   <span className="grid size-9 shrink-0 place-items-center rounded-full bg-primary font-display font-bold text-primary-foreground">
@@ -352,14 +415,14 @@ function HomePage() {
                 </li>
               ))}
             </ol>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Button asChild size="lg">
+            <div className="mt-6 grid gap-3 sm:flex sm:flex-wrap">
+              <Button asChild size="lg" className="w-full sm:w-auto">
                 <Link to="/bronirovanie">
                   <MessageCircle />
                   Оставить заявку
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline">
+              <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
                 <a href={SITE.links.booking} target="_blank" rel="noreferrer">
                   Booking
                   <ExternalLink />
@@ -370,6 +433,7 @@ function HomePage() {
         </div>
       </section>
 
+      {/* Правила кратко */}
       <section className="mx-auto max-w-6xl px-5 py-12 lg:px-8 lg:py-20">
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
@@ -403,6 +467,7 @@ function HomePage() {
         </ul>
       </section>
 
+      {/* Отзывы */}
       <section className="bg-ink text-ink-foreground">
         <div className="mx-auto max-w-6xl px-5 py-12 lg:px-8 lg:py-20">
           <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
@@ -411,6 +476,15 @@ function HomePage() {
               <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl lg:text-4xl">
                 Что говорят гости?
               </h2>
+              <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-sm text-ink-muted">
+                {RATINGS.slice(0, 4).map((r) => (
+                  <li key={r.source}>
+                    <a href={r.url} target="_blank" rel="noreferrer" className="hover:text-white">
+                      <strong className="text-white">{r.score}</strong> {r.source}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
             <Link to="/otzyvy" className="inline-flex items-center gap-2 text-sm font-semibold">
               Все отзывы <ArrowRight className="size-4" aria-hidden="true" />
@@ -439,6 +513,7 @@ function HomePage() {
         </div>
       </section>
 
+      {/* FAQ */}
       <section className="mx-auto max-w-6xl px-5 py-12 lg:px-8 lg:py-20">
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
@@ -456,7 +531,7 @@ function HomePage() {
         </div>
         <div className="mt-8 divide-y divide-border rounded-3xl border border-border">
           {faq.map(([q, a]) => (
-            <article key={q} className="grid gap-2 p-6 md:grid-cols-[1fr_2fr] md:gap-8">
+            <article key={q} className="grid gap-2 p-5 md:grid-cols-[1fr_2fr] md:gap-8 md:p-6">
               <h3 className="font-display text-lg font-bold">{q}</h3>
               <p className="text-sm leading-6 text-muted-foreground">{a}</p>
             </article>

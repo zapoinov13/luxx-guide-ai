@@ -2,15 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AnswerSection, ContentPage, QaList } from "@/components/content-page";
 import { Photo } from "@/components/photo";
 import { PHOTOS } from "@/lib/photos";
-import {
-  AMENITIES,
-  breadcrumbSchema,
-  faqSchema,
-  hostelSchema,
-  jsonLd,
-  pageHead,
-  type QA,
-} from "@/lib/site";
+import { breadcrumbSchema, faqSchema, hostelSchema, jsonLd, pageHead, type QA } from "@/lib/site";
 
 const items: QA[] = [
   [
@@ -68,18 +60,10 @@ function AmenitiesPage() {
     <ContentPage
       eyebrow="Удобства"
       title="Удобства и услуги Luxx Aparts"
-      intro="В Luxx Aparts есть общая кухня с посудой и чайником, стиральная машина, бесплатный Wi-Fi и коворкинг, камера хранения, запирающиеся шкафчики, кондиционер и отопление. Стойка регистрации и охрана работают круглосуточно, комнаты звукоизолированы, для детей есть площадка и настольные игры."
+      intro="Кухня, стирка, Wi-Fi и коворкинг бесплатны для всех гостей. Стойка и охрана работают круглосуточно, комнаты звукоизолированы, вещи можно запереть в шкафчике или сдать в камеру хранения. Ниже ответы на вопросы про каждое удобство."
       photo={PHOTOS.kitchen}
     >
-      <AnswerSection title="Что есть в хостеле?">
-        <ul className="grid gap-3 sm:grid-cols-2">
-          {AMENITIES.map((a) => (
-            <li key={a.name} className="rounded-2xl border border-border p-4">
-              <p className="font-semibold text-foreground">{a.name}</p>
-              <p className="mt-1 text-sm">{a.detail}</p>
-            </li>
-          ))}
-        </ul>
+      <AnswerSection title="Как выглядят кухня, лаундж и санузлы?">
         <div className="grid gap-3 sm:grid-cols-2">
           <Photo
             photo={PHOTOS.lounge}

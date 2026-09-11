@@ -47,7 +47,11 @@ function ReviewsPage() {
     <ContentPage
       eyebrow="Отзывы"
       title="Отзывы гостей Luxx Aparts"
-      intro={`На ${SITE.factsUpdated} у Luxx Aparts ${RATINGS.map((r) => `${r.score} из ${r.scale} на ${r.source} (${pluralReviews(r.count)})`).join(", ")}. Гости чаще всего отмечают чистоту, тишину, удобные кровати, коворкинг и вежливый персонал. Ниже цитаты с площадок с датой, именем автора и ссылкой на источник.`}
+      intro={`На ${SITE.factsUpdated} у Luxx Aparts ${RATINGS.slice(0, 3)
+        .map((r) => `${r.score} из ${r.scale} на ${r.source} (${pluralReviews(r.count)})`)
+        .join(
+          ", ",
+        )}. Гости чаще всего хвалят чистоту, тишину, удобные кровати и персонал. Ниже цитаты с площадок с датой, именем автора и ссылкой на источник.`}
       updated={SITE.factsUpdated}
       photo={PHOTOS.lounge}
     >
@@ -100,8 +104,8 @@ function ReviewsPage() {
 
       <AnswerSection title="Где оставить отзыв?">
         <p>
-          Если вы останавливались в Luxx Aparts, оставьте отзыв на 2GIS или Яндекс Картах: это
-          помогает другим гостям и хостелу.
+          Останавливались у нас? Отзыв на 2GIS или Яндекс Картах помогает другим гостям выбрать
+          жильё, а хостелу — становиться лучше.
         </p>
         <div className="flex flex-wrap gap-3">
           <Button asChild variant="outline">

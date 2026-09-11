@@ -37,6 +37,10 @@ export default defineConfig({
     ],
     // Адрес сайта задаётся в одном месте — src/lib/site.ts (SITE_URL).
     sitemap: { enabled: true, host: SITE_URL },
-    prerender: { enabled: true, autoStaticPathsDiscovery: false },
+    prerender: {
+      enabled: true,
+      autoStaticPathsDiscovery: false,
+      filter: (page: { path: string }) => !page.path.includes("?"),
+    },
   },
 });

@@ -31,7 +31,7 @@ export function Photo({ photo, className, sizes = "100vw", priority = false }: P
       loading={priority ? "eager" : "lazy"}
       decoding="async"
       fetchPriority={priority ? "high" : "auto"}
-      className={className}
+      className={className ? `bg-secondary ${className}` : "bg-secondary"}
     />
   );
 }

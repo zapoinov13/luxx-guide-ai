@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { MessageCircle, Phone } from "lucide-react";
+import { Check, MessageCircle, Phone } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { AnswerSection, ContentPage } from "@/components/content-page";
 import { PHOTOS } from "@/lib/photos";
 import {
+  ROOM_TYPES,
   SITE,
   breadcrumbSchema,
   hostelSchema,
@@ -16,7 +17,13 @@ import {
   whatsappWithText,
 } from "@/lib/site";
 
+type BookingSearch = { room?: string };
+
 export const Route = createFileRoute("/bronirovanie")({
+  validateSearch: (search: Record<string, unknown>): BookingSearch =>
+    typeof search["room"] === "string" && ROOM_TYPES.some((r) => r.slug === search["room"])
+      ? { room: search["room"] }
+      : {},
   head: () => ({
     ...pageHead(
       "Забронировать номер в Luxx Aparts напрямую, Алматы",
@@ -35,23 +42,34 @@ const roomOptions = [
   "Пока не решил(а)",
 ] as const;
 
-const humanDate = (iso: string) =>
-  new Date(`${iso}T00:00:00Z`).toLocaleDateString("ru-RU", {
+const humanDate = (iso: string) => {
+  const d = new Date(`${iso}T00:00:00Z`);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(iso) || Number.isNaN(d.getTime())) return iso;
+  return d.toLocaleDateString("ru-RU", {
     day: "numeric",
     month: "long",
     year: "numeric",
     timeZone: "UTC",
   });
+};
 
 const fieldClass =
-  "h-11 w-full border border-input bg-background px-3 text-base text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+  "h-11 w-full rounded-xl border border-input bg-background px-3 text-base text-foreground shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+
+const roomBySlug: Record<string, string> = {
+  "koyko-mesto": roomOptions[0],
+  odnomestny: roomOptions[1],
+  dvukhmestny: roomOptions[2],
+};
 
 function BookingPage() {
+  const { room: roomSlug } = Route.useSearch();
+  const [sent, setSent] = useState<string | null>(null);
   const [form, setForm] = useState({
     checkIn: "",
     checkOut: "",
     guests: "1",
-    room: roomOptions[0] as string,
+    room: (roomSlug && roomBySlug[roomSlug]) || (roomOptions[0] as string),
     name: "",
     phone: "",
     comment: "",
@@ -76,14 +94,16 @@ function BookingPage() {
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    window.open(whatsappWithText(message), "_blank", "noopener,noreferrer");
+    const url = whatsappWithText(message);
+    setSent(url);
+    window.open(url, "_blank", "noopener,noreferrer");
   };
 
   return (
     <ContentPage
       eyebrow="Бронирование"
       title="Забронировать номер напрямую"
-      intro={`Заполните форму, и заявка откроется готовым сообщением в WhatsApp администратору Luxx Aparts. Или позвоните по номеру ${SITE.phoneDisplay}: стойка отвечает круглосуточно. Администратор подтвердит свободные места, назовёт цену на ваши даты и способ оплаты. Никакой предоплаты через сайт.`}
+      intro={`Заполните форму — заявка откроется готовым сообщением в WhatsApp. Администратор подтвердит места, назовёт цену на ваши даты и способ оплаты. Предоплаты нет, отвечаем круглосуточно. Быстрее позвонить: ${SITE.phoneDisplay}.`}
       photo={PHOTOS.privateRoom}
     >
       <AnswerSection title="Как отправить заявку?">
@@ -186,25 +206,40 @@ function BookingPage() {
               </a>
             </Button>
           </div>
+          {sent && (
+            <p
+              role="status"
+              className="flex items-start gap-2 rounded-2xl bg-brand-soft p-4 text-sm text-foreground sm:col-span-2"
+            >
+              <Check className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
+              <span>
+                Заявка открыта в WhatsApp, осталось нажать «Отправить». Если окно не появилось,{" "}
+                <a href={sent} target="_blank" rel="noreferrer" className="font-semibold underline">
+                  откройте его по ссылке
+                </a>
+                .
+              </span>
+            </p>
+          )}
           <p className="text-sm sm:col-span-2">
-            Форма не отправляет данные на сервер: текст заявки открывается в вашем WhatsApp, и вы
-            сами его отправляете.
+            Данные никуда не сохраняются: текст заявки открывается в вашем WhatsApp, отправляете его
+            вы.
           </p>
         </form>
       </AnswerSection>
 
       <AnswerSection title="Почему бронировать напрямую выгоднее?">
         <ul>
-          <li>Без комиссии агрегатора: цену называет администратор хостела.</li>
-          <li>Сразу уточняете детали: формат комнаты, время приезда, способ оплаты.</li>
-          <li>Ответ круглосуточно, включая ночной заезд по договорённости.</li>
+          <li>Нет комиссии агрегатора.</li>
+          <li>Все детали в одном чате: формат комнаты, время приезда, оплата.</li>
+          <li>Ночной заезд можно согласовать сразу.</li>
         </ul>
         <p>
-          Карточка Luxx Aparts есть и на{" "}
+          Карточка хостела есть и на{" "}
           <a href={SITE.links.booking} target="_blank" rel="noreferrer">
             Booking
           </a>
-          , но условия там могут отличаться от прямого бронирования.
+          , но условия там могут отличаться.
         </p>
       </AnswerSection>
 
