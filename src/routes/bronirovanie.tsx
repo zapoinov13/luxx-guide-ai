@@ -35,6 +35,14 @@ const roomOptions = [
   "Пока не решил(а)",
 ] as const;
 
+const humanDate = (iso: string) =>
+  new Date(`${iso}T00:00:00Z`).toLocaleDateString("ru-RU", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+
 const fieldClass =
   "h-11 w-full border border-input bg-background px-3 text-base text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
@@ -54,7 +62,9 @@ function BookingPage() {
 
   const message = [
     "Здравствуйте! Хочу забронировать в Luxx Aparts.",
-    form.checkIn && form.checkOut ? `Даты: с ${form.checkIn} по ${form.checkOut}.` : "",
+    form.checkIn && form.checkOut
+      ? `Даты: с ${humanDate(form.checkIn)} по ${humanDate(form.checkOut)}.`
+      : "",
     `Гостей: ${form.guests}.`,
     `Формат: ${form.room}.`,
     form.name ? `Меня зовут ${form.name}.` : "",

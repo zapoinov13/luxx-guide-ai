@@ -54,8 +54,8 @@ const items: QA[] = [
 export const Route = createFileRoute("/udobstva")({
   head: () => ({
     ...pageHead(
-      "Что есть в хостеле Luxx Aparts: кухня, стирка, Wi-Fi, коворкинг",
-      "Удобства Luxx Aparts в Алматы: общая кухня, стиральная машина, бесплатный Wi-Fi, коворкинг, камера хранения, шкафчики, кондиционер и отопление, круглосуточная стойка и охрана.",
+      "Удобства Luxx Aparts: кухня, стирка, Wi-Fi, коворкинг",
+      "Удобства Luxx Aparts в Алматы: общая кухня, стиральная машина, бесплатный Wi-Fi, коворкинг, камера хранения, шкафчики, кондиционер, круглосуточная стойка.",
       "/udobstva",
     ),
     scripts: jsonLd(breadcrumbSchema("Удобства", "/udobstva"), hostelSchema(), faqSchema(items)),

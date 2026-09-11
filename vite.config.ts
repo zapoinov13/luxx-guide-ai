@@ -5,7 +5,12 @@
 //     React/TanStack dedupe, error logger plugins, and sandbox detection (port/host/strictPort).
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+import { readdirSync } from "node:fs";
 import { SITE_URL } from "./src/lib/site";
+
+const blogSlugs = readdirSync("content/blog")
+  .filter((f) => f.endsWith(".md"))
+  .map((f) => f.replace(/\.md$/, ""));
 
 export default defineConfig({
   tanstackStart: {
@@ -23,6 +28,12 @@ export default defineConfig({
       { path: "/pravila", sitemap: { priority: 0.8, changefreq: "monthly" } },
       { path: "/faq", sitemap: { priority: 0.8, changefreq: "monthly" } },
       { path: "/kontakty", sitemap: { priority: 0.8, changefreq: "monthly" } },
+      { path: "/blog", sitemap: { priority: 0.7, changefreq: "weekly" } },
+      ...blogSlugs.map((slug) => ({
+        path: `/blog/${slug}`,
+        sitemap: { priority: 0.6, changefreq: "monthly" as const },
+      })),
+      { path: "/blog/rss.xml", sitemap: { exclude: true } },
     ],
     // Адрес сайта задаётся в одном месте — src/lib/site.ts (SITE_URL).
     sitemap: { enabled: true, host: SITE_URL },

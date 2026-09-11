@@ -56,7 +56,7 @@ export const Route = createFileRoute("/")({
   head: () => ({
     ...pageHead(
       "Luxx Aparts — хостел и апартаменты в Алматы, Толе би 286",
-      `Хостел Luxx Aparts в Алматы: ${SITE.rooms} номера от ${SITE.priceFrom.toLocaleString("ru-RU")} ₸ за ночь, общая кухня, стирка, круглосуточная стойка, Wi-Fi, ${SITE.distanceToStation}. Прямое бронирование по WhatsApp.`,
+      `Хостел Luxx Aparts в Алматы: ${SITE.rooms} номера от ${SITE.priceFrom.toLocaleString("ru-RU")} ₸ за ночь, кухня, стирка, стойка 24/7, Wi-Fi, ${SITE.distanceToStation}. Бронирование по WhatsApp без комиссии.`,
       "/",
     ),
     scripts: jsonLd(hostelSchema(), webSiteSchema(), faqSchema(faq)),

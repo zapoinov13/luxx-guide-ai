@@ -263,6 +263,7 @@ export const NAV = [
   ["/otzyvy", "Отзывы"],
   ["/pravila", "Правила"],
   ["/faq", "Вопросы"],
+  ["/blog", "Блог"],
   ["/kontakty", "Контакты"],
 ] as const;
 

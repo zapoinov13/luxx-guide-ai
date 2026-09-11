@@ -10,7 +10,7 @@ export const Route = createFileRoute("/nomera")({
   head: () => ({
     ...pageHead(
       `Номера и цены в хостеле Luxx Aparts, Алматы — от ${SITE.priceFrom.toLocaleString("ru-RU")} ₸`,
-      `Койко-места в мужских и женских комнатах от ${SITE.priceFrom.toLocaleString("ru-RU")} ₸, одноместные и двухместные номера Economy. Что входит, как оплатить, скидки на месяц. Актуально на ${SITE.factsUpdated}.`,
+      `Койко-места в мужских и женских комнатах от ${SITE.priceFrom.toLocaleString("ru-RU")} ₸, одноместные и двухместные номера Economy. Что входит в цену и как оплатить. Актуально на ${SITE.factsUpdated}.`,
       "/nomera",
     ),
     scripts: jsonLd(breadcrumbSchema("Номера и цены", "/nomera"), hostelSchema()),

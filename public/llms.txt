@@ -18,3 +18,4 @@
 - [Правила](https://luxx-guide-ai.lovable.app/pravila): заезд 13:00-23:30, выезд до 12:00, документы, дети, животные, курение
 - [Вопросы и ответы](https://luxx-guide-ai.lovable.app/faq): цена, отдельные номера, проживание на месяц, оплата
 - [Контакты](https://luxx-guide-ai.lovable.app/kontakty): телефон, WhatsApp, адрес, часы стойки
+- [Блог](https://luxx-guide-ai.lovable.app/blog): советы гостям Алматы; RSS: https://luxx-guide-ai.lovable.app/blog/rss.xml
