@@ -1,8 +1,44 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ContentPage, AnswerSection } from "@/components/content-page";
 import { SITE, breadcrumbSchema, pageHead } from "@/lib/site";
-export const Route = createFileRoute("/kak-dobratsya")({ head: () => ({ ...pageHead("Как добраться до Luxx Aparts в Алматы", `Адрес Luxx Aparts: ${SITE.address}. Хостел расположен на втором этаже ЖК «Каусар».`, "/kak-dobratsya"), scripts: [{ type: "application/ld+json", children: JSON.stringify(breadcrumbSchema("Как добраться", "/kak-dobratsya")) }] }), component: DirectionsPage });
-function DirectionsPage() { return <ContentPage eyebrow="Как добраться" title="Где находится Luxx Aparts?" intro={`Luxx Aparts находится по адресу: ${SITE.address}. Вход расположен в ЖК «Каусар», помещение находится на втором этаже. Перед выездом свяжитесь с администратором: он подтвердит ориентир для входа и подскажет актуальный маршрут от вашей точки.`}>
-  <AnswerSection title="Как найти вход?"><p>Ориентир — ЖК «Каусар» по адресу Толе би 286/8. По прибытии позвоните администратору Luxx Aparts по номеру {SITE.phoneDisplay}: так вы получите точное указание по входу и быстрее подниметесь на второй этаж, особенно если приезжаете впервые или в ночное время.</p></AnswerSection>
-  <AnswerSection title="Как доехать от вокзала или аэропорта?"><p>Маршруты общественного транспорта, время в пути и стоимость такси меняются, поэтому Luxx Aparts не публикует неподтверждённые цифры. Перед поездкой укажите администратору точку прибытия — вокзал Алматы‑2, автовокзал Сайран или аэропорт — и получите актуальный вариант дороги.</p></AnswerSection>
-</ContentPage>; }
+export const Route = createFileRoute("/kak-dobratsya")({
+  head: () => ({
+    ...pageHead(
+      "Как добраться до Luxx Aparts в Алматы",
+      `Адрес Luxx Aparts: ${SITE.address}. Хостел расположен на втором этаже ЖК «Каусар».`,
+      "/kak-dobratsya",
+    ),
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(breadcrumbSchema("Как добраться", "/kak-dobratsya")),
+      },
+    ],
+  }),
+  component: DirectionsPage,
+});
+function DirectionsPage() {
+  return (
+    <ContentPage
+      eyebrow="Как добраться"
+      title="Где находится Luxx Aparts?"
+      intro={`Luxx Aparts находится по адресу: ${SITE.address}. Вход расположен в ЖК «Каусар», помещение находится на втором этаже. Перед выездом свяжитесь с администратором: он подтвердит ориентир для входа и подскажет актуальный маршрут от вашей точки.`}
+    >
+      <AnswerSection title="Как найти вход?">
+        <p>
+          Ориентир — ЖК «Каусар» по адресу Толе би 286/8. По прибытии позвоните администратору Luxx
+          Aparts по номеру {SITE.phoneDisplay}: так вы получите точное указание по входу и быстрее
+          подниметесь на второй этаж, особенно если приезжаете впервые или в ночное время.
+        </p>
+      </AnswerSection>
+      <AnswerSection title="Как доехать от вокзала или аэропорта?">
+        <p>
+          Маршруты общественного транспорта, время в пути и стоимость такси меняются, поэтому Luxx
+          Aparts не публикует неподтверждённые цифры. Перед поездкой укажите администратору точку
+          прибытия — вокзал Алматы‑2, автовокзал Сайран или аэропорт — и получите актуальный вариант
+          дороги.
+        </p>
+      </AnswerSection>
+    </ContentPage>
+  );
+}

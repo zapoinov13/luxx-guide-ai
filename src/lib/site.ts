@@ -1,8 +1,8 @@
 export const SITE = {
   name: "Luxx Aparts",
   phoneDisplay: "+7 771 877 7765",
-  phoneHref: "+7771877765",
-  whatsapp: "https://wa.me/7771877765",
+  phoneHref: "+77718777765",
+  whatsapp: "https://wa.me/77718777765",
   address: "ул. Толе би 286/8, 2 этаж, Алматы",
   postalCode: "050005",
   booking: "https://www.booking.com/hotel/kz/luxx-aparts.ru.html",
