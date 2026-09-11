@@ -135,7 +135,7 @@ function HomePage() {
                   Койко-место
                 </p>
                 <p className="font-display text-2xl font-bold leading-none lg:text-3xl">
-                  от {price} ₸ <span className="text-sm font-medium text-white/75">за ночь</span>
+                  от {price} ₸ <span className="text-sm font-medium text-white/75">в сутки</span>
                 </p>
               </div>
               <span className="hidden rounded-full bg-white/15 px-3 py-1.5 text-xs font-semibold backdrop-blur sm:inline-flex">
@@ -174,7 +174,7 @@ function HomePage() {
             </h1>
             <p className="mt-4 max-w-xl text-base leading-7 text-muted-foreground lg:mt-6 lg:text-lg lg:leading-8">
               Luxx Aparts — недорогой хостел и апартаменты в Алматы на улице Толе би 286/8:{" "}
-              {SITE.rooms} номера, капсульные койко-места от {price} ₸ за ночь и отдельные комнаты.
+              {SITE.rooms} номера, капсульные койко-места от {price} ₸ в сутки и отдельные комнаты.
               Общая кухня, стирка, Wi-Fi, коворкинг, стойка работает круглосуточно.{" "}
               {SITE.distanceToStation}, автовокзал Сайран на той же улице. Бронируйте напрямую в
               WhatsApp.
@@ -246,7 +246,7 @@ function HomePage() {
           <div>
             <p className="text-sm font-semibold text-primary">Номера и цены</p>
             <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl lg:text-4xl">
-              Сколько стоит ночь в Luxx Aparts?
+              Сколько стоят сутки в Luxx Aparts?
             </h2>
           </div>
           <Link
@@ -257,7 +257,7 @@ function HomePage() {
           </Link>
         </div>
         <p className="mt-4 max-w-2xl text-muted-foreground">
-          Койко-место в капсуле {price} ₸ за ночь, одноместный номер от 10 000 ₸, двухместный 15 000
+          Койко-место в капсуле {price} ₸ в сутки, одноместный номер от 10 000 ₸, двухместный 15 000
           ₸ за номер (цены на {SITE.factsUpdated}). Для срока от недели и от месяца администратор
           считает индивидуально.
         </p>
