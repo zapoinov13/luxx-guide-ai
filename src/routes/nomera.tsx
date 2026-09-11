@@ -1,14 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnswerSection, ContentPage } from "@/components/content-page";
-import { SITE, breadcrumbSchema, hostelSchema, jsonLd, pageHead } from "@/lib/site";
+import { Photo } from "@/components/photo";
+import { PHOTOS } from "@/lib/photos";
+import { ROOM_TYPES, SITE, breadcrumbSchema, hostelSchema, jsonLd, pageHead } from "@/lib/site";
 
 export const Route = createFileRoute("/nomera")({
   head: () => ({
     ...pageHead(
-      "Номера и цены в хостеле Luxx Aparts, Алматы",
-      `${SITE.rooms} номера Luxx Aparts: койко-места и отдельные комнаты. Что входит в проживание, как узнать цену на свои даты и как оплатить. Актуально на ${SITE.factsUpdated}.`,
+      `Номера и цены в хостеле Luxx Aparts, Алматы — от ${SITE.priceFrom.toLocaleString("ru-RU")} ₸`,
+      `Койко-места в мужских и женских комнатах от ${SITE.priceFrom.toLocaleString("ru-RU")} ₸, одноместные и двухместные номера Economy. Что входит, как оплатить, скидки на месяц. Актуально на ${SITE.factsUpdated}.`,
       "/nomera",
     ),
     scripts: jsonLd(breadcrumbSchema("Номера и цены", "/nomera"), hostelSchema()),
@@ -16,68 +18,54 @@ export const Route = createFileRoute("/nomera")({
   component: RoomsPage,
 });
 
-const roomTypes = [
-  {
-    name: "Койко-место в общей комнате",
-    fit: "Один гость",
-    bath: "Общий санузел на этаже",
-    forWhom: "Студенты, транзитные гости, поездки на одну-две ночи",
-  },
-  {
-    name: "Отдельная комната",
-    fit: "Один гость, пара или семья",
-    bath: "Уточняется для конкретного номера",
-    forWhom: "Командировочные, семьи, длительное проживание",
-  },
-] as const;
+const roomPhotos = [PHOTOS.dorm, PHOTOS.single, PHOTOS.privateRoom] as const;
 
 function RoomsPage() {
+  const price = SITE.priceFrom.toLocaleString("ru-RU");
   return (
     <ContentPage
       eyebrow="Номера и цены"
       title="Номера и цены Luxx Aparts"
-      intro={`В Luxx Aparts ${SITE.rooms} номера двух форматов: койко-места в общих комнатах и отдельные комнаты. Всем гостям доступны общая кухня, стиральная машина, Wi-Fi и круглосуточная стойка. Стоимость зависит от дат и формата, поэтому цену на ваши даты администратор называет при бронировании по телефону или в WhatsApp.`}
+      intro={`В Luxx Aparts ${SITE.rooms} номера трёх форматов: койко-места в мужских и женских комнатах от ${price} ₸ за ночь, одноместные и двухместные номера Economy с окном и общим санузлом. В цену входят постельное бельё, Wi-Fi, кухня и стирка. Точную стоимость на ваши даты называет администратор при бронировании.`}
       updated={SITE.factsUpdated}
+      photo={PHOTOS.dorm}
     >
-      <AnswerSection title="Какие номера есть?">
+      <AnswerSection title="Какие номера есть и сколько стоят?">
+        <div className="space-y-5">
+          {ROOM_TYPES.map((r, i) => (
+            <article
+              key={r.slug}
+              className="grid gap-0 overflow-hidden rounded-2xl border border-border sm:grid-cols-[0.8fr_1.2fr]"
+            >
+              <Photo
+                photo={roomPhotos[i] ?? PHOTOS.detail}
+                sizes="(min-width: 640px) 30vw, 100vw"
+                className="aspect-[4/3] h-full w-full object-cover"
+              />
+              <div className="p-5">
+                <h3 className="font-display text-xl font-bold text-foreground">{r.name}</h3>
+                <p className="mt-1 text-sm">{r.short}</p>
+                <p className="mt-3 font-semibold text-foreground">{r.price}</p>
+                {r.priceNote && <p className="text-xs">{r.priceNote}</p>}
+                <ul className="mt-3 grid gap-1 text-sm sm:grid-cols-2">
+                  <li>Вместимость: {r.capacity}</li>
+                  <li>Санузел: {r.bath}</li>
+                  {r.includes.map((x) => (
+                    <li key={x} className="flex items-center gap-1.5">
+                      <Check className="size-4 text-primary" aria-hidden="true" />
+                      {x}
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-3 text-sm">Кому подходит: {r.forWhom.toLowerCase()}.</p>
+              </div>
+            </article>
+          ))}
+        </div>
         <p>
-          Два формата размещения. Койко-место подходит тем, кому важна цена и кто едет один.
-          Отдельная комната закрывается на ключ и подходит парам, семьям и тем, кто остаётся
-          надолго.
-        </p>
-        <table>
-          <thead>
-            <tr>
-              <th>Тип</th>
-              <th>Вместимость</th>
-              <th>Санузел</th>
-              <th>Кому подходит</th>
-            </tr>
-          </thead>
-          <tbody>
-            {roomTypes.map((r) => (
-              <tr key={r.name}>
-                <td>
-                  <strong>{r.name}</strong>
-                </td>
-                <td>{r.fit}</td>
-                <td>{r.bath}</td>
-                <td>{r.forWhom}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <p>
-          Количество кроватей, площадь и наличие санузла в конкретной комнате администратор
-          подтверждает при бронировании.
-        </p>
-      </AnswerSection>
-
-      <AnswerSection title="Сколько стоит ночь?">
-        <p>
-          Цена зависит от формата комнаты, дат и длительности проживания. Luxx Aparts не публикует
-          цифры, которые могут устареть: администратор называет актуальную стоимость на ваши даты в
-          течение разговора. Прямое бронирование идёт без комиссии агрегатора.
+          Цена койко-места — ориентир по карточке хостела на Hostelworld на {SITE.factsUpdated} и
+          зависит от дат. Стоимость отдельных комнат и итоговую цену на ваши даты администратор
+          называет при бронировании.
         </p>
         <Button asChild className="mt-2">
           <Link to="/bronirovanie">
@@ -87,18 +75,19 @@ function RoomsPage() {
         </Button>
       </AnswerSection>
 
-      <AnswerSection title="Что входит в проживание?">
+      <AnswerSection title="Что входит в стоимость?">
         <ul>
-          <li>Спальное место в выбранном формате: койко-место или отдельная комната.</li>
-          <li>Общая кухня с посудой и чайником.</li>
-          <li>Wi-Fi.</li>
-          <li>Стиральная машина и гладильные принадлежности.</li>
-          <li>Камера хранения для багажа до заезда и после выезда.</li>
+          <li>Спальное место в выбранном формате и постельное бельё.</li>
+          <li>Wi-Fi во всём хостеле, коворкинг и лаундж с телевизором.</li>
+          <li>
+            Общая кухня с плитой, микроволновкой, холодильником, посудой. Чай и кофе бесплатно.
+          </li>
+          <li>Стиральная машина, утюг и гладильная доска.</li>
+          <li>Камера хранения багажа до заезда и после выезда.</li>
           <li>Круглосуточная стойка регистрации и охрана.</li>
         </ul>
         <p>
-          Постельное бельё и полотенца: порядок выдачи подтвердите у администратора при
-          бронировании.
+          Полотенце в стоимость не входит и выдаётся за отдельную плату на стойке. Фен по запросу.
         </p>
       </AnswerSection>
 
@@ -112,8 +101,8 @@ function RoomsPage() {
 
       <AnswerSection title="Как оплатить?">
         <p>
-          Оплата проходит при заселении. Принимаемые способы оплаты (наличные, карта, перевод)
-          подтвердите у администратора до приезда, чтобы не искать банкомат ночью.
+          Оплата при заселении: наличными в тенге или банковской картой. Предоплата через сайт не
+          требуется. Нужен ли депозит для конкретного номера, подтвердите у администратора.
         </p>
       </AnswerSection>
     </ContentPage>

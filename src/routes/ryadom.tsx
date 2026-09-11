@@ -1,46 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AnswerSection, ContentPage } from "@/components/content-page";
-import { SITE, breadcrumbSchema, jsonLd, pageHead } from "@/lib/site";
-
-/** Ориентиры рядом с хостелом. Расстояния из брифа заказчика, ориентировочные. */
-const places = [
-  {
-    name: "Автовокзал Сайран",
-    distance: "на той же улице Толе би",
-    how: "пешком или на такси",
-    note: "Удобно для тех, кто приезжает или уезжает междугородним автобусом.",
-  },
-  {
-    name: "Аквапарк Family Park",
-    distance: "около 2,5 км",
-    how: "на такси или автобусе",
-    note: "Крытый аквапарк, подходит для семей с детьми.",
-  },
-  {
-    name: "Парк развлечений Fantasy World",
-    distance: "около 10 минут на автомобиле",
-    how: "на такси",
-    note: "Аттракционы для детей и взрослых.",
-  },
-  {
-    name: "Немецкий театр",
-    distance: "около 25 минут пешком",
-    how: "пешком или на автобусе",
-    note: "Спектакли на немецком и русском языках.",
-  },
-  {
-    name: "Вокзал Алматы-2",
-    distance: "7 км",
-    how: "на такси или автобусе",
-    note: "Главный железнодорожный вокзал города.",
-  },
-] as const;
+import { PHOTOS } from "@/lib/photos";
+import { NEARBY, SITE, breadcrumbSchema, jsonLd, pageHead } from "@/lib/site";
 
 const itemListSchema = () => ({
   "@context": "https://schema.org",
   "@type": "ItemList",
   name: "Что рядом с хостелом Luxx Aparts",
-  itemListElement: places.map((p, i) => ({
+  itemListElement: NEARBY.map((p, i) => ({
     "@type": "ListItem",
     position: i + 1,
     name: p.name,
@@ -51,8 +18,8 @@ const itemListSchema = () => ({
 export const Route = createFileRoute("/ryadom")({
   head: () => ({
     ...pageHead(
-      "Что рядом с Luxx Aparts: автовокзал, аквапарк, парк, театр",
-      "Что находится рядом с хостелом Luxx Aparts на Толе би 286/8 в Алматы: автовокзал Сайран, аквапарк Family Park, Fantasy World, Немецкий театр. Расстояния и как доехать.",
+      "Что рядом с Luxx Aparts: автовокзал, аквапарк, парки, центр",
+      "Что находится рядом с хостелом Luxx Aparts на Толе би 286/8 в Алматы: автовокзал Сайран, аквапарк Family Park, Ботанический сад, Оперный театр, площадь Республики. Расстояния и как доехать.",
       "/ryadom",
     ),
     scripts: jsonLd(breadcrumbSchema("Что рядом", "/ryadom"), itemListSchema()),
@@ -65,47 +32,50 @@ function NearbyPage() {
     <ContentPage
       eyebrow="Что рядом"
       title="Что находится рядом с хостелом"
-      intro={`Luxx Aparts стоит на улице Толе би в Алматы, рядом с автовокзалом Сайран. В нескольких километрах — аквапарк Family Park и парк развлечений Fantasy World, до Немецкого театра можно дойти пешком. До вокзала Алматы-2 — 7 км. Расстояния ниже ориентировочные, актуальны на ${SITE.factsUpdated}; точный маршрут проверьте в картах перед выходом.`}
+      intro={`Luxx Aparts стоит на улице Толе би в западной части Алматы, рядом с автовокзалом Сайран. До аквапарка Family Park около 2,5 км, до Ботанического сада 4,5 км, до Оперного театра и площади Республики в центре 6,3 км. Расстояния по данным Ostrovok и брифа хостела на ${SITE.factsUpdated}; маршрут перед выходом проверьте в картах.`}
       updated={SITE.factsUpdated}
+      photo={PHOTOS.detail}
     >
       <AnswerSection title="Что посмотреть и куда съездить рядом?">
-        <table>
-          <thead>
-            <tr>
-              <th>Место</th>
-              <th>Расстояние</th>
-              <th>Как добраться</th>
-              <th>Что это</th>
-            </tr>
-          </thead>
-          <tbody>
-            {places.map((p) => (
-              <tr key={p.name}>
-                <td>
-                  <strong>{p.name}</strong>
-                </td>
-                <td>{p.distance}</td>
-                <td>{p.how}</td>
-                <td>{p.note}</td>
+        <div className="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Место</th>
+                <th>Расстояние</th>
+                <th>Как добраться</th>
+                <th>Что это</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {NEARBY.map((p) => (
+                <tr key={p.name}>
+                  <td>
+                    <strong>{p.name}</strong>
+                  </td>
+                  <td>{p.distance}</td>
+                  <td>{p.how}</td>
+                  <td>{p.note}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </AnswerSection>
 
       <AnswerSection title="Где поесть рядом?">
         <p>
-          Кафе и магазины у дома есть вдоль улицы Толе би. Готовить можно и в хостеле: на общей
-          кухне есть посуда и чайник. Список проверенных мест рядом администратор подскажет на
-          стойке.
+          Кафе, столовые и магазины у дома есть вдоль улицы Толе би и у автовокзала Сайран. Готовить
+          можно и в хостеле: на общей кухне есть плита, микроволновка и посуда, чай и кофе
+          бесплатно. Список проверенных мест рядом подскажет администратор.
         </p>
       </AnswerSection>
 
       <AnswerSection title="Как доехать до центра и Кок-Тобе?">
         <p>
-          До центра города и подъёмника на Кок-Тобе удобно ехать на такси или общественном
-          транспорте по улице Толе би в сторону центра. Время в пути зависит от часа и пробок,
-          поэтому уточните маршрут у администратора перед выходом.
+          До центра около 6 км: на такси 15–25 минут, на метро от станции «Сайран» без пересадок до
+          станций «Алмалы» и «Абая». До подъёмника на Кок-Тобе удобнее всего на такси. Время в пути
+          зависит от часа и пробок.
         </p>
       </AnswerSection>
     </ContentPage>

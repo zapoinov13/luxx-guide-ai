@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { AnswerSection, ContentPage } from "@/components/content-page";
+import { PHOTOS } from "@/lib/photos";
 import {
   SITE,
   breadcrumbSchema,
@@ -29,7 +30,8 @@ export const Route = createFileRoute("/bronirovanie")({
 
 const roomOptions = [
   "Койко-место в общей комнате",
-  "Отдельная комната",
+  "Одноместный номер",
+  "Двухместный номер",
   "Пока не решил(а)",
 ] as const;
 
@@ -72,6 +74,7 @@ function BookingPage() {
       eyebrow="Бронирование"
       title="Забронировать номер напрямую"
       intro={`Заполните форму, и заявка откроется готовым сообщением в WhatsApp администратору Luxx Aparts. Или позвоните по номеру ${SITE.phoneDisplay}: стойка отвечает круглосуточно. Администратор подтвердит свободные места, назовёт цену на ваши даты и способ оплаты. Никакой предоплаты через сайт.`}
+      photo={PHOTOS.privateRoom}
     >
       <AnswerSection title="Как отправить заявку?">
         <form onSubmit={onSubmit} className="grid gap-5 sm:grid-cols-2">
@@ -188,7 +191,7 @@ function BookingPage() {
         </ul>
         <p>
           Карточка Luxx Aparts есть и на{" "}
-          <a href={SITE.booking} target="_blank" rel="noreferrer">
+          <a href={SITE.links.booking} target="_blank" rel="noreferrer">
             Booking
           </a>
           , но условия там могут отличаться от прямого бронирования.
@@ -197,8 +200,10 @@ function BookingPage() {
 
       <AnswerSection title="Какие условия отмены?">
         <p>
-          Условия отмены и нужна ли предоплата зависят от дат и формата комнаты. Администратор
-          подтвердит их при бронировании, до того как вы что-то оплатите.
+          При бронировании через площадки бесплатная отмена действует за сутки до заезда, при более
+          поздней отмене или незаезде удерживается стоимость первой ночи. Условия прямого
+          бронирования администратор подтвердит до оплаты. Оплата при заселении наличными или
+          картой.
         </p>
       </AnswerSection>
     </ContentPage>

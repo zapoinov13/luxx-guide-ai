@@ -19,6 +19,7 @@ export default defineConfig({
       { path: "/udobstva", sitemap: { priority: 0.8, changefreq: "monthly" } },
       { path: "/kak-dobratsya", sitemap: { priority: 0.8, changefreq: "monthly" } },
       { path: "/ryadom", sitemap: { priority: 0.7, changefreq: "monthly" } },
+      { path: "/otzyvy", sitemap: { priority: 0.7, changefreq: "monthly" } },
       { path: "/pravila", sitemap: { priority: 0.8, changefreq: "monthly" } },
       { path: "/faq", sitemap: { priority: 0.8, changefreq: "monthly" } },
       { path: "/kontakty", sitemap: { priority: 0.8, changefreq: "monthly" } },

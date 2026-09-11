@@ -15,6 +15,7 @@ import { Route as FaqRouteImport } from './routes/faq'
 import { Route as KakDobratsyaRouteImport } from './routes/kak-dobratsya'
 import { Route as KontaktyRouteImport } from './routes/kontakty'
 import { Route as NomeraRouteImport } from './routes/nomera'
+import { Route as OtzyvyRouteImport } from './routes/otzyvy'
 import { Route as PravilaRouteImport } from './routes/pravila'
 import { Route as RyadomRouteImport } from './routes/ryadom'
 import { Route as UdobstvaRouteImport } from './routes/udobstva'
@@ -49,6 +50,11 @@ const NomeraRoute = NomeraRouteImport.update({
   path: '/nomera',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OtzyvyRoute = OtzyvyRouteImport.update({
+  id: '/otzyvy',
+  path: '/otzyvy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PravilaRoute = PravilaRouteImport.update({
   id: '/pravila',
   path: '/pravila',
@@ -72,6 +78,7 @@ export interface FileRoutesByFullPath {
   '/kak-dobratsya': typeof KakDobratsyaRoute
   '/kontakty': typeof KontaktyRoute
   '/nomera': typeof NomeraRoute
+  '/otzyvy': typeof OtzyvyRoute
   '/pravila': typeof PravilaRoute
   '/ryadom': typeof RyadomRoute
   '/udobstva': typeof UdobstvaRoute
@@ -83,6 +90,7 @@ export interface FileRoutesByTo {
   '/kak-dobratsya': typeof KakDobratsyaRoute
   '/kontakty': typeof KontaktyRoute
   '/nomera': typeof NomeraRoute
+  '/otzyvy': typeof OtzyvyRoute
   '/pravila': typeof PravilaRoute
   '/ryadom': typeof RyadomRoute
   '/udobstva': typeof UdobstvaRoute
@@ -95,6 +103,7 @@ export interface FileRoutesById {
   '/kak-dobratsya': typeof KakDobratsyaRoute
   '/kontakty': typeof KontaktyRoute
   '/nomera': typeof NomeraRoute
+  '/otzyvy': typeof OtzyvyRoute
   '/pravila': typeof PravilaRoute
   '/ryadom': typeof RyadomRoute
   '/udobstva': typeof UdobstvaRoute
@@ -108,6 +117,7 @@ export interface FileRouteTypes {
     | '/kak-dobratsya'
     | '/kontakty'
     | '/nomera'
+    | '/otzyvy'
     | '/pravila'
     | '/ryadom'
     | '/udobstva'
@@ -119,6 +129,7 @@ export interface FileRouteTypes {
     | '/kak-dobratsya'
     | '/kontakty'
     | '/nomera'
+    | '/otzyvy'
     | '/pravila'
     | '/ryadom'
     | '/udobstva'
@@ -130,6 +141,7 @@ export interface FileRouteTypes {
     | '/kak-dobratsya'
     | '/kontakty'
     | '/nomera'
+    | '/otzyvy'
     | '/pravila'
     | '/ryadom'
     | '/udobstva'
@@ -142,6 +154,7 @@ export interface RootRouteChildren {
   KakDobratsyaRoute: typeof KakDobratsyaRoute
   KontaktyRoute: typeof KontaktyRoute
   NomeraRoute: typeof NomeraRoute
+  OtzyvyRoute: typeof OtzyvyRoute
   PravilaRoute: typeof PravilaRoute
   RyadomRoute: typeof RyadomRoute
   UdobstvaRoute: typeof UdobstvaRoute
@@ -191,6 +204,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NomeraRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/otzyvy': {
+      id: '/otzyvy'
+      path: '/otzyvy'
+      fullPath: '/otzyvy'
+      preLoaderRoute: typeof OtzyvyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pravila': {
       id: '/pravila'
       path: '/pravila'
@@ -222,6 +242,7 @@ const rootRouteChildren: RootRouteChildren = {
   KakDobratsyaRoute: KakDobratsyaRoute,
   KontaktyRoute: KontaktyRoute,
   NomeraRoute: NomeraRoute,
+  OtzyvyRoute: OtzyvyRoute,
   PravilaRoute: PravilaRoute,
   RyadomRoute: RyadomRoute,
   UdobstvaRoute: UdobstvaRoute,

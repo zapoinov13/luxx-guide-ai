@@ -1,14 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Clock3, ExternalLink, MapPin, MessageCircle, Phone } from "lucide-react";
+import { Clock3, ExternalLink, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnswerSection, ContentPage } from "@/components/content-page";
-import { SITE, breadcrumbSchema, hostelSchema, jsonLd, pageHead } from "@/lib/site";
+import { PHOTOS } from "@/lib/photos";
+import { SITE, breadcrumbSchema, hostelSchema, jsonLd, mapEmbedUrl, pageHead } from "@/lib/site";
 
 export const Route = createFileRoute("/kontakty")({
   head: () => ({
     ...pageHead(
       "Контакты хостела Luxx Aparts в Алматы",
-      `Телефон и WhatsApp ${SITE.phoneDisplay}, адрес ${SITE.address}. Стойка регистрации работает круглосуточно.`,
+      `Телефон и WhatsApp ${SITE.phoneDisplay}, e-mail ${SITE.email}, адрес ${SITE.address}. Стойка регистрации работает круглосуточно.`,
       "/kontakty",
     ),
     scripts: jsonLd(breadcrumbSchema("Контакты", "/kontakty"), hostelSchema()),
@@ -16,73 +17,93 @@ export const Route = createFileRoute("/kontakty")({
   component: ContactsPage,
 });
 
+const cards = [
+  { icon: Phone, label: "Телефон", value: SITE.phoneDisplay, href: `tel:${SITE.phoneHref}` },
+  { icon: MessageCircle, label: "WhatsApp", value: "Написать администратору", href: SITE.whatsapp },
+  { icon: Mail, label: "E-mail", value: SITE.email, href: `mailto:${SITE.email}` },
+] as const;
+
 function ContactsPage() {
   return (
     <ContentPage
       eyebrow="Контакты"
       title="Контакты Luxx Aparts"
       intro={`Позвоните по номеру ${SITE.phoneDisplay} или напишите в WhatsApp, чтобы узнать свободные комнаты и цену на ваши даты. Адрес хостела: ${SITE.address}, ${SITE.complex}. Стойка регистрации работает круглосуточно, заезд с ${SITE.checkIn.from} до ${SITE.checkIn.to}.`}
+      photo={PHOTOS.reception}
     >
-      <div className="grid gap-4 sm:grid-cols-2">
-        <a
-          href={`tel:${SITE.phoneHref}`}
-          className="border border-border p-7 transition-colors hover:bg-secondary"
-        >
-          <Phone className="size-5 text-accent-foreground" aria-hidden="true" />
-          <p className="mt-6 text-sm text-muted-foreground">Телефон</p>
-          <p className="mt-1 font-display text-2xl font-semibold text-foreground">
-            {SITE.phoneDisplay}
-          </p>
-        </a>
-        <a
-          href={SITE.whatsapp}
-          target="_blank"
-          rel="noreferrer"
-          className="border border-border p-7 transition-colors hover:bg-secondary"
-        >
-          <MessageCircle className="size-5 text-accent-foreground" aria-hidden="true" />
-          <p className="mt-6 text-sm text-muted-foreground">WhatsApp</p>
-          <p className="mt-1 font-display text-2xl font-semibold text-foreground">
-            Написать администратору
-          </p>
-        </a>
+      <div className="grid gap-4 sm:grid-cols-3">
+        {cards.map(({ icon: Icon, label, value, href }) => (
+          <a
+            key={label}
+            href={href}
+            target={href.startsWith("http") ? "_blank" : undefined}
+            rel={href.startsWith("http") ? "noreferrer" : undefined}
+            className="rounded-2xl border border-border p-5 transition-colors hover:bg-secondary"
+          >
+            <Icon className="size-5 text-primary" aria-hidden="true" />
+            <p className="mt-5 text-sm text-muted-foreground">{label}</p>
+            <p className="mt-1 break-words font-display text-lg font-bold text-foreground">
+              {value}
+            </p>
+          </a>
+        ))}
       </div>
 
-      <div className="mt-12">
+      <div className="mt-10">
         <AnswerSection title="По какому адресу приезжать?">
           <div className="flex gap-4">
-            <MapPin className="mt-1 size-5 shrink-0 text-accent-foreground" aria-hidden="true" />
+            <MapPin className="mt-1 size-5 shrink-0 text-primary" aria-hidden="true" />
             <p>
               <strong>{SITE.address}</strong>
               <br />
-              {SITE.complex}, почтовый индекс {SITE.postalCode}. Хостел на втором этаже. Перед
-              приездом попросите администратора подтвердить ориентир для входа или откройте{" "}
-              <Link to="/kak-dobratsya">страницу «Как добраться»</Link>.
+              {SITE.complex}, почтовый индекс {SITE.postalCode}. Хостел на втором этаже. Подробные
+              маршруты — на странице <Link to="/kak-dobratsya">«Как добраться»</Link>.
             </p>
+          </div>
+          <div className="overflow-hidden rounded-2xl border border-border">
+            <iframe
+              title="Luxx Aparts на карте: ул. Толе би 286/8, Алматы"
+              src={mapEmbedUrl}
+              className="h-[320px] w-full"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
           </div>
         </AnswerSection>
 
         <AnswerSection title="Когда работает стойка?">
           <div className="flex gap-4">
-            <Clock3 className="mt-1 size-5 shrink-0 text-accent-foreground" aria-hidden="true" />
+            <Clock3 className="mt-1 size-5 shrink-0 text-primary" aria-hidden="true" />
             <p>
               Круглосуточно, без выходных. Заезд с {SITE.checkIn.from} до {SITE.checkIn.to}, выезд
-              до {SITE.checkOut}. Ночной заезд согласуйте с администратором заранее.
+              до {SITE.checkOut}. Ночной заезд согласуйте с администратором заранее. Персонал
+              говорит по-русски и по-английски.
             </p>
           </div>
         </AnswerSection>
 
         <AnswerSection title="Где ещё есть Luxx Aparts?">
           <p>
-            Карточка хостела есть на Booking. Тарифы и условия агрегатора могут отличаться от
-            прямого бронирования.
+            Карточки хостела есть на картах и площадках бронирования. Условия агрегаторов могут
+            отличаться от прямого бронирования.
           </p>
-          <Button asChild variant="outline" className="mt-2">
-            <a href={SITE.booking} target="_blank" rel="noreferrer">
-              Открыть Booking
-              <ExternalLink />
-            </a>
-          </Button>
+          <div className="flex flex-wrap gap-3">
+            {[
+              ["2GIS", SITE.links.twoGis],
+              ["Яндекс Карты", SITE.links.yandexMaps],
+              ["Booking", SITE.links.booking],
+              ["Hostelworld", SITE.links.hostelworld],
+              ["Ostrovok", SITE.links.ostrovok],
+            ].map(([label, href]) => (
+              <Button key={label} asChild variant="outline" size="sm">
+                <a href={href} target="_blank" rel="noreferrer">
+                  {label}
+                  <ExternalLink />
+                </a>
+              </Button>
+            ))}
+          </div>
         </AnswerSection>
       </div>
     </ContentPage>

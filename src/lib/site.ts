@@ -2,8 +2,9 @@
  * Единый источник фактов о хостеле. Всё, что видно на сайте и в разметке,
  * берётся отсюда: поменял здесь — поменялось везде.
  *
- * Правило из ТЗ: на сайте только подтверждённые факты. Цены, координаты,
- * маршруты транспорта и e-mail появятся, когда их подтвердит заказчик.
+ * Источники: ТЗ заказчика (docs/tz-sait-luxx-aparts.md), карточки Luxx Aparts
+ * на Hostelworld, Ostrovok, 2GIS и Booking. Там, где источники расходятся,
+ * приоритет у ТЗ. Даты актуальности — в SITE.factsUpdated.
  */
 
 /** Адрес сайта. Когда появится свой домен — заменить здесь, и все canonical,
@@ -20,33 +21,238 @@ export const SITE = {
   phoneDisplay: "+7 771 877 7765",
   phoneHref: "+77718777765",
   whatsapp: "https://wa.me/77718777765",
+  email: "luxxaparts@gmail.com",
   address: "ул. Толе би 286/8, 2 этаж, Алматы",
   streetAddress: "улица Толе би 286/8, 2 этаж",
   city: "Алматы",
   complex: "ЖК «Каусар»",
   postalCode: "050005",
+  geo: { lat: 43.2476791, lng: 76.8680911 },
   rooms: 44,
   checkIn: { from: "13:00", to: "23:30" },
   checkOut: "12:00",
   distanceToStation: "7 км от вокзала Алматы-2",
-  booking: "https://www.booking.com/hotel/kz/luxx-aparts.ru.html",
-  /** Месяц, на который подтверждены правила и факты на сайте. */
+  /** Ориентир по цене койко-места: Hostelworld, сентябрь 2026. */
+  priceFrom: 7000,
+  languages: ["русский", "английский"],
+  links: {
+    booking: "https://www.booking.com/hotel/kz/luxx-aparts.ru.html",
+    hostelworld: "https://www.hostelworld.com/hostels/p/335147/luxx-aparts/",
+    ostrovok: "https://ostrovok.ru/hotel/kazakhstan/almaty/mid13341876/luxx_aparts_hostel/",
+    twoGis: "https://2gis.kz/almaty/firm/70000001100801444",
+    yandexMaps: "https://yandex.ru/maps/org/luxx_aparts/136439991889/",
+  },
+  /** Месяц, на который подтверждены правила, цены и факты на сайте. */
   factsUpdated: "сентябрь 2026",
   factsUpdatedIso: "2026-09-11",
 } as const;
 
-/** Удобства из ТЗ, раздел 5.1 («Что есть в хостеле?»). */
+export const mapEmbedUrl = `https://www.google.com/maps?q=${SITE.geo.lat},${SITE.geo.lng}&z=16&hl=ru&output=embed`;
+export const mapLinkUrl = `https://www.google.com/maps/search/?api=1&query=${SITE.geo.lat},${SITE.geo.lng}`;
+
+/** Удобства: ТЗ (раздел 5.1) плюс подтверждённые карточками на площадках. */
 export const AMENITIES = [
-  "Общая кухня с посудой и чайником",
-  "Стиральная машина",
-  "Кондиционер и отопление",
-  "Звукоизолированные комнаты",
-  "Камера хранения",
-  "Круглосуточная стойка и охрана",
-  "Wi-Fi",
-  "Гладильные принадлежности",
-  "Детская площадка",
-  "Настольные игры",
+  {
+    name: "Общая кухня с посудой и чайником",
+    detail: "Плита, микроволновка, холодильник, бесплатный чай и кофе",
+  },
+  { name: "Wi-Fi", detail: "Бесплатный, во всех зонах" },
+  { name: "Коворкинг и лаундж", detail: "Столы для работы с ноутбуком, телевизор в лобби" },
+  { name: "Стиральная машина", detail: "Утюг и гладильные принадлежности" },
+  { name: "Кондиционер и отопление", detail: "Вентиляция в комнатах" },
+  { name: "Звукоизолированные комнаты", detail: "У каждой кровати розетка и лампа для чтения" },
+  { name: "Запирающиеся шкафчики", detail: "Для личных вещей в общих комнатах" },
+  { name: "Камера хранения", detail: "Багаж до заезда и после выезда" },
+  { name: "Круглосуточная стойка и охрана", detail: "Персонал говорит по-русски и по-английски" },
+  { name: "Горячий душ и фен", detail: "Фен выдают на стойке по запросу" },
+  { name: "Детская площадка и настольные игры", detail: "Для семей с детьми" },
+  { name: "Парковка рядом", detail: "Уточните место у администратора" },
+] as const;
+
+/** Форматы размещения. Цены: ориентир по площадкам на SITE.factsUpdated. */
+export const ROOM_TYPES = [
+  {
+    slug: "koyko-mesto",
+    name: "Койко-место в общей комнате",
+    short: "Мужские и женские комнаты на 10–14 мест",
+    capacity: "1 гость",
+    bath: "Общий санузел на этаже",
+    price: "от 7 000 ₸ за ночь",
+    priceNote: "Hostelworld, сентябрь 2026",
+    includes: [
+      "Постельное бельё",
+      "Шкафчик с замком",
+      "Розетка и лампа у кровати",
+      "Кухня, Wi-Fi, стирка",
+    ],
+    forWhom: "Одиночным путешественникам, студентам, транзитным гостям",
+  },
+  {
+    slug: "odnomestny",
+    name: "Одноместный номер Economy",
+    short: "Отдельная комната с окном, запирается на ключ",
+    capacity: "1 гость",
+    bath: "Общий санузел на этаже",
+    price: "цену на ваши даты назовёт администратор",
+    priceNote: "",
+    includes: ["Постельное бельё", "Кондиционер и отопление", "Кухня, Wi-Fi, стирка"],
+    forWhom: "Командировочным и тем, кто остаётся надолго",
+  },
+  {
+    slug: "dvukhmestny",
+    name: "Двухместный номер Economy",
+    short: "Отдельная комната с двуспальной кроватью и окном",
+    capacity: "2 гостя",
+    bath: "Общий санузел на этаже",
+    price: "цену на ваши даты назовёт администратор",
+    priceNote: "",
+    includes: ["Постельное бельё", "Кондиционер и отопление", "Кухня, Wi-Fi, стирка"],
+    forWhom: "Парам и семьям",
+  },
+] as const;
+
+/** Расстояния, которые хостел сам указывает в карточке на Hostelworld. */
+export const DISTANCES = [
+  { name: "Автовокзал Сайран", value: "рядом, на той же улице Толе би" },
+  { name: "Станция метро «Сайран»", value: "1,9 км" },
+  { name: "Станция метро «Москва»", value: "2,4 км" },
+  { name: "Вокзал Алматы-2", value: "7 км" },
+  { name: "Вокзал Алматы-1", value: "14 км" },
+  { name: "Аэропорт Алматы", value: "около 20 км" },
+] as const;
+
+/** Что рядом: расстояния по данным Ostrovok и брифа заказчика, ориентировочные. */
+export const NEARBY = [
+  {
+    name: "Автовокзал Сайран",
+    distance: "на той же улице",
+    how: "пешком",
+    note: "Междугородние автобусы по всему Казахстану",
+  },
+  {
+    name: "Аквапарк Family Park",
+    distance: "около 2,5 км",
+    how: "такси, автобус",
+    note: "Крытый аквапарк для семей с детьми",
+  },
+  {
+    name: "Ботанический сад",
+    distance: "4,5 км",
+    how: "такси, автобус",
+    note: "Прогулки в тени, особенно летом",
+  },
+  {
+    name: "Центральный стадион",
+    distance: "4,6 км",
+    how: "такси, автобус",
+    note: "Матчи и концерты",
+  },
+  { name: "Оперный театр им. Абая", distance: "6,3 км", how: "такси, метро", note: "Центр города" },
+  {
+    name: "Площадь Республики",
+    distance: "6,3 км",
+    how: "такси, метро",
+    note: "Главная площадь Алматы",
+  },
+  {
+    name: "Парк Первого Президента",
+    distance: "6,6 км",
+    how: "такси",
+    note: "Вид на горы, фонтаны",
+  },
+  { name: "Зелёный базар", distance: "7,2 км", how: "такси, метро", note: "Главный рынок города" },
+] as const;
+
+export type Review = {
+  author: string;
+  date: string;
+  score: string;
+  scale: string;
+  room: string;
+  text: string;
+  source: "Ostrovok" | "Hostelworld";
+  url: string;
+};
+
+/** Реальные отзывы с площадок. Имя и дата — как на площадке. */
+export const REVIEWS: Review[] = [
+  {
+    author: "Dim",
+    date: "июнь 2026",
+    score: "10",
+    scale: "10",
+    room: "Койко-место в мужской комнате",
+    text: "Хостел оказался уютным, приятным местом. Чисто, продуманы все необходимые бытовые мелочи. Вежливые админы всегда идут навстречу. Есть коворкинг, кондиционер, кухня.",
+    source: "Ostrovok",
+    url: SITE.links.ostrovok,
+  },
+  {
+    author: "Vladislavna",
+    date: "январь 2026",
+    score: "9,8",
+    scale: "10",
+    room: "Койко-место в женской комнате",
+    text: "Весь хостел очень чистый, персонал вежливый, всё очень тихо. Кровать ощущается как маленький отдельный мир. В ванной имеется фен, душевые чистые. В следующий раз также остановлюсь в Luxx Aparts.",
+    source: "Ostrovok",
+    url: SITE.links.ostrovok,
+  },
+  {
+    author: "Viktoria",
+    date: "сентябрь 2025",
+    score: "9,2",
+    scale: "10",
+    room: "Койко-место в женской комнате",
+    text: "Очень чисто, буквально стерильно. Приветливый персонал, разговаривают на четырёх языках. Все с ноутбуками сидят работают. Кровать удобная, просторная, розетка, вентиляция работает.",
+    source: "Ostrovok",
+    url: SITE.links.ostrovok,
+  },
+  {
+    author: "Ilfat",
+    date: "август 2025",
+    score: "9,0",
+    scale: "10",
+    room: "Одноместный номер Economy",
+    text: "Рядом набережная и автовокзал, ходят многие рейсы. Современный отель с хорошим ремонтом, своя система кондиционирования, можно постирать вещи. Удобная кровать и вид на горы из номера.",
+    source: "Ostrovok",
+    url: SITE.links.ostrovok,
+  },
+  {
+    author: "Anna",
+    date: "апрель 2026",
+    score: "9,2",
+    scale: "10",
+    room: "Двухместный номер Economy",
+    text: "Хорошая сантехника. Район чистый, транспорта много. Достаточно места в столовой, просторная зона для работы.",
+    source: "Ostrovok",
+    url: SITE.links.ostrovok,
+  },
+  {
+    author: "Nursa",
+    date: "март 2026",
+    score: "10",
+    scale: "10",
+    room: "Койко-место в женской комнате",
+    text: "Отличный хостел, всё чисто, есть все удобства, дружелюбный персонал. В следующий раз приеду только сюда.",
+    source: "Ostrovok",
+    url: SITE.links.ostrovok,
+  },
+  {
+    author: "Marouane",
+    date: "июль 2026",
+    score: "10",
+    scale: "10",
+    room: "Койко-место",
+    text: "Amazing hostel! The place is clean, the atmosphere is great, and the staff are incredibly friendly. Highly recommended!",
+    source: "Hostelworld",
+    url: SITE.links.hostelworld,
+  },
+];
+
+/** Оценки на площадках на SITE.factsUpdated. */
+export const RATINGS = [
+  { source: "2GIS", score: "4,8", scale: "5", count: 83, url: SITE.links.twoGis },
+  { source: "Ostrovok", score: "8,7", scale: "10", count: 11, url: SITE.links.ostrovok },
+  { source: "Hostelworld", score: "10", scale: "10", count: 1, url: SITE.links.hostelworld },
 ] as const;
 
 export const NAV = [
@@ -54,6 +260,7 @@ export const NAV = [
   ["/udobstva", "Удобства"],
   ["/kak-dobratsya", "Как добраться"],
   ["/ryadom", "Рядом"],
+  ["/otzyvy", "Отзывы"],
   ["/pravila", "Правила"],
   ["/faq", "Вопросы"],
   ["/kontakty", "Контакты"],
@@ -85,17 +292,17 @@ export const faqSchema = (items: readonly QA[]) => ({
   })),
 });
 
-/** Полный узел организации (ТЗ, раздел 6). Поля geo и priceRange добавим,
- *  когда заказчик пришлёт координаты и цены. */
+/** Полный узел организации (ТЗ, раздел 6). */
 export const hostelSchema = () => ({
   "@context": "https://schema.org",
   "@type": "Hostel",
   "@id": absolute("/#hostel"),
   name: SITE.name,
   url: absolute("/"),
-  image: [absolute("/og-image.png")],
+  image: [absolute("/photos/01-1600.webp"), absolute("/og-image.jpg")],
   description: SITE.whoWeAre,
   telephone: SITE.phoneDisplay,
+  email: SITE.email,
   address: {
     "@type": "PostalAddress",
     streetAddress: SITE.streetAddress,
@@ -103,21 +310,38 @@ export const hostelSchema = () => ({
     postalCode: SITE.postalCode,
     addressCountry: "KZ",
   },
+  geo: { "@type": "GeoCoordinates", latitude: SITE.geo.lat, longitude: SITE.geo.lng },
+  hasMap: mapLinkUrl,
   checkinTime: SITE.checkIn.from,
   checkoutTime: SITE.checkOut,
   numberOfRooms: SITE.rooms,
   petsAllowed: false,
   smokingAllowed: false,
-  amenityFeature: AMENITIES.map((name) => ({
+  priceRange: `от ${SITE.priceFrom.toLocaleString("ru-RU")} ₸`,
+  currenciesAccepted: "KZT",
+  paymentAccepted: "Наличные, банковская карта",
+  availableLanguage: ["ru", "en"],
+  amenityFeature: AMENITIES.map((a) => ({
     "@type": "LocationFeatureSpecification",
-    name,
+    name: a.name,
     value: true,
   })),
+  makesOffer: [
+    {
+      "@type": "Offer",
+      name: "Койко-место в общей комнате",
+      price: String(SITE.priceFrom),
+      priceCurrency: "KZT",
+      availability: "https://schema.org/InStock",
+      validFrom: SITE.factsUpdatedIso,
+    },
+  ],
   contactPoint: {
     "@type": "ContactPoint",
     telephone: SITE.phoneDisplay,
+    email: SITE.email,
     contactType: "reservations",
-    availableLanguage: ["ru"],
+    availableLanguage: ["ru", "en"],
     hoursAvailable: {
       "@type": "OpeningHoursSpecification",
       dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
@@ -125,7 +349,7 @@ export const hostelSchema = () => ({
       closes: "23:59",
     },
   },
-  sameAs: [SITE.booking],
+  sameAs: Object.values(SITE.links),
   dateModified: SITE.factsUpdatedIso,
 });
 
@@ -151,7 +375,7 @@ export const pageHead = (title: string, description: string, path: string) => {
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
       { property: "og:url", content: url },
-      { property: "og:image", content: absolute("/og-image.png") },
+      { property: "og:image", content: absolute("/og-image.jpg") },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { property: "og:locale", content: "ru_RU" },
@@ -160,4 +384,13 @@ export const pageHead = (title: string, description: string, path: string) => {
     ],
     links: [{ rel: "canonical", href: url }],
   };
+};
+
+/** «83 отзыва», «11 отзывов», «1 отзыв». */
+export const pluralReviews = (n: number) => {
+  const mod10 = n % 10;
+  const mod100 = n % 100;
+  if (mod10 === 1 && mod100 !== 11) return `${n} отзыв`;
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return `${n} отзыва`;
+  return `${n} отзывов`;
 };
