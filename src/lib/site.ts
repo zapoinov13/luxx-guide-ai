@@ -50,6 +50,31 @@ export const SITE = {
   factsUpdatedIso: "2026-09-11",
 } as const;
 
+/**
+ * Дата последней содержательной правки каждой страницы: идёт в lastmod sitemap.xml
+ * и в dateModified разметки. Меняйте дату только вместе с текстом страницы, иначе
+ * поисковики перестанут доверять sitemap. Статьи блога берут дату из frontmatter.
+ */
+export const PAGE_DATES: Record<string, string> = {
+  "/": "2026-09-11",
+  "/nomera": "2026-09-11",
+  "/nomera/koyko-mesto": "2026-09-11",
+  "/nomera/odnomestny": "2026-09-11",
+  "/nomera/dvukhmestny": "2026-09-11",
+  "/bronirovanie": "2026-09-11",
+  "/udobstva": "2026-09-11",
+  "/kak-dobratsya": "2026-09-11",
+  "/ryadom": "2026-09-11",
+  "/otzyvy": "2026-09-11",
+  "/pravila": "2026-09-11",
+  "/faq": "2026-09-11",
+  "/kontakty": "2026-09-11",
+  "/blog": "2026-09-11",
+  "/blog/avtor": "2026-09-11",
+};
+
+export const pageDate = (path: string) => PAGE_DATES[path] ?? SITE.factsUpdatedIso;
+
 export const mapEmbedUrl = `https://www.google.com/maps?q=${SITE.geo.lat},${SITE.geo.lng}&z=16&hl=ru&output=embed`;
 export const mapLinkUrl = `https://www.google.com/maps/search/?api=1&query=${SITE.geo.lat},${SITE.geo.lng}`;
 
@@ -432,7 +457,16 @@ export const roomOfferSchema = (room: RoomType) =>
 
 /** Все тарифы всех типов для таблицы цен на /nomera. */
 export const PRICE_LIST = ROOM_TYPES.flatMap((r) =>
-  r.variants.map((v) => ({ ...v, slug: r.slug, capacity: r.capacity, bath: r.bath })),
+  r.variants.map((v) => ({
+    ...v,
+    slug: r.slug,
+    capacity: r.capacity,
+    bath: r.bath,
+    includes: r.includes
+      .join(", ")
+      .toLowerCase()
+      .replace(/^./, (c) => c.toUpperCase()),
+  })),
 );
 
 /** Страница типа номера (ТЗ, раздел 5.2): HotelRoom + Offer. */
@@ -456,6 +490,58 @@ export const hotelRoomSchema = (room: RoomType, images: readonly string[]) => ({
   dateModified: SITE.factsUpdatedIso,
 });
 
+/** Фото хостела для разметки: ImageObject с подписью, а не голые ссылки. */
+const HOSTEL_IMAGES: { id: string; caption: string; width: number; height: number }[] = [
+  {
+    id: "03",
+    caption: "Стойка регистрации хостела Luxx Aparts, Алматы",
+    width: 1600,
+    height: 1067,
+  },
+  {
+    id: "04",
+    caption: "Капсульные койко-места со шторками в общей комнате Luxx Aparts",
+    width: 1600,
+    height: 1067,
+  },
+  { id: "18", caption: "Двухместный номер Economy в Luxx Aparts", width: 1600, height: 1067 },
+  { id: "07", caption: "Одноместный номер Economy в Luxx Aparts", width: 1600, height: 1200 },
+  { id: "28", caption: "Общая кухня Luxx Aparts", width: 1600, height: 1067 },
+  { id: "17", caption: "Лаундж и коворкинг Luxx Aparts", width: 1600, height: 1122 },
+];
+
+export const imageObject = (img: {
+  id: string;
+  caption: string;
+  width: number;
+  height: number;
+}) => ({
+  "@type": "ImageObject",
+  contentUrl: absolute(`/photos/${img.id}-1600.webp`),
+  url: absolute(`/photos/${img.id}-1600.webp`),
+  caption: img.caption,
+  name: img.caption,
+  width: img.width,
+  height: img.height,
+  creditText: SITE.name,
+});
+
+/**
+ * Средняя оценка для разметки: только по реальным отзывам, берём площадку с
+ * наибольшим числом отзывов (RATINGS[0]). Обновлять вместе с RATINGS раз в месяц.
+ */
+export const aggregateRatingSchema = () => {
+  const r = RATINGS[0];
+  return {
+    "@type": "AggregateRating",
+    ratingValue: r.score.replace(",", "."),
+    bestRating: r.scale,
+    worstRating: "1",
+    ratingCount: r.count,
+    reviewCount: r.count,
+  };
+};
+
 /** Полный узел организации (ТЗ, раздел 6). */
 export const hostelSchema = () => ({
   "@context": "https://schema.org",
@@ -463,8 +549,11 @@ export const hostelSchema = () => ({
   "@id": absolute("/#hostel"),
   name: SITE.name,
   url: absolute("/"),
-  image: [absolute("/photos/01-1600.webp"), absolute("/og-image.jpg")],
+  image: HOSTEL_IMAGES.map(imageObject),
+  photo: HOSTEL_IMAGES.map(imageObject),
+  logo: absolute("/favicon.png"),
   description: SITE.whoWeAre,
+  aggregateRating: aggregateRatingSchema(),
   telephone: SITE.phoneDisplay,
   email: SITE.email,
   address: {
@@ -478,6 +567,12 @@ export const hostelSchema = () => ({
   hasMap: mapLinkUrl,
   checkinTime: SITE.checkIn.from,
   checkoutTime: SITE.checkOut,
+  openingHoursSpecification: {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    opens: "00:00",
+    closes: "23:59",
+  },
   numberOfRooms: SITE.rooms,
   petsAllowed: false,
   smokingAllowed: false,
@@ -520,7 +615,17 @@ export const jsonLd = (...nodes: unknown[]) => [
   { type: "application/ld+json", children: JSON.stringify(nodes.length === 1 ? nodes[0] : nodes) },
 ];
 
-export const pageHead = (title: string, description: string, path: string) => {
+type PageHeadOptions = {
+  /** Своя картинка для соцсетей (путь от корня сайта), по умолчанию og-image.jpg. */
+  image?: string;
+};
+
+export const pageHead = (
+  title: string,
+  description: string,
+  path: string,
+  { image = "/og-image.jpg" }: PageHeadOptions = {},
+) => {
   const url = absolute(path);
   return {
     meta: [
@@ -530,9 +635,13 @@ export const pageHead = (title: string, description: string, path: string) => {
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
       { property: "og:url", content: url },
-      { property: "og:image", content: absolute("/og-image.jpg") },
-      { property: "og:image:width", content: "1200" },
-      { property: "og:image:height", content: "630" },
+      { property: "og:image", content: absolute(image) },
+      ...(image === "/og-image.jpg"
+        ? [
+            { property: "og:image:width", content: "1200" },
+            { property: "og:image:height", content: "630" },
+          ]
+        : []),
       { property: "og:locale", content: "ru_RU" },
       { property: "og:site_name", content: SITE.name },
       { name: "twitter:card", content: "summary_large_image" },

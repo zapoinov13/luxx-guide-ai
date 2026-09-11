@@ -2,7 +2,6 @@ import { Link } from "@tanstack/react-router";
 import { Menu, Phone, X } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
-import logoAsset from "@/assets/luxx-aparts-logo.png.asset.json";
 import { goalForLink, trackGoal } from "@/lib/analytics";
 import { NAV, SITE } from "@/lib/site";
 
@@ -30,7 +29,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
             className="flex shrink-0 items-center gap-2.5"
           >
             <img
-              src={logoAsset.url}
+              src="/favicon.png"
               alt=""
               width="36"
               height="36"

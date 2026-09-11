@@ -17,10 +17,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { Gallery } from "@/components/gallery";
 import { Photo } from "@/components/photo";
+import { MapEmbed } from "@/components/map-embed";
 import { GALLERY, PHOTOS, roomCover } from "@/lib/photos";
 import {
   AMENITIES,
   DISTANCES,
+  PRICE_LIST,
   RATINGS,
   REVIEWS,
   ROOM_TYPES,
@@ -28,8 +30,6 @@ import {
   faqSchema,
   hostelSchema,
   jsonLd,
-  mapEmbedUrl,
-  mapLinkUrl,
   pageHead,
   pluralReviews,
   webSiteSchema,
@@ -258,9 +258,52 @@ function HomePage() {
         </div>
         <p className="mt-4 max-w-2xl text-muted-foreground">
           Койко-место в капсуле {price} ₸ в сутки, одноместный номер от 10 000 ₸, двухместный 15 000
-          ₸ за номер (цены на {SITE.factsUpdated}). Для срока от недели и от месяца администратор
-          считает индивидуально.
+          ₸ за номер. Для срока от недели и от месяца администратор считает индивидуально.
         </p>
+        <div className="prose-copy table-scroll mt-6 text-sm text-muted-foreground lg:mt-8">
+          <table>
+            <thead>
+              <tr>
+                <th>Размещение</th>
+                <th>Цена в сутки</th>
+                <th>Что включено</th>
+                <th>
+                  <span className="sr-only">Действие</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {PRICE_LIST.map((row) => (
+                <tr key={row.name}>
+                  <td>
+                    <Link to="/nomera/$type" params={{ type: row.slug }}>
+                      {row.name}
+                    </Link>
+                  </td>
+                  <td>
+                    <strong className="whitespace-nowrap">
+                      {row.price.toLocaleString("ru-RU")} ₸
+                    </strong>
+                  </td>
+                  <td>{row.includes}</td>
+                  <td>
+                    <Link
+                      to="/bronirovanie"
+                      search={{ room: row.slug }}
+                      className="whitespace-nowrap font-semibold"
+                    >
+                      Забронировать
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p>
+            Цены актуальны на {SITE.factsUpdated}: койко-место — за место, номера — за номер
+            целиком. Оплата при заселении, предоплаты нет.
+          </p>
+        </div>
         <div className="mt-8 grid gap-5 md:grid-cols-3">
           {ROOM_TYPES.map((r) => (
             <article
@@ -349,20 +392,6 @@ function HomePage() {
                 </div>
               ))}
             </dl>
-            <div className="mt-5 flex flex-wrap gap-2">
-              {[
-                ["2GIS", SITE.links.twoGis],
-                ["Яндекс Карты", SITE.links.yandexMaps],
-                ["Google Карты", mapLinkUrl],
-              ].map(([label, href]) => (
-                <Button key={label} asChild size="sm" variant="outline">
-                  <a href={href} target="_blank" rel="noreferrer">
-                    {label}
-                    <ExternalLink />
-                  </a>
-                </Button>
-              ))}
-            </div>
             <Link
               to="/kak-dobratsya"
               className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary"
@@ -370,16 +399,7 @@ function HomePage() {
               Маршруты от вокзала и аэропорта <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
           </div>
-          <div className="overflow-hidden rounded-3xl border border-border shadow-card">
-            <iframe
-              title="Luxx Aparts на карте: ул. Толе би 286/8, Алматы"
-              src={mapEmbedUrl}
-              className="h-[300px] w-full lg:h-full lg:min-h-[380px]"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              allowFullScreen
-            />
-          </div>
+          <MapEmbed className="h-[300px] lg:h-full lg:min-h-[380px]" />
         </div>
       </section>
 

@@ -1,16 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AnswerSection, ContentPage } from "@/components/content-page";
 import { PHOTOS } from "@/lib/photos";
-import {
-  DISTANCES,
-  SITE,
-  breadcrumbSchema,
-  hostelSchema,
-  jsonLd,
-  mapEmbedUrl,
-  mapLinkUrl,
-  pageHead,
-} from "@/lib/site";
+import { MapEmbed } from "@/components/map-embed";
+import { DISTANCES, SITE, breadcrumbSchema, hostelSchema, jsonLd, pageHead } from "@/lib/site";
 
 export const Route = createFileRoute("/kak-dobratsya")({
   head: () => ({
@@ -33,30 +25,7 @@ function DirectionsPage() {
       photo={PHOTOS.reception}
     >
       <AnswerSection title="Где хостел на карте?">
-        <div className="overflow-hidden rounded-2xl border border-border">
-          <iframe
-            title="Luxx Aparts на карте: ул. Толе би 286/8, Алматы"
-            src={mapEmbedUrl}
-            className="h-[360px] w-full"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            allowFullScreen
-          />
-        </div>
-        <p>
-          Координаты: {SITE.geo.lat}, {SITE.geo.lng}.{" "}
-          <a href={mapLinkUrl} target="_blank" rel="noreferrer">
-            Открыть в Google Картах
-          </a>
-          {" · "}
-          <a href={SITE.links.twoGis} target="_blank" rel="noreferrer">
-            Открыть в 2GIS
-          </a>
-          {" · "}
-          <a href={SITE.links.yandexMaps} target="_blank" rel="noreferrer">
-            Открыть в Яндекс Картах
-          </a>
-        </p>
+        <MapEmbed className="h-[360px]" />
         <table>
           <thead>
             <tr>

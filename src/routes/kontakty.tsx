@@ -3,7 +3,8 @@ import { Clock3, ExternalLink, Mail, MapPin, MessageCircle, Phone } from "lucide
 import { Button } from "@/components/ui/button";
 import { AnswerSection, ContentPage } from "@/components/content-page";
 import { PHOTOS } from "@/lib/photos";
-import { SITE, breadcrumbSchema, hostelSchema, jsonLd, mapEmbedUrl, pageHead } from "@/lib/site";
+import { MapEmbed } from "@/components/map-embed";
+import { SITE, breadcrumbSchema, hostelSchema, jsonLd, pageHead } from "@/lib/site";
 
 export const Route = createFileRoute("/kontakty")({
   head: () => ({
@@ -60,16 +61,7 @@ function ContactsPage() {
               аэропорта — на странице <Link to="/kak-dobratsya">«Как добраться»</Link>.
             </p>
           </div>
-          <div className="overflow-hidden rounded-2xl border border-border">
-            <iframe
-              title="Luxx Aparts на карте: ул. Толе би 286/8, Алматы"
-              src={mapEmbedUrl}
-              className="h-[320px] w-full"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              allowFullScreen
-            />
-          </div>
+          <MapEmbed className="h-[320px]" />
         </AnswerSection>
 
         <AnswerSection title="Когда работает стойка?">

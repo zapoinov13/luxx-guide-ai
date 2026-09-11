@@ -25,7 +25,9 @@ export const Route = createFileRoute("/nomera/$type")({
     if (!room) return {};
     const photos = ROOM_PHOTOS[room.slug] ?? [];
     return {
-      ...pageHead(room.title, room.description, `/nomera/${room.slug}`),
+      ...pageHead(room.title, room.description, `/nomera/${room.slug}`, {
+        ...(photos[0] ? { image: `/photos/${photos[0].id}-1600.webp` } : {}),
+      }),
       scripts: jsonLd(
         breadcrumbsSchema([
           ["Номера и цены", "/nomera"],

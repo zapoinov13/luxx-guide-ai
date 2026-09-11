@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Check, MessageCircle, Phone } from "lucide-react";
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -45,6 +45,31 @@ const roomOptions = [
   "Пока не решил(а)",
 ] as const;
 
+/** Цена в сутки по варианту из формы (SITE.factsUpdated). Койко-место — за место, номера — за номер. */
+const priceByOption: Record<string, number> = {
+  [roomOptions[0]]: 6000,
+  [roomOptions[1]]: 6000,
+  [roomOptions[2]]: 11000,
+  [roomOptions[3]]: 10000,
+  [roomOptions[4]]: 15000,
+};
+
+const nightsBetween = (from: string, to: string) => {
+  const a = Date.parse(`${from}T00:00:00Z`);
+  const b = Date.parse(`${to}T00:00:00Z`);
+  if (Number.isNaN(a) || Number.isNaN(b) || b <= a) return 0;
+  return Math.round((b - a) / 86_400_000);
+};
+
+const pluralDays = (n: number) => {
+  const m10 = n % 10;
+  const m100 = n % 100;
+  if (m10 === 1 && m100 !== 11) return `${n} сутки`;
+  return `${n} суток`;
+};
+
+const fmt = (n: number) => n.toLocaleString("ru-RU");
+
 const humanDate = (iso: string) => {
   const d = new Date(`${iso}T00:00:00Z`);
   if (!/^\d{4}-\d{2}-\d{2}$/.test(iso) || Number.isNaN(d.getTime())) return iso;
@@ -81,6 +106,21 @@ function BookingPage() {
   const update = (field: keyof typeof form) => (value: string) =>
     setForm((prev) => ({ ...prev, [field]: value }));
 
+  // Страница пререндерена без query, поэтому формат из ?room= подставляем после гидрации.
+  useEffect(() => {
+    const preset = roomSlug && roomBySlug[roomSlug];
+    if (preset) setForm((prev) => ({ ...prev, room: preset }));
+  }, [roomSlug]);
+
+  const nights = nightsBetween(form.checkIn, form.checkOut);
+  const unitPrice = priceByOption[form.room];
+  const perBed = form.room.startsWith("Койко-место");
+  const units = perBed ? Math.max(1, Number(form.guests) || 1) : 1;
+  const total = nights && unitPrice ? nights * unitPrice * units : 0;
+  const estimate = total
+    ? `${pluralDays(nights)} × ${fmt(unitPrice ?? 0)} ₸${units > 1 ? ` × ${units}` : ""} = ${fmt(total)} ₸`
+    : "";
+
   const message = [
     "Здравствуйте! Хочу забронировать в Luxx Aparts.",
     form.checkIn && form.checkOut
@@ -88,6 +128,7 @@ function BookingPage() {
       : "",
     `Гостей: ${form.guests}.`,
     `Формат: ${form.room}.`,
+    estimate ? `Ориентировочно: ${estimate}.` : "",
     form.name ? `Меня зовут ${form.name}.` : "",
     form.phone ? `Телефон: ${form.phone}.` : "",
     form.comment ? `Комментарий: ${form.comment}` : "",
@@ -98,7 +139,7 @@ function BookingPage() {
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     const url = whatsappWithText(message);
-    trackGoal("booking_form", { room: form.room });
+    trackGoal("booking_form", { room: form.room, nights: String(nights) });
     setSent(url);
     window.open(url, "_blank", "noopener,noreferrer");
   };
@@ -197,6 +238,27 @@ function BookingPage() {
               onChange={(e) => update("comment")(e.target.value)}
               className="text-base"
             />
+          </div>
+          <div
+            className="rounded-2xl border border-border bg-secondary/60 p-4 text-sm sm:col-span-2"
+            aria-live="polite"
+          >
+            {estimate ? (
+              <>
+                <p className="text-muted-foreground">Ориентировочная стоимость</p>
+                <p className="mt-1 font-display text-xl font-bold text-foreground">{estimate}</p>
+                <p className="mt-1 text-muted-foreground">
+                  По базовым ценам на {SITE.factsUpdated}
+                  {perBed ? ", за каждого гостя" : ", за номер целиком"}. Итоговую сумму подтвердит
+                  администратор, оплата при заселении.
+                </p>
+              </>
+            ) : (
+              <p className="text-muted-foreground">
+                Укажите даты и формат — покажем ориентировочную стоимость по базовым ценам:
+                койко-место 6 000 ₸, одноместный 10 000–11 000 ₸, двухместный 15 000 ₸ в сутки.
+              </p>
+            )}
           </div>
           <div className="flex flex-wrap gap-3 sm:col-span-2">
             <Button type="submit" size="lg">
