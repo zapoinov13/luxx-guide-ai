@@ -8,6 +8,7 @@ import {
   Bus,
   Car,
   Check,
+  ChevronDown,
   Clock3,
   CookingPot,
   ExternalLink,
@@ -33,14 +34,13 @@ import { Button } from "@/components/ui/button";
 import { Gallery } from "@/components/gallery";
 import { Photo } from "@/components/photo";
 import { MapEmbed } from "@/components/map-embed";
-import { GALLERY, PHOTOS, roomCover } from "@/lib/photos";
+import { TariffCards } from "@/components/tariff-cards";
+import { GALLERY, PHOTOS } from "@/lib/photos";
 import {
   AMENITIES,
   DISTANCES,
-  PRICE_LIST,
   RATINGS,
   REVIEWS,
-  ROOM_TYPES,
   SITE,
   faqSchema,
   hostelSchema,
@@ -276,86 +276,11 @@ function HomePage() {
           Койко-место в капсуле {price} ₸, одноместный номер от 10 000 ₸, двухместный 15 000 ₸ за
           номер. Для срока от недели и от месяца администратор считает индивидуально.
         </p>
-        <div className="prose-copy table-stack mt-6 text-sm text-muted-foreground lg:mt-8">
-          <table>
-            <thead>
-              <tr>
-                <th>Размещение</th>
-                <th>Цена</th>
-                <th>Что включено</th>
-                <th>
-                  <span className="sr-only">Действие</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {PRICE_LIST.map((row) => (
-                <tr key={row.name}>
-                  <td>
-                    <Link to="/nomera/$type" params={{ type: row.slug }}>
-                      {row.name}
-                    </Link>
-                  </td>
-                  <td data-label="Цена">
-                    <strong className="whitespace-nowrap">
-                      {row.price.toLocaleString("ru-RU")} ₸
-                    </strong>
-                  </td>
-                  <td data-label="Включено">
-                    <span className="text-right sm:text-left">{row.includes}</span>
-                  </td>
-                  <td data-label="">
-                    <Link
-                      to="/bronirovanie"
-                      search={{ room: row.slug }}
-                      className="whitespace-nowrap font-semibold"
-                    >
-                      Забронировать →
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <p>
-            Цены актуальны на {SITE.factsUpdated}: койко-место — за место, номера — за номер
-            целиком. Оплата при заселении, предоплаты нет.
-          </p>
-        </div>
-        <div className="mt-8 grid gap-5 md:grid-cols-3">
-          {ROOM_TYPES.map((r) => (
-            <article
-              key={r.slug}
-              className="flex flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-card transition-all hover:-translate-y-0.5 hover:shadow-photo"
-            >
-              <Link to="/nomera/$type" params={{ type: r.slug }} className="block">
-                <Photo
-                  photo={roomCover(r.slug)}
-                  sizes="(min-width: 768px) 33vw, 100vw"
-                  className="aspect-[4/3] w-full object-cover"
-                />
-              </Link>
-              <div className="flex flex-1 flex-col p-6">
-                <h3 className="font-display text-xl font-bold">
-                  <Link to="/nomera/$type" params={{ type: r.slug }} className="hover:text-primary">
-                    {r.name}
-                  </Link>
-                </h3>
-                <p className="mt-1 text-sm text-muted-foreground">{r.short}</p>
-                <p className="mt-4 font-semibold">{r.price}</p>
-                {r.priceNote && <p className="text-xs text-muted-foreground">{r.priceNote}</p>}
-                <p className="mt-3 text-sm text-muted-foreground">
-                  {r.capacity} · {r.bath}
-                </p>
-                <Button asChild variant="outline" className="mt-5 w-full sm:w-auto">
-                  <Link to="/bronirovanie" search={{ room: r.slug }}>
-                    Забронировать
-                  </Link>
-                </Button>
-              </div>
-            </article>
-          ))}
-        </div>
+        <TariffCards className="mt-6 lg:mt-8" />
+        <p className="mt-4 text-sm text-muted-foreground">
+          Цены актуальны на {SITE.factsUpdated}: койко-место — за место, номера — за номер целиком.
+          Оплата при заселении, предоплаты нет.
+        </p>
       </section>
 
       {/* Удобства */}
@@ -450,7 +375,7 @@ function HomePage() {
               Маршруты от вокзала и аэропорта <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
           </div>
-          <MapEmbed className="h-[300px] lg:h-full lg:min-h-[420px]" />
+          <MapEmbed className="lg:h-full lg:min-h-[420px]" />
         </div>
       </section>
 
@@ -606,12 +531,19 @@ function HomePage() {
             Все вопросы <ArrowRight className="size-4" aria-hidden="true" />
           </Link>
         </div>
-        <div className="mt-8 divide-y divide-border rounded-3xl border border-border">
-          {HOME_FAQ.map(([q, a]) => (
-            <article key={q} className="grid gap-2 p-5 md:grid-cols-[1fr_2fr] md:gap-8 md:p-6">
-              <h3 className="font-display text-lg font-bold">{q}</h3>
-              <p className="text-sm leading-6 text-muted-foreground">{a}</p>
-            </article>
+        <div className="mt-6 divide-y divide-border rounded-2xl border border-border lg:mt-8 lg:rounded-3xl">
+          {HOME_FAQ.map(([q, a], i) => (
+            <details key={q} open={i === 0} className="group px-4 sm:px-6">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 [&::-webkit-details-marker]:hidden sm:py-5">
+                <h3 className="font-display text-base font-bold sm:text-lg">{q}</h3>
+                <span className="grid size-8 shrink-0 place-items-center rounded-full bg-secondary text-foreground transition-transform group-open:rotate-180">
+                  <ChevronDown className="size-4" aria-hidden="true" />
+                </span>
+              </summary>
+              <p className="pb-5 text-sm leading-6 text-muted-foreground sm:pr-16 sm:text-base sm:leading-7">
+                {a}
+              </p>
+            </details>
           ))}
         </div>
       </section>

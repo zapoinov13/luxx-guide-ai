@@ -138,3 +138,19 @@ export const PHOTO_SECTIONS: { title: string; text: string; photos: PhotoRef[] }
     photos: [PHOTOS.reception, p("11", "Стойка регистрации Luxx Aparts, вид сбоку, Алматы")],
   },
 ];
+
+/** Фото для карточек тарифов (по названию варианта из ROOM_TYPES[].variants). */
+export const TARIFF_PHOTOS: Record<string, PhotoRef> = {
+  "Спальное место в общем номере для мужчин": PHOTOS.dorm,
+  "Спальное место в общем номере для женщин": p(
+    "21",
+    "Капсулы со шторками в женской комнате Luxx Aparts, Алматы",
+    P,
+  ),
+  "Одноместный номер без окна": p("24", "Одноместный номер Luxx Aparts: кровать и стол, Алматы"),
+  "Одноместный номер с окном": PHOTOS.single,
+  "Двухместный номер": PHOTOS.privateRoom,
+};
+
+export const tariffPhoto = (name: string, slug: string): PhotoRef =>
+  TARIFF_PHOTOS[name] ?? roomCover(slug);

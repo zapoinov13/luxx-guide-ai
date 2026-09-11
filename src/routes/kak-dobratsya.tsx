@@ -25,7 +25,7 @@ function DirectionsPage() {
       photo={PHOTOS.reception}
     >
       <AnswerSection title="Где хостел на карте?">
-        <MapEmbed className="h-[360px]" />
+        <MapEmbed className="lg:min-h-[280px]" />
         <table>
           <thead>
             <tr>

@@ -289,6 +289,18 @@
     font-weight: 600;
   }
 
+  /* Карточки тарифов внутри текстового блока: без подчёркиваний ссылок */
+  .prose-copy .tariff-cards a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .prose-copy .tariff-cards ul,
+  .prose-copy .tariff-cards li + li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
   .article-body h2 {
     margin-top: 2.25rem;
     font-family: var(--font-display);

@@ -3,6 +3,7 @@ import { ArrowRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnswerSection, ContentPage } from "@/components/content-page";
 import { Photo } from "@/components/photo";
+import { TariffCards } from "@/components/tariff-cards";
 import { PHOTOS, roomCover } from "@/lib/photos";
 import {
   PRICE_LIST,
@@ -37,7 +38,8 @@ function RoomsPage() {
       photo={PHOTOS.dorm}
     >
       <AnswerSection title="Какие номера есть и сколько стоят?">
-        <div className="table-stack">
+        <TariffCards className="sm:hidden" />
+        <div className="hidden sm:block">
           <table>
             <thead>
               <tr>
