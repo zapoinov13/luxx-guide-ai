@@ -6,7 +6,7 @@
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 import { readdirSync } from "node:fs";
-import { SITE_URL } from "./src/lib/site";
+import { ROOM_TYPES, SITE_URL } from "./src/lib/site";
 
 const blogSlugs = readdirSync("content/blog")
   .filter((f) => f.endsWith(".md"))
@@ -20,6 +20,10 @@ export default defineConfig({
     pages: [
       { path: "/", sitemap: { priority: 1, changefreq: "weekly" } },
       { path: "/nomera", sitemap: { priority: 0.9, changefreq: "weekly" } },
+      ...ROOM_TYPES.map((r) => ({
+        path: `/nomera/${r.slug}`,
+        sitemap: { priority: 0.8, changefreq: "monthly" as const },
+      })),
       { path: "/bronirovanie", sitemap: { priority: 0.9, changefreq: "monthly" } },
       { path: "/udobstva", sitemap: { priority: 0.8, changefreq: "monthly" } },
       { path: "/kak-dobratsya", sitemap: { priority: 0.8, changefreq: "monthly" } },
@@ -29,6 +33,7 @@ export default defineConfig({
       { path: "/faq", sitemap: { priority: 0.8, changefreq: "monthly" } },
       { path: "/kontakty", sitemap: { priority: 0.8, changefreq: "monthly" } },
       { path: "/blog", sitemap: { priority: 0.7, changefreq: "weekly" } },
+      { path: "/blog/avtor", sitemap: { priority: 0.4, changefreq: "yearly" } },
       ...blogSlugs.map((slug) => ({
         path: `/blog/${slug}`,
         sitemap: { priority: 0.6, changefreq: "monthly" as const },
@@ -40,6 +45,9 @@ export default defineConfig({
     prerender: {
       enabled: true,
       autoStaticPathsDiscovery: false,
+      // Все страницы перечислены выше явно. Без этого локальная сборка находит по ссылкам
+      // /bronirovanie?room=… и кладёт их в sitemap как отдельные адреса.
+      crawlLinks: false,
       filter: (page: { path: string }) => !page.path.includes("?"),
     },
   },

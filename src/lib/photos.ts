@@ -50,3 +50,36 @@ export const GALLERY: PhotoRef[] = [
   PHOTOS.lounge,
   PHOTOS.doubleGreen,
 ];
+
+/** Фото для страниц типов номеров /nomera/<slug>: 5–8 на тип (ТЗ, раздел 5.2). */
+export const ROOM_PHOTOS: Record<string, PhotoRef[]> = {
+  "koyko-mesto": [
+    PHOTOS.dorm,
+    PHOTOS.dormNumbered,
+    p("21", "Капсулы 29 и 30 в общей комнате Luxx Aparts, Алматы", P),
+    p("09", "Капсульные кровати Luxx Aparts, вид сбоку, Алматы", [900, 1600]),
+    PHOTOS.capsuleLaptop,
+    p("25", "Капсулы 23 и 24 со шторками в Luxx Aparts, Алматы", P),
+    PHOTOS.lockers,
+    PHOTOS.bathroom,
+  ],
+  odnomestny: [
+    PHOTOS.single,
+    p("19", "Одноместный номер Luxx Aparts с рабочим столом, Алматы", [1200, 1600]),
+    p("24", "Одноместный номер Luxx Aparts: кровать и стол, Алматы"),
+    p("26", "Одноместный номер Luxx Aparts с окном, Алматы", [1200, 1600]),
+    PHOTOS.bathroom,
+    PHOTOS.kitchen,
+  ],
+  dvukhmestny: [
+    PHOTOS.privateRoom,
+    PHOTOS.doubleGreen,
+    p("29", "Двухместный номер Luxx Aparts: изголовье кровати, Алматы"),
+    p("30", "Двухместный номер Luxx Aparts с ноутбуком на кровати, Алматы", P),
+    PHOTOS.bathroom,
+    PHOTOS.kitchenSink,
+  ],
+};
+
+/** Первое фото типа номера для карточек на главной и /nomera. */
+export const roomCover = (slug: string): PhotoRef => ROOM_PHOTOS[slug]?.[0] ?? PHOTOS.detail;

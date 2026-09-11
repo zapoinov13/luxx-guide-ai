@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Photo } from "@/components/photo";
 import { formatDate, getPost, getPosts } from "@/lib/blog";
 import { SITE, absolute, jsonLd, pageHead } from "@/lib/site";
+import { AUTHOR } from "./blog.avtor";
 
 const articleSchema = (post: NonNullable<ReturnType<typeof getPost>>) => ({
   "@context": "https://schema.org",
@@ -17,7 +18,12 @@ const articleSchema = (post: NonNullable<ReturnType<typeof getPost>>) => ({
   wordCount: post.text.split(" ").length,
   keywords: post.tags.join(", "),
   image: post.cover ? [absolute(`/photos/${post.cover}-1600.webp`)] : [absolute("/og-image.jpg")],
-  author: { "@type": "Organization", name: post.author, url: absolute("/") },
+  author: {
+    "@type": "Organization",
+    "@id": absolute(`${AUTHOR.path}#author`),
+    name: post.author,
+    url: absolute(AUTHOR.path),
+  },
   publisher: { "@id": absolute("/#hostel") },
   mainEntityOfPage: absolute(`/blog/${post.slug}`),
   isPartOf: { "@id": absolute("/blog#blog") },
@@ -95,7 +101,9 @@ function BlogPostPage() {
             {post.description}
           </p>
           <p className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
-            <span>{post.author}</span>
+            <Link to="/blog/avtor" className="hover:text-foreground">
+              {post.author}
+            </Link>
             <time dateTime={post.date}>{formatDate(post.date)}</time>
             <span className="inline-flex items-center gap-1">
               <Clock3 className="size-4" aria-hidden="true" />

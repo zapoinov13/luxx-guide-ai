@@ -10,6 +10,9 @@
 ## Страницы
 
 - [Номера и цены](https://luxx-guide-ai.lovable.app/nomera): койко-места и отдельные комнаты, что входит в проживание, как узнать цену
+  - [Койко-место в общей комнате](https://luxx-guide-ai.lovable.app/nomera/koyko-mesto): от 6 000 ₸ за ночь, капсула со шторкой, шкафчик
+  - [Одноместный номер Economy](https://luxx-guide-ai.lovable.app/nomera/odnomestny): отдельная комната с окном, санузел на этаже
+  - [Двухместный номер Economy](https://luxx-guide-ai.lovable.app/nomera/dvukhmestny): двуспальная кровать, для пары или семьи
 - [Бронирование](https://luxx-guide-ai.lovable.app/bronirovanie): прямая заявка в WhatsApp без комиссии
 - [Удобства](https://luxx-guide-ai.lovable.app/udobstva): кухня, стирка, Wi-Fi, камера хранения, кондиционер, детская площадка
 - [Как добраться](https://luxx-guide-ai.lovable.app/kak-dobratsya): от вокзала Алматы-2 (7 км), автовокзала Сайран, аэропорта; как найти вход

@@ -17,7 +17,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Gallery } from "@/components/gallery";
 import { Photo } from "@/components/photo";
-import { GALLERY, PHOTOS } from "@/lib/photos";
+import { GALLERY, PHOTOS, roomCover } from "@/lib/photos";
 import {
   AMENITIES,
   DISTANCES,
@@ -108,8 +108,6 @@ const steps = [
   ["Получите подтверждение", "Администратор проверит места и назовёт цену на ваши даты."],
   ["Оплатите при заселении", "Наличными в тенге или картой. Предоплата через сайт не нужна."],
 ] as const;
-
-const roomPhotos = [PHOTOS.dorm, PHOTOS.single, PHOTOS.privateRoom] as const;
 
 const shortSource: Record<string, string> = { "Яндекс Карты": "Яндекс" };
 
@@ -264,18 +262,24 @@ function HomePage() {
           суммой.
         </p>
         <div className="mt-8 grid gap-5 md:grid-cols-3">
-          {ROOM_TYPES.map((r, i) => (
+          {ROOM_TYPES.map((r) => (
             <article
               key={r.slug}
               className="flex flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-card transition-all hover:-translate-y-0.5 hover:shadow-photo"
             >
-              <Photo
-                photo={roomPhotos[i] ?? PHOTOS.detail}
-                sizes="(min-width: 768px) 33vw, 100vw"
-                className="aspect-[4/3] w-full object-cover"
-              />
+              <Link to="/nomera/$type" params={{ type: r.slug }} className="block">
+                <Photo
+                  photo={roomCover(r.slug)}
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                  className="aspect-[4/3] w-full object-cover"
+                />
+              </Link>
               <div className="flex flex-1 flex-col p-6">
-                <h3 className="font-display text-xl font-bold">{r.name}</h3>
+                <h3 className="font-display text-xl font-bold">
+                  <Link to="/nomera/$type" params={{ type: r.slug }} className="hover:text-primary">
+                    {r.name}
+                  </Link>
+                </h3>
                 <p className="mt-1 text-sm text-muted-foreground">{r.short}</p>
                 <p className="mt-4 font-semibold">{r.price}</p>
                 {r.priceNote && <p className="text-xs text-muted-foreground">{r.priceNote}</p>}

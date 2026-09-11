@@ -1,12 +1,24 @@
 import { Link } from "@tanstack/react-router";
 import { Menu, Phone, X } from "lucide-react";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import logoAsset from "@/assets/luxx-aparts-logo.png.asset.json";
+import { goalForLink, trackGoal } from "@/lib/analytics";
 import { NAV, SITE } from "@/lib/site";
 
 export function SiteShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
+
+  // Цели аналитики: любой клик по ссылке tel: или wa.me на любой странице.
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      const link = (e.target as Element | null)?.closest?.("a[href]");
+      const goal = link && goalForLink(link.getAttribute("href") ?? "");
+      if (goal) trackGoal(goal, { page: window.location.pathname });
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, []);
 
   return (
     <div className="min-h-screen bg-background text-foreground">

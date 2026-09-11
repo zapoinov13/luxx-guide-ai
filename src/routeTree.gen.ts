@@ -14,14 +14,16 @@ import { Route as BronirovanieRouteImport } from './routes/bronirovanie'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as KakDobratsyaRouteImport } from './routes/kak-dobratsya'
 import { Route as KontaktyRouteImport } from './routes/kontakty'
-import { Route as NomeraRouteImport } from './routes/nomera'
 import { Route as OtzyvyRouteImport } from './routes/otzyvy'
 import { Route as PravilaRouteImport } from './routes/pravila'
 import { Route as RyadomRouteImport } from './routes/ryadom'
 import { Route as UdobstvaRouteImport } from './routes/udobstva'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as BlogAvtorRouteImport } from './routes/blog.avtor'
 import { Route as BlogRssDotxmlRouteImport } from './routes/blog.rss[.]xml'
+import { Route as NomeraIndexRouteImport } from './routes/nomera.index'
+import { Route as NomeraTypeRouteImport } from './routes/nomera.$type'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,11 +48,6 @@ const KakDobratsyaRoute = KakDobratsyaRouteImport.update({
 const KontaktyRoute = KontaktyRouteImport.update({
   id: '/kontakty',
   path: '/kontakty',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const NomeraRoute = NomeraRouteImport.update({
-  id: '/nomera',
-  path: '/nomera',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OtzyvyRoute = OtzyvyRouteImport.update({
@@ -83,9 +80,24 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogAvtorRoute = BlogAvtorRouteImport.update({
+  id: '/blog/avtor',
+  path: '/blog/avtor',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlogRssDotxmlRoute = BlogRssDotxmlRouteImport.update({
   id: '/blog/rss.xml',
   path: '/blog/rss.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NomeraIndexRoute = NomeraIndexRouteImport.update({
+  id: '/nomera/',
+  path: '/nomera/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NomeraTypeRoute = NomeraTypeRouteImport.update({
+  id: '/nomera/$type',
+  path: '/nomera/$type',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -95,14 +107,16 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/kak-dobratsya': typeof KakDobratsyaRoute
   '/kontakty': typeof KontaktyRoute
-  '/nomera': typeof NomeraRoute
   '/otzyvy': typeof OtzyvyRoute
   '/pravila': typeof PravilaRoute
   '/ryadom': typeof RyadomRoute
   '/udobstva': typeof UdobstvaRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/blog/avtor': typeof BlogAvtorRoute
   '/blog/rss.xml': typeof BlogRssDotxmlRoute
+  '/nomera/$type': typeof NomeraTypeRoute
   '/blog/': typeof BlogIndexRoute
+  '/nomera/': typeof NomeraIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -110,14 +124,16 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/kak-dobratsya': typeof KakDobratsyaRoute
   '/kontakty': typeof KontaktyRoute
-  '/nomera': typeof NomeraRoute
   '/otzyvy': typeof OtzyvyRoute
   '/pravila': typeof PravilaRoute
   '/ryadom': typeof RyadomRoute
   '/udobstva': typeof UdobstvaRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/blog/avtor': typeof BlogAvtorRoute
   '/blog/rss.xml': typeof BlogRssDotxmlRoute
+  '/nomera/$type': typeof NomeraTypeRoute
   '/blog': typeof BlogIndexRoute
+  '/nomera': typeof NomeraIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -126,14 +142,16 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/kak-dobratsya': typeof KakDobratsyaRoute
   '/kontakty': typeof KontaktyRoute
-  '/nomera': typeof NomeraRoute
   '/otzyvy': typeof OtzyvyRoute
   '/pravila': typeof PravilaRoute
   '/ryadom': typeof RyadomRoute
   '/udobstva': typeof UdobstvaRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/blog/avtor': typeof BlogAvtorRoute
   '/blog/rss.xml': typeof BlogRssDotxmlRoute
+  '/nomera/$type': typeof NomeraTypeRoute
   '/blog/': typeof BlogIndexRoute
+  '/nomera/': typeof NomeraIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -143,14 +161,16 @@ export interface FileRouteTypes {
     | '/faq'
     | '/kak-dobratsya'
     | '/kontakty'
-    | '/nomera'
     | '/otzyvy'
     | '/pravila'
     | '/ryadom'
     | '/udobstva'
     | '/blog/$slug'
+    | '/blog/avtor'
     | '/blog/rss.xml'
+    | '/nomera/$type'
     | '/blog/'
+    | '/nomera/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -158,14 +178,16 @@ export interface FileRouteTypes {
     | '/faq'
     | '/kak-dobratsya'
     | '/kontakty'
-    | '/nomera'
     | '/otzyvy'
     | '/pravila'
     | '/ryadom'
     | '/udobstva'
     | '/blog/$slug'
+    | '/blog/avtor'
     | '/blog/rss.xml'
+    | '/nomera/$type'
     | '/blog'
+    | '/nomera'
   id:
     | '__root__'
     | '/'
@@ -173,14 +195,16 @@ export interface FileRouteTypes {
     | '/faq'
     | '/kak-dobratsya'
     | '/kontakty'
-    | '/nomera'
     | '/otzyvy'
     | '/pravila'
     | '/ryadom'
     | '/udobstva'
     | '/blog/$slug'
+    | '/blog/avtor'
     | '/blog/rss.xml'
+    | '/nomera/$type'
     | '/blog/'
+    | '/nomera/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -189,14 +213,16 @@ export interface RootRouteChildren {
   FaqRoute: typeof FaqRoute
   KakDobratsyaRoute: typeof KakDobratsyaRoute
   KontaktyRoute: typeof KontaktyRoute
-  NomeraRoute: typeof NomeraRoute
   OtzyvyRoute: typeof OtzyvyRoute
   PravilaRoute: typeof PravilaRoute
   RyadomRoute: typeof RyadomRoute
   UdobstvaRoute: typeof UdobstvaRoute
   BlogSlugRoute: typeof BlogSlugRoute
+  BlogAvtorRoute: typeof BlogAvtorRoute
   BlogRssDotxmlRoute: typeof BlogRssDotxmlRoute
+  NomeraTypeRoute: typeof NomeraTypeRoute
   BlogIndexRoute: typeof BlogIndexRoute
+  NomeraIndexRoute: typeof NomeraIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -234,13 +260,6 @@ declare module '@tanstack/react-router' {
       path: '/kontakty'
       fullPath: '/kontakty'
       preLoaderRoute: typeof KontaktyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/nomera': {
-      id: '/nomera'
-      path: '/nomera'
-      fullPath: '/nomera'
-      preLoaderRoute: typeof NomeraRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/otzyvy': {
@@ -285,11 +304,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/avtor': {
+      id: '/blog/avtor'
+      path: '/blog/avtor'
+      fullPath: '/blog/avtor'
+      preLoaderRoute: typeof BlogAvtorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blog/rss.xml': {
       id: '/blog/rss.xml'
       path: '/blog/rss.xml'
       fullPath: '/blog/rss.xml'
       preLoaderRoute: typeof BlogRssDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nomera/': {
+      id: '/nomera/'
+      path: '/nomera'
+      fullPath: '/nomera/'
+      preLoaderRoute: typeof NomeraIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nomera/$type': {
+      id: '/nomera/$type'
+      path: '/nomera/$type'
+      fullPath: '/nomera/$type'
+      preLoaderRoute: typeof NomeraTypeRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -301,14 +341,16 @@ const rootRouteChildren: RootRouteChildren = {
   FaqRoute: FaqRoute,
   KakDobratsyaRoute: KakDobratsyaRoute,
   KontaktyRoute: KontaktyRoute,
-  NomeraRoute: NomeraRoute,
   OtzyvyRoute: OtzyvyRoute,
   PravilaRoute: PravilaRoute,
   RyadomRoute: RyadomRoute,
   UdobstvaRoute: UdobstvaRoute,
   BlogSlugRoute: BlogSlugRoute,
+  BlogAvtorRoute: BlogAvtorRoute,
   BlogRssDotxmlRoute: BlogRssDotxmlRoute,
+  NomeraTypeRoute: NomeraTypeRoute,
   BlogIndexRoute: BlogIndexRoute,
+  NomeraIndexRoute: NomeraIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

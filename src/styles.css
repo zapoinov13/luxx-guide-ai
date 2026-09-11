@@ -219,6 +219,14 @@
   .prose-copy li + li {
     margin-top: 0.5rem;
   }
+  /* Сетки (галерея) внутри текстового блока: без маркеров и отступов списка */
+  .prose-copy ul.list-none {
+    list-style: none;
+    padding-left: 0;
+  }
+  .prose-copy ul.list-none li + li {
+    margin-top: 0;
+  }
   .prose-copy a {
     color: var(--color-primary);
     text-decoration: underline;

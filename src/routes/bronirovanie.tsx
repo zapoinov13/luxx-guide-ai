@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { AnswerSection, ContentPage } from "@/components/content-page";
+import { trackGoal } from "@/lib/analytics";
 import { PHOTOS } from "@/lib/photos";
 import {
   ROOM_TYPES,
@@ -95,6 +96,7 @@ function BookingPage() {
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     const url = whatsappWithText(message);
+    trackGoal("booking_form", { room: form.room });
     setSent(url);
     window.open(url, "_blank", "noopener,noreferrer");
   };

@@ -3,7 +3,7 @@ import { ChevronRight, MessageCircle, Phone } from "lucide-react";
 import type { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { Photo, type PhotoRef } from "@/components/photo";
-import { SITE, type QA } from "@/lib/site";
+import { SITE, type Crumb, type QA } from "@/lib/site";
 
 type ContentPageProps = {
   title: string;
@@ -13,11 +13,21 @@ type ContentPageProps = {
   /** Пометка «Актуально на …» под первым абзацем (ТЗ, раздел 2, «Даты»). */
   updated?: string;
   /** Фото справа от заголовка. */
-  photo?: PhotoRef;
+  photo?: PhotoRef | undefined;
+  /** Промежуточные хлебные крошки между «Главная» и текущей страницей. */
+  crumbs?: readonly Crumb[];
   children: ReactNode;
 };
 
-export function ContentPage({ title, eyebrow, intro, updated, photo, children }: ContentPageProps) {
+export function ContentPage({
+  title,
+  eyebrow,
+  intro,
+  updated,
+  photo,
+  crumbs = [],
+  children,
+}: ContentPageProps) {
   return (
     <main className="pb-24 lg:pb-0">
       <div className="border-b border-border bg-secondary/60">
@@ -25,11 +35,19 @@ export function ContentPage({ title, eyebrow, intro, updated, photo, children }:
           <div>
             <nav
               aria-label="Хлебные крошки"
-              className="mb-6 flex items-center gap-2 text-sm text-muted-foreground"
+              className="mb-6 flex flex-wrap items-center gap-2 text-sm text-muted-foreground"
             >
               <Link to="/" className="hover:text-foreground">
                 Главная
               </Link>
+              {crumbs.map(([name, path]) => (
+                <span key={path} className="contents">
+                  <ChevronRight className="size-4" aria-hidden="true" />
+                  <Link to={path} className="hover:text-foreground">
+                    {name}
+                  </Link>
+                </span>
+              ))}
               <ChevronRight className="size-4" aria-hidden="true" />
               <span aria-current="page">{eyebrow}</span>
             </nav>

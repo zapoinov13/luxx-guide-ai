@@ -3,10 +3,10 @@ import { ArrowRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnswerSection, ContentPage } from "@/components/content-page";
 import { Photo } from "@/components/photo";
-import { PHOTOS } from "@/lib/photos";
+import { PHOTOS, roomCover } from "@/lib/photos";
 import { ROOM_TYPES, SITE, breadcrumbSchema, hostelSchema, jsonLd, pageHead } from "@/lib/site";
 
-export const Route = createFileRoute("/nomera")({
+export const Route = createFileRoute("/nomera/")({
   head: () => ({
     ...pageHead(
       `Цены хостела Luxx Aparts в Алматы: койко-место от ${SITE.priceFrom.toLocaleString("ru-RU")} ₸`,
@@ -17,8 +17,6 @@ export const Route = createFileRoute("/nomera")({
   }),
   component: RoomsPage,
 });
-
-const roomPhotos = [PHOTOS.dorm, PHOTOS.single, PHOTOS.privateRoom] as const;
 
 function RoomsPage() {
   const price = SITE.priceFrom.toLocaleString("ru-RU");
@@ -32,18 +30,24 @@ function RoomsPage() {
     >
       <AnswerSection title="Какие номера есть и сколько стоят?">
         <div className="space-y-5">
-          {ROOM_TYPES.map((r, i) => (
+          {ROOM_TYPES.map((r) => (
             <article
               key={r.slug}
               className="grid gap-0 overflow-hidden rounded-2xl border border-border sm:grid-cols-[0.8fr_1.2fr]"
             >
-              <Photo
-                photo={roomPhotos[i] ?? PHOTOS.detail}
-                sizes="(min-width: 640px) 30vw, 100vw"
-                className="aspect-[4/3] h-full w-full object-cover"
-              />
+              <Link to="/nomera/$type" params={{ type: r.slug }} className="block">
+                <Photo
+                  photo={roomCover(r.slug)}
+                  sizes="(min-width: 640px) 30vw, 100vw"
+                  className="aspect-[4/3] h-full w-full object-cover"
+                />
+              </Link>
               <div className="p-5">
-                <h3 className="font-display text-xl font-bold text-foreground">{r.name}</h3>
+                <h3 className="font-display text-xl font-bold text-foreground">
+                  <Link to="/nomera/$type" params={{ type: r.slug }} className="hover:text-primary">
+                    {r.name}
+                  </Link>
+                </h3>
                 <p className="mt-1 text-sm">{r.short}</p>
                 <p className="mt-3 font-semibold text-foreground">{r.price}</p>
                 {r.priceNote && <p className="text-xs">{r.priceNote}</p>}
@@ -58,6 +62,13 @@ function RoomsPage() {
                   ))}
                 </ul>
                 <p className="mt-3 text-sm">Кому подходит: {r.forWhom.toLowerCase()}.</p>
+                <Link
+                  to="/nomera/$type"
+                  params={{ type: r.slug }}
+                  className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-primary"
+                >
+                  Подробнее и фото <ArrowRight className="size-4" aria-hidden="true" />
+                </Link>
               </div>
             </article>
           ))}

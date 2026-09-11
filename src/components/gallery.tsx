@@ -31,7 +31,7 @@ export function Gallery({ photos }: { photos: readonly PhotoRef[] }) {
 
   return (
     <>
-      <ul className="grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-3">
+      <ul className="list-none grid grid-cols-2 gap-2 p-0 md:grid-cols-4 md:gap-3">
         {photos.map((photo, i) => (
           <li key={photo.id} className={i === 0 ? "col-span-2 row-span-2" : ""}>
             <button

@@ -11,6 +11,8 @@
  *  og:url, sitemap и JSON-LD станут ссылаться на него. */
 export const SITE_URL = "https://luxx-guide-ai.lovable.app";
 
+export type QA = [question: string, answer: string];
+
 export const SITE = {
   name: "Luxx Aparts",
   url: SITE_URL,
@@ -69,15 +71,23 @@ export const AMENITIES = [
   { name: "Парковка рядом", detail: "Уточните место у администратора" },
 ] as const;
 
-/** Форматы размещения. Цены: ориентир по площадкам на SITE.factsUpdated. */
+/**
+ * Форматы размещения. У каждого типа своя страница /nomera/<slug> с разметкой
+ * HotelRoom + Offer. Цена подтверждена заказчиком только для койко-места
+ * (SITE.priceFrom); для остальных типов price = null, пока заказчик не пришлёт тариф.
+ * Фото по типам — src/lib/photos.ts (ROOM_PHOTOS).
+ */
 export const ROOM_TYPES = [
   {
     slug: "koyko-mesto",
     name: "Койко-место в общей комнате",
     short: "Капсульные кровати со шторками в мужских и женских комнатах на 10–14 мест",
     capacity: "1 гость",
+    occupancy: 1,
+    beds: "Односпальная капсульная кровать со шторкой",
     bath: "Общий санузел на этаже",
     price: "от 6 000 ₸ за ночь",
+    priceValue: 6000 as number | null,
     priceNote: "цена на сентябрь 2026, зависит от дат",
     includes: [
       "Постельное бельё",
@@ -86,30 +96,99 @@ export const ROOM_TYPES = [
       "Кухня, Wi-Fi, стирка",
     ],
     forWhom: "Одиночным путешественникам, студентам, транзитным гостям",
+    /** Мета и первый абзац страницы типа. */
+    title: "Койко-место в хостеле Luxx Aparts, Алматы — от 6 000 ₸",
+    description:
+      "Капсульное койко-место со шторкой в мужской или женской комнате хостела Luxx Aparts в Алматы от 6 000 ₸ за ночь. Шкафчик, розетка, бельё включено. Фото и что входит в цену.",
+    intro:
+      "Койко-место в Luxx Aparts стоит от 6 000 ₸ за ночь на сентябрь 2026. Это капсульная кровать со шторкой, розеткой и лампой в мужской или женской комнате на 10–14 мест. У каждого гостя запирающийся шкафчик, бельё включено, санузел с душевыми общий на этаже. Кухня, Wi-Fi и стиральная машина бесплатно.",
+    details: [
+      [
+        "Как устроена общая комната?",
+        "Кровати капсульного типа в один и два яруса, у каждой шторка, розетка и лампа для чтения. Комнаты раздельные для мужчин и женщин, на 10–14 мест, с кондиционером, отоплением и вентиляцией. Ценные вещи хранятся в запирающемся шкафчике в коридоре: замок можно принести свой или взять на стойке.",
+      ],
+      [
+        "Что входит в цену койко-места?",
+        "Постельное бельё, шкафчик, Wi-Fi, общая кухня с посудой, чай и кофе, стиральная машина, камера хранения и круглосуточная стойка. Полотенце выдаётся за отдельную плату, фен по запросу на стойке.",
+      ],
+      [
+        "Сколько стоит койко-место на неделю или месяц?",
+        "Цена зависит от срока: для проживания от недели и от месяца администратор считает индивидуально. Напишите даты в WhatsApp, и в ответ придёт точная сумма. Прямое бронирование без комиссии агрегатора.",
+      ],
+    ] as QA[],
   },
   {
     slug: "odnomestny",
     name: "Одноместный номер Economy",
     short: "Отдельная комната с окном, запирается на ключ",
     capacity: "1 гость",
+    occupancy: 1,
+    beds: "Односпальная кровать",
     bath: "Общий санузел на этаже",
     price: "цена по запросу на ваши даты",
+    priceValue: null as number | null,
     priceNote: "",
     includes: ["Постельное бельё", "Кондиционер и отопление", "Кухня, Wi-Fi, стирка"],
     forWhom: "Командировочным и тем, кто остаётся надолго",
+    title: "Одноместный номер в хостеле Luxx Aparts, Алматы",
+    description:
+      "Одноместный номер Economy в Luxx Aparts: отдельная комната с окном и столом, закрывается на ключ, санузел на этаже. Цена на ваши даты — у администратора. Фото, что включено.",
+    intro:
+      "Одноместный номер Economy в Luxx Aparts — отдельная комната с окном, односпальной кроватью и столом для работы, дверь закрывается на ключ. Санузел с душевыми общий на этаже. Кондиционер, отопление и Wi-Fi включены. Цена зависит от дат и срока: напишите даты в WhatsApp, администратор ответит точной суммой.",
+    details: [
+      [
+        "Что есть в одноместном номере?",
+        "Кровать, стол и стул для работы с ноутбуком, окно, кондиционер и отопление, розетки. Дверь закрывается на ключ. Бельё включено, полотенце выдаётся за отдельную плату на стойке.",
+      ],
+      [
+        "Санузел в номере или общий?",
+        "Общий на этаже: раковины, душевые кабины и туалеты, горячая вода. Фен по запросу на стойке. Гости в отзывах отдельно отмечают чистоту санузлов.",
+      ],
+      [
+        "Сколько стоит одноместный номер?",
+        "Цена зависит от дат и срока проживания, для срока от недели и от месяца считается индивидуально. Напишите даты в WhatsApp или позвоните, ответ круглосуточно. Оплата при заселении наличными или картой.",
+      ],
+    ] as QA[],
   },
   {
     slug: "dvukhmestny",
     name: "Двухместный номер Economy",
     short: "Отдельная комната с двуспальной кроватью и окном",
     capacity: "2 гостя",
+    occupancy: 2,
+    beds: "Двуспальная кровать",
     bath: "Общий санузел на этаже",
     price: "цена по запросу на ваши даты",
+    priceValue: null as number | null,
     priceNote: "",
     includes: ["Постельное бельё", "Кондиционер и отопление", "Кухня, Wi-Fi, стирка"],
     forWhom: "Парам и семьям",
+    title: "Двухместный номер в хостеле Luxx Aparts, Алматы",
+    description:
+      "Двухместный номер Economy в Luxx Aparts: отдельная комната с двуспальной кроватью и окном для пары или семьи, санузел на этаже. Цена на ваши даты — у администратора. Фото.",
+    intro:
+      "Двухместный номер Economy в Luxx Aparts — отдельная комната с двуспальной кроватью и окном для пары, двух друзей или родителя с ребёнком. Дверь закрывается на ключ, санузел с душевыми общий на этаже. Кондиционер, отопление и Wi-Fi включены. Цену на ваши даты назовёт администратор в WhatsApp.",
+    details: [
+      [
+        "Что есть в двухместном номере?",
+        "Двуспальная кровать, окно, кондиционер и отопление, розетки. Дверь закрывается на ключ. Бельё на двоих включено, полотенца выдаются за отдельную плату на стойке.",
+      ],
+      [
+        "Можно ли с ребёнком?",
+        "Да, семьи с детьми Luxx Aparts размещает именно в отдельных номерах. Гости до 18 лет заселяются только с родителем или опекуном. В хостеле есть детская площадка и настольные игры.",
+      ],
+      [
+        "Сколько стоит двухместный номер?",
+        "Цена зависит от дат и срока, для проживания от недели и от месяца считается индивидуально. Напишите даты и число гостей в WhatsApp, администратор ответит точной суммой. Оплата при заселении наличными или картой.",
+      ],
+    ] as QA[],
   },
 ] as const;
+
+export type RoomType = (typeof ROOM_TYPES)[number];
+
+export const getRoomType = (slug: string): RoomType | undefined =>
+  ROOM_TYPES.find((r) => r.slug === slug);
 
 /** Расстояния, которые хостел сам указывает в карточке на Hostelworld. */
 export const DISTANCES = [
@@ -297,21 +376,26 @@ export const NAV = [
   ["/kontakty", "Контакты"],
 ] as const;
 
-export type QA = [question: string, answer: string];
-
 export const absolute = (path: string) => new URL(path, SITE.url).toString();
 
 export const whatsappWithText = (text: string) =>
   `${SITE.whatsapp}?text=${encodeURIComponent(text)}`;
 
-export const breadcrumbSchema = (name: string, path: string) => ({
+export type Crumb = [name: string, path: string];
+
+/** Хлебные крошки: «Главная» добавляется автоматически. */
+export const breadcrumbsSchema = (crumbs: readonly Crumb[]) => ({
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Главная", item: absolute("/") },
-    { "@type": "ListItem", position: 2, name, item: absolute(path) },
-  ],
+  itemListElement: [["Главная", "/"] as Crumb, ...crumbs].map(([name, path], i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name,
+    item: absolute(path),
+  })),
 });
+
+export const breadcrumbSchema = (name: string, path: string) => breadcrumbsSchema([[name, path]]);
 
 export const faqSchema = (items: readonly QA[]) => ({
   "@context": "https://schema.org",
@@ -321,6 +405,39 @@ export const faqSchema = (items: readonly QA[]) => ({
     name,
     acceptedAnswer: { "@type": "Answer", text },
   })),
+});
+
+/** Предложение по типу номера: цена только там, где её подтвердил заказчик. */
+export const roomOfferSchema = (room: RoomType) => ({
+  "@type": "Offer",
+  name: room.name,
+  url: absolute(`/nomera/${room.slug}`),
+  priceCurrency: "KZT",
+  ...(room.priceValue !== null ? { price: String(room.priceValue) } : {}),
+  availability: "https://schema.org/InStock",
+  validFrom: SITE.factsUpdatedIso,
+  itemOffered: { "@id": absolute(`/nomera/${room.slug}#room`) },
+});
+
+/** Страница типа номера (ТЗ, раздел 5.2): HotelRoom + Offer. */
+export const hotelRoomSchema = (room: RoomType, images: readonly string[]) => ({
+  "@context": "https://schema.org",
+  "@type": "HotelRoom",
+  "@id": absolute(`/nomera/${room.slug}#room`),
+  name: room.name,
+  description: room.intro,
+  url: absolute(`/nomera/${room.slug}`),
+  image: images.map((id) => absolute(`/photos/${id}-1600.webp`)),
+  bed: { "@type": "BedDetails", typeOfBed: room.beds, numberOfBeds: 1 },
+  occupancy: { "@type": "QuantitativeValue", maxValue: room.occupancy, unitCode: "C62" },
+  amenityFeature: room.includes.map((name) => ({
+    "@type": "LocationFeatureSpecification",
+    name,
+    value: true,
+  })),
+  containedInPlace: { "@id": absolute("/#hostel") },
+  offers: roomOfferSchema(room),
+  dateModified: SITE.factsUpdatedIso,
 });
 
 /** Полный узел организации (ТЗ, раздел 6). */
@@ -357,16 +474,7 @@ export const hostelSchema = () => ({
     name: a.name,
     value: true,
   })),
-  makesOffer: [
-    {
-      "@type": "Offer",
-      name: "Койко-место в общей комнате",
-      price: String(SITE.priceFrom),
-      priceCurrency: "KZT",
-      availability: "https://schema.org/InStock",
-      validFrom: SITE.factsUpdatedIso,
-    },
-  ],
+  makesOffer: ROOM_TYPES.map((r) => roomOfferSchema(r)),
   contactPoint: {
     "@type": "ContactPoint",
     telephone: SITE.phoneDisplay,
