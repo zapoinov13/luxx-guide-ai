@@ -10,33 +10,91 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FaqRouteImport } from './routes/faq'
+import { Route as KakDobratsyaRouteImport } from './routes/kak-dobratsya'
+import { Route as KontaktyRouteImport } from './routes/kontakty'
+import { Route as NomeraRouteImport } from './routes/nomera'
+import { Route as PravilaRouteImport } from './routes/pravila'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KakDobratsyaRoute = KakDobratsyaRouteImport.update({
+  id: '/kak-dobratsya',
+  path: '/kak-dobratsya',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KontaktyRoute = KontaktyRouteImport.update({
+  id: '/kontakty',
+  path: '/kontakty',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NomeraRoute = NomeraRouteImport.update({
+  id: '/nomera',
+  path: '/nomera',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PravilaRoute = PravilaRouteImport.update({
+  id: '/pravila',
+  path: '/pravila',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/faq': typeof FaqRoute
+  '/kak-dobratsya': typeof KakDobratsyaRoute
+  '/kontakty': typeof KontaktyRoute
+  '/nomera': typeof NomeraRoute
+  '/pravila': typeof PravilaRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/faq': typeof FaqRoute
+  '/kak-dobratsya': typeof KakDobratsyaRoute
+  '/kontakty': typeof KontaktyRoute
+  '/nomera': typeof NomeraRoute
+  '/pravila': typeof PravilaRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/faq': typeof FaqRoute
+  '/kak-dobratsya': typeof KakDobratsyaRoute
+  '/kontakty': typeof KontaktyRoute
+  '/nomera': typeof NomeraRoute
+  '/pravila': typeof PravilaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    '/' | '/faq' | '/kak-dobratsya' | '/kontakty' | '/nomera' | '/pravila'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/faq' | '/kak-dobratsya' | '/kontakty' | '/nomera' | '/pravila'
+  id:
+    | '__root__'
+    | '/'
+    | '/faq'
+    | '/kak-dobratsya'
+    | '/kontakty'
+    | '/nomera'
+    | '/pravila'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  FaqRoute: typeof FaqRoute
+  KakDobratsyaRoute: typeof KakDobratsyaRoute
+  KontaktyRoute: typeof KontaktyRoute
+  NomeraRoute: typeof NomeraRoute
+  PravilaRoute: typeof PravilaRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +106,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kak-dobratsya': {
+      id: '/kak-dobratsya'
+      path: '/kak-dobratsya'
+      fullPath: '/kak-dobratsya'
+      preLoaderRoute: typeof KakDobratsyaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kontakty': {
+      id: '/kontakty'
+      path: '/kontakty'
+      fullPath: '/kontakty'
+      preLoaderRoute: typeof KontaktyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nomera': {
+      id: '/nomera'
+      path: '/nomera'
+      fullPath: '/nomera'
+      preLoaderRoute: typeof NomeraRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pravila': {
+      id: '/pravila'
+      path: '/pravila'
+      fullPath: '/pravila'
+      preLoaderRoute: typeof PravilaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  FaqRoute: FaqRoute,
+  KakDobratsyaRoute: KakDobratsyaRoute,
+  KontaktyRoute: KontaktyRoute,
+  NomeraRoute: NomeraRoute,
+  PravilaRoute: PravilaRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
