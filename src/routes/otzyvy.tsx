@@ -34,7 +34,7 @@ export const Route = createFileRoute("/otzyvy")({
   head: () => ({
     ...pageHead(
       "Отзывы гостей о хостеле Luxx Aparts в Алматы",
-      `Реальные отзывы о Luxx Aparts с 2GIS, Ostrovok и Hostelworld: оценки ${RATINGS.map((r) => `${r.source} ${r.score}/${r.scale}`).join(", ")}. Чистота, тишина, коворкинг, персонал.`,
+      "Реальные отзывы о Luxx Aparts: Booking 8,8 из 10 (315 отзывов), Яндекс Карты 5,0 (192), 2GIS 4,8 (83), Ostrovok 8,7 (11). Чистота, тишина, коворкинг, персонал.",
       "/otzyvy",
     ),
     scripts: jsonLd(breadcrumbSchema("Отзывы", "/otzyvy"), reviewsSchema()),
@@ -52,7 +52,7 @@ function ReviewsPage() {
       photo={PHOTOS.lounge}
     >
       <AnswerSection title="Какие оценки у хостела на площадках?">
-        <div className="grid gap-3 sm:grid-cols-3">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
           {RATINGS.map((r) => (
             <a
               key={r.source}

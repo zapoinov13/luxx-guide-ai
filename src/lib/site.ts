@@ -248,11 +248,41 @@ export const REVIEWS: Review[] = [
   },
 ];
 
-/** Оценки на площадках на SITE.factsUpdated. */
+/** Оценки на площадках на SITE.factsUpdated. Порядок = порядок показа. */
 export const RATINGS = [
-  { source: "2GIS", score: "4,8", scale: "5", count: 83, url: SITE.links.twoGis },
-  { source: "Ostrovok", score: "8,7", scale: "10", count: 11, url: SITE.links.ostrovok },
-  { source: "Hostelworld", score: "10", scale: "10", count: 1, url: SITE.links.hostelworld },
+  {
+    source: "Booking",
+    label: "Потрясающе",
+    score: "8,8",
+    scale: "10",
+    count: 315,
+    url: SITE.links.booking,
+  },
+  {
+    source: "Яндекс Карты",
+    label: "",
+    score: "5,0",
+    scale: "5",
+    count: 192,
+    url: SITE.links.yandexMaps,
+  },
+  { source: "2GIS", label: "", score: "4,8", scale: "5", count: 83, url: SITE.links.twoGis },
+  {
+    source: "Ostrovok",
+    label: "Отлично",
+    score: "8,7",
+    scale: "10",
+    count: 11,
+    url: SITE.links.ostrovok,
+  },
+  {
+    source: "Hostelworld",
+    label: "",
+    score: "10",
+    scale: "10",
+    count: 1,
+    url: SITE.links.hostelworld,
+  },
 ] as const;
 
 export const NAV = [

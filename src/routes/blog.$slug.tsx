@@ -71,7 +71,7 @@ function BlogPostPage() {
   return (
     <main className="pb-24 lg:pb-0">
       <div className="bg-sand">
-        <div className="mx-auto max-w-3xl px-5 py-12 lg:px-8 lg:py-16">
+        <div className="mx-auto max-w-3xl px-5 py-8 lg:px-8 lg:py-16">
           <nav
             aria-label="Хлебные крошки"
             className="mb-6 flex flex-wrap items-center gap-2 text-sm text-muted-foreground"
@@ -88,10 +88,12 @@ function BlogPostPage() {
               {post.title}
             </span>
           </nav>
-          <h1 className="font-display text-4xl font-bold leading-[1.1] sm:text-5xl">
+          <h1 className="font-display text-[2rem] font-bold leading-[1.1] sm:text-4xl lg:text-5xl">
             {post.title}
           </h1>
-          <p className="mt-5 text-lg leading-8 text-muted-foreground">{post.description}</p>
+          <p className="mt-4 text-base leading-7 text-muted-foreground lg:mt-5 lg:text-lg lg:leading-8">
+            {post.description}
+          </p>
           <p className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
             <span>{post.author}</span>
             <time dateTime={post.date}>{formatDate(post.date)}</time>
@@ -113,7 +115,7 @@ function BlogPostPage() {
               height: 1067,
             }}
             sizes="(min-width: 768px) 768px, 100vw"
-            className="mb-10 aspect-[16/9] w-full rounded-3xl object-cover shadow-card"
+            className="mb-8 aspect-[16/10] w-full rounded-2xl object-cover shadow-card lg:mb-10 lg:aspect-[16/9] lg:rounded-3xl"
             priority
           />
         )}

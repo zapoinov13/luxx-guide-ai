@@ -66,7 +66,7 @@ function BlogIndexPage() {
                     {p.readingMinutes} мин
                   </span>
                 </p>
-                <h2 className="mt-2 font-display text-xl font-bold leading-snug sm:text-2xl">
+                <h2 className="mt-2 font-display text-lg font-bold leading-snug sm:text-2xl">
                   <Link to="/blog/$slug" params={{ slug: p.slug }} className="hover:text-primary">
                     {p.title}
                   </Link>
