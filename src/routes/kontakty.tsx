@@ -77,12 +77,13 @@ function ContactsPage() {
 
         <AnswerSection title="Где ещё есть Luxx Aparts?">
           <p>
-            Карточки хостела на картах и площадках бронирования. Цены и условия там могут отличаться
-            от прямых.
+            Карточки хостела на картах и площадках бронирования, фото и новости — в Instagram. Цены
+            и условия на площадках могут отличаться от прямых.
           </p>
           <div className="flex flex-wrap gap-3">
             {[
               ["2GIS", SITE.links.twoGis],
+              ["Instagram", SITE.links.instagram],
               ["Яндекс Карты", SITE.links.yandexMaps],
               ["Booking", SITE.links.booking],
               ["Hostelworld", SITE.links.hostelworld],

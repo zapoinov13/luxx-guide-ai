@@ -42,7 +42,9 @@ export const SITE = {
     booking: "https://www.booking.com/hotel/kz/luxx-aparts.ru.html",
     hostelworld: "https://www.hostelworld.com/hostels/p/335147/luxx-aparts/",
     ostrovok: "https://ostrovok.ru/hotel/kazakhstan/almaty/mid13341876/luxx_aparts_hostel/",
-    twoGis: "https://2gis.kz/almaty/firm/70000001100801444",
+    /** Ссылка на карточку 2GIS от заказчика. */
+    twoGis: "https://go.2gis.com/DFrEx",
+    instagram: "https://www.instagram.com/luxx.aparts",
     yandexMaps: "https://yandex.ru/maps/org/luxx_aparts/136439991889/",
   },
   /** Месяц, на который подтверждены правила, цены и факты на сайте. */

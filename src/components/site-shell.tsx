@@ -174,6 +174,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
                 ["Booking", SITE.links.booking],
                 ["Яндекс Карты", SITE.links.yandexMaps],
                 ["2GIS", SITE.links.twoGis],
+                ["Instagram", SITE.links.instagram],
                 ["Hostelworld", SITE.links.hostelworld],
                 ["Ostrovok", SITE.links.ostrovok],
               ].map(([label, href]) => (
