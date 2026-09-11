@@ -12,8 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BronirovanieRouteImport } from './routes/bronirovanie'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as FotoRouteImport } from './routes/foto'
 import { Route as KakDobratsyaRouteImport } from './routes/kak-dobratsya'
 import { Route as KontaktyRouteImport } from './routes/kontakty'
+import { Route as LlmsFullDottxtRouteImport } from './routes/llms-full[.]txt'
 import { Route as OtzyvyRouteImport } from './routes/otzyvy'
 import { Route as PravilaRouteImport } from './routes/pravila'
 import { Route as RyadomRouteImport } from './routes/ryadom'
@@ -40,6 +42,11 @@ const FaqRoute = FaqRouteImport.update({
   path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FotoRoute = FotoRouteImport.update({
+  id: '/foto',
+  path: '/foto',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const KakDobratsyaRoute = KakDobratsyaRouteImport.update({
   id: '/kak-dobratsya',
   path: '/kak-dobratsya',
@@ -48,6 +55,11 @@ const KakDobratsyaRoute = KakDobratsyaRouteImport.update({
 const KontaktyRoute = KontaktyRouteImport.update({
   id: '/kontakty',
   path: '/kontakty',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LlmsFullDottxtRoute = LlmsFullDottxtRouteImport.update({
+  id: '/llms-full.txt',
+  path: '/llms-full.txt',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OtzyvyRoute = OtzyvyRouteImport.update({
@@ -105,8 +117,10 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bronirovanie': typeof BronirovanieRoute
   '/faq': typeof FaqRoute
+  '/foto': typeof FotoRoute
   '/kak-dobratsya': typeof KakDobratsyaRoute
   '/kontakty': typeof KontaktyRoute
+  '/llms-full.txt': typeof LlmsFullDottxtRoute
   '/otzyvy': typeof OtzyvyRoute
   '/pravila': typeof PravilaRoute
   '/ryadom': typeof RyadomRoute
@@ -122,8 +136,10 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/bronirovanie': typeof BronirovanieRoute
   '/faq': typeof FaqRoute
+  '/foto': typeof FotoRoute
   '/kak-dobratsya': typeof KakDobratsyaRoute
   '/kontakty': typeof KontaktyRoute
+  '/llms-full.txt': typeof LlmsFullDottxtRoute
   '/otzyvy': typeof OtzyvyRoute
   '/pravila': typeof PravilaRoute
   '/ryadom': typeof RyadomRoute
@@ -140,8 +156,10 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/bronirovanie': typeof BronirovanieRoute
   '/faq': typeof FaqRoute
+  '/foto': typeof FotoRoute
   '/kak-dobratsya': typeof KakDobratsyaRoute
   '/kontakty': typeof KontaktyRoute
+  '/llms-full.txt': typeof LlmsFullDottxtRoute
   '/otzyvy': typeof OtzyvyRoute
   '/pravila': typeof PravilaRoute
   '/ryadom': typeof RyadomRoute
@@ -159,8 +177,10 @@ export interface FileRouteTypes {
     | '/'
     | '/bronirovanie'
     | '/faq'
+    | '/foto'
     | '/kak-dobratsya'
     | '/kontakty'
+    | '/llms-full.txt'
     | '/otzyvy'
     | '/pravila'
     | '/ryadom'
@@ -176,8 +196,10 @@ export interface FileRouteTypes {
     | '/'
     | '/bronirovanie'
     | '/faq'
+    | '/foto'
     | '/kak-dobratsya'
     | '/kontakty'
+    | '/llms-full.txt'
     | '/otzyvy'
     | '/pravila'
     | '/ryadom'
@@ -193,8 +215,10 @@ export interface FileRouteTypes {
     | '/'
     | '/bronirovanie'
     | '/faq'
+    | '/foto'
     | '/kak-dobratsya'
     | '/kontakty'
+    | '/llms-full.txt'
     | '/otzyvy'
     | '/pravila'
     | '/ryadom'
@@ -211,8 +235,10 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BronirovanieRoute: typeof BronirovanieRoute
   FaqRoute: typeof FaqRoute
+  FotoRoute: typeof FotoRoute
   KakDobratsyaRoute: typeof KakDobratsyaRoute
   KontaktyRoute: typeof KontaktyRoute
+  LlmsFullDottxtRoute: typeof LlmsFullDottxtRoute
   OtzyvyRoute: typeof OtzyvyRoute
   PravilaRoute: typeof PravilaRoute
   RyadomRoute: typeof RyadomRoute
@@ -248,6 +274,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/foto': {
+      id: '/foto'
+      path: '/foto'
+      fullPath: '/foto'
+      preLoaderRoute: typeof FotoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/kak-dobratsya': {
       id: '/kak-dobratsya'
       path: '/kak-dobratsya'
@@ -260,6 +293,13 @@ declare module '@tanstack/react-router' {
       path: '/kontakty'
       fullPath: '/kontakty'
       preLoaderRoute: typeof KontaktyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/llms-full.txt': {
+      id: '/llms-full.txt'
+      path: '/llms-full.txt'
+      fullPath: '/llms-full.txt'
+      preLoaderRoute: typeof LlmsFullDottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/otzyvy': {
@@ -339,8 +379,10 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BronirovanieRoute: BronirovanieRoute,
   FaqRoute: FaqRoute,
+  FotoRoute: FotoRoute,
   KakDobratsyaRoute: KakDobratsyaRoute,
   KontaktyRoute: KontaktyRoute,
+  LlmsFullDottxtRoute: LlmsFullDottxtRoute,
   OtzyvyRoute: OtzyvyRoute,
   PravilaRoute: PravilaRoute,
   RyadomRoute: RyadomRoute,

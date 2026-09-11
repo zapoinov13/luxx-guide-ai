@@ -42,6 +42,7 @@ export default defineConfig({
       page("/pravila", 0.8, "monthly"),
       page("/faq", 0.8, "monthly"),
       page("/kontakty", 0.8, "monthly"),
+      page("/foto", 0.6, "monthly"),
       page(
         "/blog",
         0.7,
@@ -54,6 +55,7 @@ export default defineConfig({
       page("/blog/avtor", 0.4, "yearly"),
       ...blogPosts.map((p) => page(`/blog/${p.slug}`, 0.6, "monthly", p.lastmod)),
       { path: "/blog/rss.xml", sitemap: { exclude: true } },
+      { path: "/llms-full.txt", sitemap: { exclude: true } },
     ],
     // Адрес сайта задаётся в одном месте — src/lib/site.ts (SITE_URL).
     sitemap: { enabled: true, host: SITE_URL },

@@ -33,31 +33,8 @@ import {
   pageHead,
   pluralReviews,
   webSiteSchema,
-  type QA,
 } from "@/lib/site";
-
-const faq: QA[] = [
-  [
-    "Есть ли в хостеле кухня?",
-    "Да, общая кухня с плитой, микроволновкой, холодильником, посудой и чайником, чай и кофе бесплатно. Рядом стиральная машина и утюг.",
-  ],
-  [
-    "Можно ли заселиться ночью?",
-    `Стойка регистрации работает круглосуточно. Стандартный заезд с ${SITE.checkIn.from} до ${SITE.checkIn.to}. Если приезжаете позже, заранее напишите администратору в WhatsApp: он подтвердит порядок ночного заезда.`,
-  ],
-  [
-    "Принимаете ли иностранцев?",
-    "Да. Персонал говорит по-русски и по-английски. Для заселения нужен паспорт. Вопросы по регистрации иностранных гостей уточните у администратора до приезда.",
-  ],
-  [
-    "Можно ли с детьми?",
-    "Да, семьи с детьми размещаются в отдельных комнатах. Гости до 18 лет заселяются только с родителем или опекуном. Есть детская площадка и настольные игры.",
-  ],
-  [
-    "Как далеко хостел от центра Алматы?",
-    "Около 6 км: 15–25 минут на такси или на метро от станции «Сайран» (1,9 км). До вокзала Алматы-2 7 км, до аэропорта около 20 км, автовокзал Сайран на той же улице Толе би.",
-  ],
-];
+import { HOME_FAQ } from "@/lib/qa";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -66,7 +43,7 @@ export const Route = createFileRoute("/")({
       `Недорогой хостел в Алматы рядом с автовокзалом Сайран: капсулы от ${SITE.priceFrom.toLocaleString("ru-RU")} ₸, отдельные номера, кухня, коворкинг, стойка 24/7. Бронируйте напрямую в WhatsApp.`,
       "/",
     ),
-    scripts: jsonLd(hostelSchema(), webSiteSchema(), faqSchema(faq)),
+    scripts: jsonLd(hostelSchema(), webSiteSchema(), faqSchema(HOME_FAQ)),
   }),
   component: HomePage,
 });
@@ -232,7 +209,10 @@ function HomePage() {
           </div>
           <p className="max-w-md text-sm text-muted-foreground">
             Капсулы со шторками, комнаты с окном, кухня, коворкинг и санузлы. Нажмите на фото, чтобы
-            открыть крупнее.
+            открыть крупнее.{" "}
+            <Link to="/foto" className="font-semibold text-primary">
+              Все 30 фото
+            </Link>
           </p>
         </div>
         <div className="mt-6 lg:mt-8">
@@ -556,7 +536,7 @@ function HomePage() {
           </Link>
         </div>
         <div className="mt-8 divide-y divide-border rounded-3xl border border-border">
-          {faq.map(([q, a]) => (
+          {HOME_FAQ.map(([q, a]) => (
             <article key={q} className="grid gap-2 p-5 md:grid-cols-[1fr_2fr] md:gap-8 md:p-6">
               <h3 className="font-display text-lg font-bold">{q}</h3>
               <p className="text-sm leading-6 text-muted-foreground">{a}</p>

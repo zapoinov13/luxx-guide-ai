@@ -72,6 +72,43 @@ function RoomsPage() {
       </AnswerSection>
 
       <AnswerSection title="Чем отличаются форматы?">
+        <div className="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>
+                  <span className="sr-only">Параметр</span>
+                </th>
+                {ROOM_TYPES.map((r) => (
+                  <th key={r.slug}>
+                    <Link to="/nomera/$type" params={{ type: r.slug }}>
+                      {r.name}
+                    </Link>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                ["Цена в сутки", ROOM_TYPES.map((r) => r.price.replace(" в сутки", ""))],
+                ["За кого", ["за место", "за номер", "за номер"]],
+                ["Кровать", ROOM_TYPES.map((r) => r.beds)],
+                ["Дверь на ключ", ["нет, шторка у капсулы", "да", "да"]],
+                ["Окно", ["в комнате", "с окном или без", "да"]],
+                ["Санузел", ROOM_TYPES.map((r) => r.bath)],
+                ["Шкафчик с замком", ["да", "комната закрывается", "комната закрывается"]],
+                ["Кому подходит", ROOM_TYPES.map((r) => r.forWhom.toLowerCase())],
+              ].map(([label, values]) => (
+                <tr key={label as string}>
+                  <th scope="row">{label as string}</th>
+                  {(values as string[]).map((v, i) => (
+                    <td key={i}>{v}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
         <div className="space-y-5">
           {ROOM_TYPES.map((r) => (
             <article
@@ -141,6 +178,16 @@ function RoomsPage() {
         </ul>
         <p>
           Полотенце в стоимость не входит и выдаётся за отдельную плату на стойке. Фен по запросу.
+        </p>
+      </AnswerSection>
+
+      <AnswerSection title="Сколько стоит проживание на месяц?">
+        <p>
+          По базовому тарифу 30 суток стоят: койко-место 180 000 ₸, одноместный номер без окна 300
+          000 ₸, с окном 330 000 ₸, двухместный номер 450 000 ₸. Это верхняя граница: для срока от
+          недели и от месяца администратор считает индивидуально, поэтому напишите даты и срок в
+          WhatsApp. На месяц удобнее всего койко-место или одноместный номер: кухня, стиральная
+          машина и коворкинг включены, а до метро «Сайран» и автовокзала близко.
         </p>
       </AnswerSection>
 

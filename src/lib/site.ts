@@ -69,6 +69,7 @@ export const PAGE_DATES: Record<string, string> = {
   "/pravila": "2026-09-11",
   "/faq": "2026-09-11",
   "/kontakty": "2026-09-11",
+  "/foto": "2026-09-11",
   "/blog": "2026-09-11",
   "/blog/avtor": "2026-09-11",
 };
@@ -398,6 +399,9 @@ export const RATINGS = [
     url: SITE.links.hostelworld,
   },
 ] as const;
+
+/** Ссылки, которых нет в шапке: подвал и внутренние переходы. */
+export const EXTRA_NAV = [["/foto", "Фото хостела"]] as const;
 
 export const NAV = [
   ["/nomera", "Номера"],

@@ -3,7 +3,7 @@ import { Menu, Phone, X } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { goalForLink, trackGoal } from "@/lib/analytics";
-import { NAV, SITE } from "@/lib/site";
+import { EXTRA_NAV, NAV, SITE } from "@/lib/site";
 
 export function SiteShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
@@ -131,7 +131,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
           <div>
             <p className="text-sm font-semibold">Разделы</p>
             <nav aria-label="Разделы сайта" className="mt-3 flex flex-col gap-2">
-              {NAV.map(([to, label]) => (
+              {[...NAV, ...EXTRA_NAV].map(([to, label]) => (
                 <Link
                   key={to}
                   to={to}
