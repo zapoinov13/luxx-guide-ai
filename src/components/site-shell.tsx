@@ -27,7 +27,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
             <span className="font-display text-lg font-bold tracking-tight">Luxx Aparts</span>
           </Link>
 
-          <nav aria-label="Основная навигация" className="hidden items-center gap-5 xl:flex">
+          <nav aria-label="Основная навигация" className="hidden items-center gap-4 xl:flex">
             {NAV.map(([to, label]) => (
               <Link
                 key={to}
@@ -42,8 +42,13 @@ export function SiteShell({ children }: { children: ReactNode }) {
             ))}
           </nav>
 
-          <div className="hidden items-center gap-2 xl:flex">
-            <Button asChild variant="ghost">
+          <div className="hidden items-center gap-1 xl:flex">
+            <Button asChild variant="ghost" size="icon" className="2xl:hidden">
+              <a href={`tel:${SITE.phoneHref}`} aria-label={`Позвонить ${SITE.phoneDisplay}`}>
+                <Phone />
+              </a>
+            </Button>
+            <Button asChild variant="ghost" className="hidden 2xl:inline-flex">
               <a href={`tel:${SITE.phoneHref}`}>
                 <Phone />
                 {SITE.phoneDisplay}
