@@ -33,7 +33,7 @@ const reviewsSchema = () => ({
 export const Route = createFileRoute("/otzyvy")({
   head: () => ({
     ...pageHead(
-      "Отзывы гостей о хостеле Luxx Aparts в Алматы",
+      "Отзывы о хостеле Luxx Aparts в Алматы: 8,8 на Booking",
       "Реальные отзывы о Luxx Aparts: Booking 8,8 из 10 (315 отзывов), Яндекс Карты 5,0 (192), 2GIS 4,8 (83), Ostrovok 8,7 (11). Чистота, тишина, коворкинг, персонал.",
       "/otzyvy",
     ),
@@ -46,7 +46,7 @@ function ReviewsPage() {
   return (
     <ContentPage
       eyebrow="Отзывы"
-      title="Отзывы гостей Luxx Aparts"
+      title="Отзывы о хостеле Luxx Aparts в Алматы"
       intro={`На ${SITE.factsUpdated} у Luxx Aparts ${RATINGS.slice(0, 3)
         .map((r) => `${r.score} из ${r.scale} на ${r.source} (${pluralReviews(r.count)})`)
         .join(

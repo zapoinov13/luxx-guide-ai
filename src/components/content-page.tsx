@@ -20,7 +20,7 @@ type ContentPageProps = {
 export function ContentPage({ title, eyebrow, intro, updated, photo, children }: ContentPageProps) {
   return (
     <main className="pb-24 lg:pb-0">
-      <div className="bg-sand">
+      <div className="border-b border-border bg-secondary/60">
         <div className="mx-auto grid max-w-6xl items-center gap-6 px-5 py-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10 lg:px-8 lg:py-16">
           <div>
             <nav

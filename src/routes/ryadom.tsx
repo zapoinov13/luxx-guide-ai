@@ -18,8 +18,8 @@ const itemListSchema = () => ({
 export const Route = createFileRoute("/ryadom")({
   head: () => ({
     ...pageHead(
-      "Что рядом с Luxx Aparts: автовокзал, аквапарк, парки, центр",
-      "Что рядом с хостелом Luxx Aparts на Толе би 286/8: автовокзал Сайран, аквапарк Family Park, Ботанический сад, Оперный театр. Расстояния и как доехать.",
+      "Что рядом с хостелом Luxx Aparts в Алматы",
+      "Хостел на Толе би в Алматы: что рядом с Luxx Aparts. Автовокзал Сайран, аквапарк Family Park, Ботанический сад, центр и Оперный театр. Расстояния и как доехать.",
       "/ryadom",
     ),
     scripts: jsonLd(breadcrumbSchema("Что рядом", "/ryadom"), itemListSchema()),

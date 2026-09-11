@@ -70,7 +70,7 @@ function BlogPostPage() {
   const { post, others } = Route.useLoaderData();
   return (
     <main className="pb-24 lg:pb-0">
-      <div className="bg-sand">
+      <div className="border-b border-border bg-secondary/60">
         <div className="mx-auto max-w-3xl px-5 py-8 lg:px-8 lg:py-16">
           <nav
             aria-label="Хлебные крошки"

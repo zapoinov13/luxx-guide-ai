@@ -77,7 +77,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: `${SITE.name} — хостел и апартаменты в Алматы` },
+      { title: `Хостел в Алматы ${SITE.name}` },
       { name: "description", content: SITE.whoWeAre },
       { name: "author", content: SITE.name },
       { name: "theme-color", content: "#1c1f2b" },

@@ -26,8 +26,8 @@ export const Route = createFileRoute("/bronirovanie")({
       : {},
   head: () => ({
     ...pageHead(
-      "Забронировать номер в Luxx Aparts напрямую, Алматы",
-      `Прямое бронирование в хостеле Luxx Aparts: заявка в WhatsApp или звонок ${SITE.phoneDisplay}. Без комиссии агрегатора, ответ администратора круглосуточно.`,
+      "Забронировать хостел в Алматы напрямую — Luxx Aparts",
+      `Бронирование хостела Luxx Aparts в Алматы без комиссии: заявка в WhatsApp или звонок ${SITE.phoneDisplay}. Койко-место от ${SITE.priceFrom.toLocaleString("ru-RU")} ₸, ответ круглосуточно.`,
       "/bronirovanie",
     ),
     scripts: jsonLd(breadcrumbSchema("Бронирование", "/bronirovanie"), hostelSchema()),
@@ -102,7 +102,7 @@ function BookingPage() {
   return (
     <ContentPage
       eyebrow="Бронирование"
-      title="Забронировать номер напрямую"
+      title="Забронировать хостел в Алматы напрямую"
       intro={`Заполните форму — заявка откроется готовым сообщением в WhatsApp. Администратор подтвердит места, назовёт цену на ваши даты и способ оплаты. Предоплаты нет, отвечаем круглосуточно. Быстрее позвонить: ${SITE.phoneDisplay}.`}
       photo={PHOTOS.privateRoom}
     >

@@ -46,7 +46,7 @@ const rules: QA[] = [
 export const Route = createFileRoute("/pravila")({
   head: () => ({
     ...pageHead(
-      "Правила заселения и проживания в Luxx Aparts",
+      "Правила заселения в хостеле Luxx Aparts, Алматы",
       `Заезд с ${SITE.checkIn.from} до ${SITE.checkIn.to}, выезд до ${SITE.checkOut}. Документы, дети, животные, курение, оплата, отмена: правила хостела Luxx Aparts в Алматы.`,
       "/pravila",
     ),
@@ -59,8 +59,8 @@ function RulesPage() {
   return (
     <ContentPage
       eyebrow="Правила"
-      title="Правила заселения и проживания"
-      intro={`Заезд с ${SITE.checkIn.from} до ${SITE.checkIn.to}, выезд до ${SITE.checkOut}. Нужен документ с фотографией, гости до 18 лет живут только с родителем. Оплата при заселении наличными или картой. Животные, курение в помещениях и вечеринки не допускаются.`}
+      title="Правила заселения и проживания в хостеле Luxx Aparts"
+      intro={`Заезд в хостел с ${SITE.checkIn.from} до ${SITE.checkIn.to}, выезд до ${SITE.checkOut}. Для заселения нужен документ с фотографией, гости до 18 лет живут только с родителем. Оплата при заселении наличными или картой. Животные, курение в помещениях и вечеринки не допускаются.`}
       updated={SITE.factsUpdated}
       photo={PHOTOS.reception}
     >

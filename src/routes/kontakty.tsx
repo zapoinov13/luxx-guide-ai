@@ -8,7 +8,7 @@ import { SITE, breadcrumbSchema, hostelSchema, jsonLd, mapEmbedUrl, pageHead } f
 export const Route = createFileRoute("/kontakty")({
   head: () => ({
     ...pageHead(
-      "Контакты хостела Luxx Aparts в Алматы",
+      "Контакты хостела Luxx Aparts в Алматы: телефон, адрес",
       `Телефон и WhatsApp ${SITE.phoneDisplay}, e-mail ${SITE.email}, адрес ${SITE.address}. Стойка регистрации работает круглосуточно.`,
       "/kontakty",
     ),
@@ -27,7 +27,7 @@ function ContactsPage() {
   return (
     <ContentPage
       eyebrow="Контакты"
-      title="Контакты Luxx Aparts"
+      title="Контакты хостела Luxx Aparts в Алматы"
       intro={`Свободные места и цену на ваши даты быстрее всего узнать в WhatsApp или по телефону ${SITE.phoneDisplay}. Адрес: ${SITE.address}, ${SITE.complex}. На связи круглосуточно.`}
       photo={PHOTOS.reception}
     >
