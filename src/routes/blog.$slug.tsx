@@ -150,7 +150,7 @@ function BlogPostPage() {
           <div>
             <h2 className="font-display text-2xl font-bold">Едете в Алматы?</h2>
             <p className="mt-2 text-sm text-ink-muted">
-              Койко-место от {SITE.priceFrom.toLocaleString("ru-RU")} ₸, отдельные комнаты, стойка
+              Койко-место от {SITE.priceFrom.toLocaleString("ru-RU")} ₸, отдельные комнаты, стойка
               круглосуточно.
             </p>
           </div>

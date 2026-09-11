@@ -28,7 +28,7 @@ export const Route = createFileRoute("/bronirovanie")({
   head: () => ({
     ...pageHead(
       "Забронировать хостел в Алматы напрямую — Luxx Aparts",
-      `Бронирование хостела Luxx Aparts в Алматы без комиссии: заявка в WhatsApp или звонок ${SITE.phoneDisplay}. Койко-место ${SITE.priceFrom.toLocaleString("ru-RU")} ₸, номера от 10 000 ₸, ответ круглосуточно.`,
+      `Бронирование хостела Luxx Aparts в Алматы без комиссии: заявка в WhatsApp или звонок ${SITE.phoneDisplay}. Койко-место ${SITE.priceFrom.toLocaleString("ru-RU")} ₸, номера от 10 000 ₸, ответ круглосуточно.`,
       "/bronirovanie",
     ),
     scripts: jsonLd(breadcrumbSchema("Бронирование", "/bronirovanie"), hostelSchema()),
@@ -119,7 +119,7 @@ function BookingPage() {
   const units = perBed ? Math.max(1, Number(form.guests) || 1) : 1;
   const total = nights && unitPrice ? nights * unitPrice * units : 0;
   const estimate = total
-    ? `${pluralDays(nights)} × ${fmt(unitPrice ?? 0)} ₸${units > 1 ? ` × ${units}` : ""} = ${fmt(total)} ₸`
+    ? `${pluralDays(nights)} × ${fmt(unitPrice ?? 0)} ₸${units > 1 ? ` × ${units}` : ""} = ${fmt(total)} ₸`
     : "";
 
   const message = [
@@ -149,7 +149,7 @@ function BookingPage() {
     <ContentPage
       eyebrow="Бронирование"
       title="Забронировать хостел в Алматы напрямую"
-      intro={`Заполните форму — заявка откроется готовым сообщением в WhatsApp. Администратор подтвердит свободные места и способ оплаты. Койко-место ${SITE.priceFrom.toLocaleString("ru-RU")} ₸, одноместный номер от 10 000 ₸, двухместный 15 000 ₸. Предоплаты нет, отвечаем круглосуточно. Быстрее позвонить: ${SITE.phoneDisplay}.`}
+      intro={`Заполните форму — заявка откроется готовым сообщением в WhatsApp. Администратор подтвердит свободные места и способ оплаты. Койко-место ${SITE.priceFrom.toLocaleString("ru-RU")} ₸, одноместный номер от 10 000 ₸, двухместный 15 000 ₸. Предоплаты нет, отвечаем круглосуточно. Быстрее позвонить: ${SITE.phoneDisplay}.`}
       photo={PHOTOS.privateRoom}
     >
       <AnswerSection title="Как отправить заявку?">
@@ -257,7 +257,7 @@ function BookingPage() {
             ) : (
               <p className="text-muted-foreground">
                 Укажите даты и формат — покажем ориентировочную стоимость по базовым ценам:
-                койко-место 6 000 ₸, одноместный 10 000–11 000 ₸, двухместный 15 000 ₸.
+                койко-место 6 000 ₸, одноместный 10 000–11 000 ₸, двухместный 15 000 ₸.
               </p>
             )}
           </div>

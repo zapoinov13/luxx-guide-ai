@@ -72,7 +72,7 @@ function RoomTypePage() {
               {room.variants.map((v) => (
                 <li key={v.name} className="flex justify-between gap-4">
                   <span>{v.name}</span>
-                  <strong className="text-foreground">{v.price.toLocaleString("ru-RU")} ₸</strong>
+                  <strong className="text-foreground">{v.price.toLocaleString("ru-RU")} ₸</strong>
                 </li>
               ))}
             </ul>

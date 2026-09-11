@@ -1,4 +1,4 @@
-import { marked } from "marked";
+import { marked, Renderer } from "marked";
 
 /**
  * Блог: статьи лежат в content/blog/<slug>.md с frontmatter.
@@ -57,6 +57,11 @@ const plainText = (markdown: string) =>
     .replace(/\s+/g, " ")
     .trim();
 
+/* Таблицы в статьях оборачиваются в прокручиваемый блок, чтобы не ломать мобильную вёрстку. */
+const renderer = new Renderer();
+const baseTable = renderer.table.bind(renderer);
+renderer.table = (token) => `<div class="table-scroll table-wide">${baseTable(token)}</div>`;
+
 const toPost = (path: string, raw: string): Post => {
   const slug = path.replace(/^.*\//, "").replace(/\.md$/, "");
   const { data, body } = parseFrontmatter(raw);
@@ -76,7 +81,7 @@ const toPost = (path: string, raw: string): Post => {
       .map((t) => t.trim())
       .filter(Boolean),
     readingMinutes: Math.max(1, Math.round(words / 180)),
-    html: marked.parse(body, { async: false, gfm: true }) as string,
+    html: marked.parse(body, { async: false, gfm: true, renderer }) as string,
     text,
   };
 };

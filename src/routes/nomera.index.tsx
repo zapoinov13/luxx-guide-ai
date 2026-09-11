@@ -17,8 +17,8 @@ import {
 export const Route = createFileRoute("/nomera/")({
   head: () => ({
     ...pageHead(
-      `Цены хостела Luxx Aparts в Алматы: койко-место от ${SITE.priceFrom.toLocaleString("ru-RU")} ₸`,
-      `Сколько стоит хостел в Алматы: койко-место ${SITE.priceFrom.toLocaleString("ru-RU")} ₸, одноместный номер от 10 000 ₸, двухместный 15 000 ₸. Что входит в цену, скидки на месяц.`,
+      `Цены хостела Luxx Aparts в Алматы: койко-место от ${SITE.priceFrom.toLocaleString("ru-RU")} ₸`,
+      `Сколько стоит хостел в Алматы: койко-место ${SITE.priceFrom.toLocaleString("ru-RU")} ₸, одноместный номер от 10 000 ₸, двухместный 15 000 ₸. Что входит в цену, скидки на месяц.`,
       "/nomera",
     ),
     scripts: jsonLd(breadcrumbSchema("Номера и цены", "/nomera"), hostelSchema()),
@@ -32,12 +32,12 @@ function RoomsPage() {
     <ContentPage
       eyebrow="Номера и цены"
       title="Номера и цены хостела Luxx Aparts в Алматы"
-      intro={`Проживание в хостеле Luxx Aparts стоит от ${price} до ${SITE.priceTo.toLocaleString("ru-RU")} ₸: койко-место в мужской или женской комнате ${price} ₸, одноместный номер 10 000 ₸ без окна и 11 000 ₸ с окном, двухместный номер 15 000 ₸ за номер. Всего ${SITE.rooms} номера, санузел общий на этаже. В цену входят бельё, Wi-Fi, кухня и стирка.`}
+      intro={`Проживание в хостеле Luxx Aparts стоит от ${price} до ${SITE.priceTo.toLocaleString("ru-RU")} ₸: койко-место в мужской или женской комнате ${price} ₸, одноместный номер 10 000 ₸ без окна и 11 000 ₸ с окном, двухместный номер 15 000 ₸ за номер. Всего ${SITE.rooms} номера, санузел общий на этаже. В цену входят бельё, Wi-Fi, кухня и стирка.`}
       updated={SITE.factsUpdated}
       photo={PHOTOS.dorm}
     >
       <AnswerSection title="Какие номера есть и сколько стоят?">
-        <div className="table-scroll">
+        <div className="table-stack">
           <table>
             <thead>
               <tr>
@@ -55,10 +55,12 @@ function RoomsPage() {
                       {row.name}
                     </Link>
                   </td>
-                  <td>{row.capacity}</td>
-                  <td>{row.bath}</td>
-                  <td>
-                    <strong>{row.price.toLocaleString("ru-RU")} ₸</strong>
+                  <td data-label="Вместимость">{row.capacity}</td>
+                  <td data-label="Санузел">{row.bath}</td>
+                  <td data-label="Цена">
+                    <strong className="whitespace-nowrap">
+                      {row.price.toLocaleString("ru-RU")} ₸
+                    </strong>
                   </td>
                 </tr>
               ))}
@@ -72,7 +74,37 @@ function RoomsPage() {
       </AnswerSection>
 
       <AnswerSection title="Чем отличаются форматы?">
-        <div className="table-scroll">
+        <div className="grid gap-4 sm:hidden">
+          {ROOM_TYPES.map((r, i) => (
+            <div key={r.slug} className="rounded-2xl border border-border bg-card p-4">
+              <p className="font-semibold text-foreground">
+                <Link to="/nomera/$type" params={{ type: r.slug }}>
+                  {r.name}
+                </Link>
+              </p>
+              <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-sm">
+                {(
+                  [
+                    ["Цена", r.price],
+                    ["За кого", ["за место", "за номер", "за номер"][i]],
+                    ["Кровать", r.beds],
+                    ["Дверь на ключ", ["нет, шторка у капсулы", "да", "да"][i]],
+                    ["Окно", ["в комнате", "с окном или без", "да"][i]],
+                    ["Санузел", r.bath],
+                    ["Шкафчик", ["с замком", "комната закрывается", "комната закрывается"][i]],
+                    ["Кому", r.forWhom.toLowerCase()],
+                  ] as [string, string | undefined][]
+                ).map(([k, v]) => (
+                  <div key={k} className="contents">
+                    <dt className="text-muted-foreground">{k}</dt>
+                    <dd className="text-foreground">{v}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          ))}
+        </div>
+        <div className="table-scroll hidden sm:block">
           <table>
             <thead>
               <tr>
@@ -183,8 +215,8 @@ function RoomsPage() {
 
       <AnswerSection title="Сколько стоит проживание на месяц?">
         <p>
-          По базовому тарифу за 30 дней: койко-место 180 000 ₸, одноместный номер без окна 300 000
-          ₸, с окном 330 000 ₸, двухместный номер 450 000 ₸. Это верхняя граница: для срока от
+          По базовому тарифу за 30 дней: койко-место 180 000 ₸, одноместный номер без окна 300 000
+           ₸, с окном 330 000 ₸, двухместный номер 450 000 ₸. Это верхняя граница: для срока от
           недели и от месяца администратор считает индивидуально, поэтому напишите даты и срок в
           WhatsApp. На месяц удобнее всего койко-место или одноместный номер: кухня, стиральная
           машина и коворкинг включены, а до метро «Сайран» и автовокзала близко.

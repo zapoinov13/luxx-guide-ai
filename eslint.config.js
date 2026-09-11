@@ -34,6 +34,11 @@ export default tseslint.config(
       ],
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
       "@typescript-eslint/no-unused-vars": "off",
+      // Неразрывные пробелы в ценах («6 000 ₸») — осознанно, чтобы не рвать сумму на мобильном.
+      "no-irregular-whitespace": [
+        "error",
+        { skipStrings: true, skipTemplates: true, skipJSXText: true, skipComments: true },
+      ],
     },
   },
   eslintPluginPrettier,

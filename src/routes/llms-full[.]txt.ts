@@ -39,7 +39,7 @@ const build = () => {
     `## Цены (${SITE.factsUpdated})`,
     ...PRICE_LIST.map(
       (r) =>
-        `- ${r.name}: ${r.price.toLocaleString("ru-RU")} ₸, ${r.capacity}, ${r.bath.toLowerCase()}. ${absolute(`/nomera/${r.slug}`)}`,
+        `- ${r.name}: ${r.price.toLocaleString("ru-RU")} ₸, ${r.capacity}, ${r.bath.toLowerCase()}. ${absolute(`/nomera/${r.slug}`)}`,
     ),
     "Койко-место — за место, номера — за номер целиком. В цену входят бельё, Wi-Fi, кухня, стирка. Для срока от недели и от месяца цена считается индивидуально.",
     "",

@@ -37,7 +37,7 @@ function NearbyPage() {
       photo={PHOTOS.detail}
     >
       <AnswerSection title="Что посмотреть и куда съездить рядом?">
-        <div className="table-scroll">
+        <div className="table-stack">
           <table>
             <thead>
               <tr>
@@ -53,9 +53,9 @@ function NearbyPage() {
                   <td>
                     <strong>{p.name}</strong>
                   </td>
-                  <td>{p.distance}</td>
-                  <td>{p.how}</td>
-                  <td>{p.note}</td>
+                  <td data-label="Расстояние">{p.distance}</td>
+                  <td data-label="Как добраться">{p.how}</td>
+                  <td data-label="">{p.note}</td>
                 </tr>
               ))}
             </tbody>
