@@ -125,7 +125,7 @@ const amenityIcons = [
 function HomePage() {
   const price = SITE.priceFrom.toLocaleString("ru-RU");
   return (
-    <main className="pb-20 lg:pb-0">
+    <main>
       {/* Первый экран */}
       <section className="bg-background">
         <div className="mx-auto grid max-w-6xl gap-5 px-5 py-4 lg:grid-cols-[1.08fr_1fr] lg:items-center lg:gap-12 lg:px-8 lg:py-14">

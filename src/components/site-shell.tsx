@@ -115,7 +115,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
 
       {children}
 
-      <footer className="border-t border-border bg-secondary pb-20 lg:pb-0">
+      <footer className="border-t border-border bg-secondary">
         <div className="mx-auto grid max-w-6xl gap-8 px-5 py-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:px-8">
           <div>
             <p className="font-display text-lg font-bold">Luxx Aparts</p>
@@ -203,20 +203,6 @@ export function SiteShell({ children }: { children: ReactNode }) {
           </div>
         </div>
       </footer>
-
-      <div className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-2 gap-2 border-t border-border bg-background/95 p-2 shadow-elevated backdrop-blur lg:hidden">
-        <Button asChild variant="outline" size="lg">
-          <a href={`tel:${SITE.phoneHref}`}>
-            <Phone />
-            Позвонить
-          </a>
-        </Button>
-        <Button asChild size="lg">
-          <a href={SITE.whatsapp} target="_blank" rel="noreferrer">
-            WhatsApp
-          </a>
-        </Button>
-      </div>
     </div>
   );
 }

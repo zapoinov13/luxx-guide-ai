@@ -75,7 +75,7 @@ export const Route = createFileRoute("/blog/$slug")({
 function BlogPostPage() {
   const { post, others } = Route.useLoaderData();
   return (
-    <main className="pb-24 lg:pb-0">
+    <main>
       <div className="border-b border-border bg-secondary/60">
         <div className="mx-auto max-w-3xl px-5 py-8 lg:px-8 lg:py-16">
           <nav
