@@ -1,0 +1,760 @@
+/* Luxx immersive redesign. Existing brand/content/URLs retained.
+   Motion hierarchy: spatial photo hero > room theatre > supporting reveals.
+   No fake room reconstruction. No scroll hijacking. */
+.luxx-reading-progress {
+  position: fixed;
+  inset: 0 0 auto;
+  height: 3px;
+  transform-origin: left;
+  z-index: 45;
+  background: #5c825e;
+  pointer-events: none;
+}
+.luxx-motion-control {
+  position: fixed;
+  left: 16px;
+  bottom: 18px;
+  z-index: 42;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 9px 13px;
+  border-radius: 12px;
+  border: 1px solid #61766166;
+  color: #f2f5ef;
+  background: #173125ed;
+  box-shadow: 0 5px 25px #0a231a22;
+  font: 500 0.72rem/1.4 var(--font-sans);
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+}
+.luxx-motion-control:focus-visible {
+  outline: 3px solid #77985e;
+  outline-offset: 4px;
+}
+.site-shell .home-hero {
+  position: relative;
+  isolation: isolate;
+  background: radial-gradient(ellipse at 90% 35%, #cad7c180, transparent 62%), #eef0e7;
+  overflow: hidden;
+  border-bottom: 1px solid #c9d1c0;
+}
+.site-shell .home-hero > div {
+  max-width: 1400px;
+  grid-template-columns: 1.02fr 1fr;
+  gap: 48px;
+  padding: 44px 40px 52px;
+  align-items: center;
+}
+.site-shell .home-hero h1 {
+  font-size: clamp(2.5rem, 4.5vw, 4.65rem);
+  line-height: 1.05;
+  letter-spacing: -0.065em;
+  font-weight: 600;
+  color: #1e3629;
+  margin-top: 22px;
+  max-width: 650px;
+}
+.site-shell .home-hero .hero-serif {
+  font-style: normal;
+  font-weight: 500;
+  color: #5b7354;
+}
+.site-shell .home-hero .speakable {
+  font-size: 1rem;
+  line-height: 1.7;
+  max-width: 510px;
+  margin-top: 22px;
+}
+.site-shell .home-hero .design-eyebrow {
+  font-size: 0.67rem;
+  letter-spacing: 0.15em;
+  margin-bottom: 15px;
+  color: #526a51;
+}
+.site-shell .home-hero .hero-explore-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: #284531;
+  font-size: 0.9rem;
+  margin-top: 13px;
+  border-bottom: 1px solid #91a383;
+  padding-bottom: 3px;
+}
+.site-shell .home-hero .luxx-button {
+  white-space: nowrap;
+  font-size: 0.9rem;
+  min-height: 50px;
+  border-radius: 12px;
+}
+.spatial-hero {
+  position: relative;
+  display: block;
+  min-width: 0;
+  perspective: 1300px;
+  color: #eef5e9;
+  text-decoration: none;
+  align-self: center;
+  outline-offset: 10px;
+}
+.spatial-hero-world {
+  position: relative;
+  height: 550px;
+  transform-style: preserve-3d;
+}
+.spatial-hero-main {
+  position: absolute;
+  inset: 25px 8px 50px 42px;
+  border: 8px solid #fafbf5;
+  border-radius: 24px;
+  overflow: hidden;
+  transform: translateZ(20px) rotate(3deg);
+  box-shadow: 0 24px 60px -15px #29402e55;
+}
+.spatial-hero-main > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+.spatial-hero-main::after {
+  content: "";
+  position: absolute;
+  inset: 40% 0 0;
+  background: linear-gradient(transparent, #0e251bbd);
+  pointer-events: none;
+}
+.spatial-hero-caption {
+  position: absolute;
+  left: 24px;
+  right: 20px;
+  bottom: 22px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  font-weight: 700;
+}
+.spatial-hero-secondary {
+  position: absolute;
+  left: -24px;
+  bottom: 0;
+  width: 52%;
+  height: 220px;
+  transform: translateZ(82px) rotate(-8deg);
+  border: 7px solid #fafbf5;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 18px 40px #19342238;
+}
+.spatial-hero-secondary > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.spatial-hero-secondary > span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 32px 14px 14px;
+  background: linear-gradient(transparent, #10271ed9);
+  font-size: 0.85rem;
+}
+.spatial-hero-tertiary {
+  position: absolute;
+  right: -15px;
+  top: 0;
+  width: 32%;
+  height: 155px;
+  transform: translateZ(95px) rotate(10deg);
+  border: 6px solid #fafbf5;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 18px 40px #1934222b;
+}
+.spatial-hero-tertiary img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.spatial-hero-invitation {
+  position: absolute;
+  right: 4%;
+  bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 200px;
+  color: #183727;
+  background: #e3ebd8;
+  padding: 16px 18px;
+  border: 1px solid #c3ceb7;
+  border-radius: 15px;
+  font-size: 0.88rem;
+  font-weight: 650;
+  transform: translateZ(105px) rotate(4deg);
+  box-shadow: 0 12px 30px #1a372b22;
+}
+.spatial-hero-invitation svg {
+  flex-shrink: 0;
+}
+.spatial-hero-shadow {
+  position: absolute;
+  left: 10%;
+  right: 5%;
+  bottom: 25px;
+  height: 100px;
+  background: radial-gradient(ellipse, #29473240, transparent 68%);
+  transform: rotateX(70deg) translateZ(-30px);
+}
+.spatial-hero-footnote {
+  display: block;
+  text-align: right;
+  font-size: 0.73rem;
+  color: #526a51;
+  margin-top: 24px;
+  letter-spacing: 0.01em;
+}
+.site-shell .room-explorer {
+  max-width: 1320px;
+  margin: 40px auto 72px;
+  padding: 48px;
+  border: 1px solid #78907955;
+  border-radius: 28px;
+  box-shadow: 0 25px 70px -50px #0e2b1dcc;
+  background: radial-gradient(ellipse at 25% 75%, #365b42, transparent 60%), #172e23;
+  overflow: hidden;
+}
+.site-shell .room-explorer::before {
+  display: none;
+}
+.site-shell .rx-heading {
+  position: relative;
+  display: block;
+  min-height: 145px;
+  padding-right: 225px;
+  margin-bottom: 34px;
+}
+.site-shell .rx-heading > p {
+  max-width: 650px;
+  margin-top: 18px;
+  line-height: 1.65;
+  font-size: 0.95rem;
+}
+.site-shell .rx-heading h2 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  letter-spacing: -0.055em;
+  line-height: 1.07;
+}
+.site-shell .rx-heading h2 em {
+  color: #c1d4b4;
+  font-weight: 500;
+}
+.site-shell .rx-heading .rx-eyebrow {
+  display: none;
+}
+.rx-sculpture {
+  position: absolute;
+  right: 0;
+  top: -42px;
+  width: 240px;
+  height: 240px;
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(0 22px 24px #07180d50);
+}
+.site-shell .rx-choices {
+  gap: 12px;
+  margin-bottom: 30px;
+}
+.site-shell .rx-choices > button {
+  padding: 14px;
+  background: #ffffff04;
+  border-radius: 14px;
+  min-height: 110px;
+}
+.site-shell .rx-choices > button[aria-pressed="true"] {
+  background: #d5ee8c15;
+  border-color: #c6dbae;
+}
+.site-shell .rx-choices > button > img {
+  width: 78px;
+  height: 78px;
+  border-radius: 9px;
+}
+.site-shell .rx-choices small {
+  font-size: 0.72rem;
+  letter-spacing: 0;
+}
+.site-shell .rx-layout {
+  grid-template-columns: minmax(0, 1.8fr) minmax(250px, 1fr);
+  gap: 42px;
+  align-items: center;
+}
+.site-shell .rx-frame {
+  border: 6px solid #e0e8d6;
+  border-radius: 17px;
+  box-shadow: 0 28px 65px #05120c60;
+}
+.site-shell .rx-perspective {
+  perspective: 1600px;
+  padding: 8px 10px 28px;
+}
+.site-shell .rx-back-sheet-one {
+  transform: translateZ(-30px) rotate(-4deg) translate(-12px, 14px);
+}
+.site-shell .rx-back-sheet-two {
+  transform: translateZ(-60px) rotate(5deg) translate(12px, 22px);
+}
+.site-shell .rx-image-label {
+  padding: 65px 22px 24px;
+}
+.site-shell .rx-image-label span {
+  display: none;
+}
+.site-shell .rx-info .rx-eyebrow,
+.site-shell .rx-room-number {
+  display: none;
+}
+.site-shell .rx-info h3 {
+  font-size: 2.4rem;
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+}
+.site-shell .rx-info .rx-description {
+  font-size: 1rem;
+}
+.site-shell .rx-features {
+  margin-top: 28px;
+}
+.site-shell .rx-book {
+  border-radius: 12px;
+  transition:
+    transform 0.2s,
+    background 0.2s;
+}
+.site-shell .rx-media-note {
+  font-size: 0.76rem;
+  color: #c1cfc0;
+}
+.site-shell .rx-footer {
+  margin-top: 30px;
+}
+.site-shell .rx-filmstrip button {
+  border-radius: 10px;
+  transition:
+    transform 0.25s,
+    border-color 0.25s,
+    opacity 0.25s;
+}
+.site-shell .rx-filmstrip button[aria-pressed="true"] {
+  transform: translateY(-4px);
+}
+.site-shell .home-section {
+  scroll-margin-top: 95px;
+}
+.site-shell .site-header {
+  box-shadow: 0 8px 35px -25px #1c362a55;
+  backdrop-filter: blur(18px);
+}
+.site-shell .home-section h2,
+.site-shell .answer-section h2 {
+  letter-spacing: -0.045em;
+}
+.site-shell .tariff-cards > li {
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s;
+}
+.site-shell .gallery-section img,
+.site-shell .amenity-space img {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .site-shell .luxx-button:hover,
+  .site-shell .rx-book:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px -12px #18392555;
+  }
+  .site-shell .luxx-button:active,
+  .site-shell .rx-book:active {
+    transform: translateY(0) scale(0.98);
+  }
+  .site-shell .rx-choices > button:hover {
+    transform: translateY(-5px);
+  }
+  .site-shell .rx-video-toggle:hover svg {
+    transform: scale(1.15);
+  }
+  .site-shell .tariff-cards > li:hover {
+    transform: perspective(1200px) rotateX(2deg) translateY(-7px);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .spatial-hero-main {
+    animation: luxx-main-enter 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .spatial-hero-secondary {
+    animation: luxx-secondary-enter 1.25s 0.12s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .spatial-hero-tertiary {
+    animation: luxx-tertiary-enter 1.35s 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .spatial-hero-invitation {
+    animation: luxx-invitation-enter 1.4s 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+@keyframes luxx-main-enter {
+  from {
+    opacity: 0;
+    transform: translateZ(-100px) rotate(-6deg) translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(20px) rotate(3deg);
+  }
+}
+@keyframes luxx-secondary-enter {
+  from {
+    opacity: 0;
+    transform: translateZ(-50px) rotate(-18deg) translateY(70px);
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(82px) rotate(-8deg);
+  }
+}
+@keyframes luxx-tertiary-enter {
+  from {
+    opacity: 0;
+    transform: translateZ(-100px) rotate(20deg) translateY(-45px);
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(95px) rotate(10deg);
+  }
+}
+@keyframes luxx-invitation-enter {
+  from {
+    opacity: 0;
+    transform: translateZ(0) translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(105px) rotate(4deg);
+  }
+}
+@supports (animation-timeline: view()) {
+  @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+    .rx-sculpture {
+      animation: luxx-key-turn linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+    }
+    @keyframes luxx-key-turn {
+      from {
+        transform: rotate(-12deg) translateY(-12px);
+      }
+      to {
+        transform: rotate(12deg) translateY(30px);
+      }
+    }
+  }
+}
+@media (min-width: 1024px) and (max-width: 1200px) {
+  .site-shell .home-hero > div {
+    gap: 30px;
+    padding: 36px 30px 45px;
+  }
+  .spatial-hero-world {
+    height: 490px;
+  }
+  .site-shell .home-hero h1 {
+    font-size: 3.4rem;
+  }
+  .spatial-hero-secondary {
+    height: 175px;
+  }
+  .spatial-hero-tertiary {
+    height: 125px;
+  }
+  .site-shell .room-explorer {
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 35px;
+  }
+  .site-shell .rx-layout {
+    gap: 30px;
+  }
+}
+@media (max-width: 1023px) {
+  .site-shell .home-hero > div {
+    grid-template-columns: 1fr;
+    gap: 26px;
+    padding: 30px 28px 40px;
+  }
+  .site-shell .home-hero > div > .lg\:order-first {
+    order: -1;
+  }
+  .site-shell .home-hero h1 {
+    font-size: clamp(2.5rem, 6.5vw, 4rem);
+    max-width: 700px;
+  }
+  .spatial-hero {
+    width: 100%;
+    max-width: 680px;
+    margin: auto;
+  }
+  .spatial-hero-world {
+    height: 480px;
+  }
+  .spatial-hero-main {
+    left: 50px;
+    right: 30px;
+  }
+  .spatial-hero-secondary {
+    left: 10px;
+    width: 43%;
+    height: 190px;
+  }
+  .spatial-hero-tertiary {
+    right: 0;
+    width: 27%;
+    height: 150px;
+  }
+  .spatial-hero-invitation {
+    right: 7%;
+    bottom: 8px;
+  }
+  .site-shell .room-explorer {
+    margin: 24px 18px 50px;
+    padding: 30px 26px;
+  }
+  .site-shell .rx-layout {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .site-shell .rx-info {
+    max-width: none;
+  }
+  .site-shell .rx-info h3 {
+    font-size: 2rem;
+  }
+  .site-shell .rx-heading {
+    padding-right: 160px;
+  }
+  .rx-sculpture {
+    width: 185px;
+    height: 185px;
+    top: -10px;
+  }
+  .site-shell .rx-choices > button {
+    padding: 10px;
+    gap: 10px;
+  }
+  .site-shell .rx-choices > button > img {
+    width: 55px;
+    height: 66px;
+  }
+  .site-shell .rx-heading > p {
+    max-width: 480px;
+  }
+}
+@media (max-width: 639px) {
+  .site-shell .home-hero > div {
+    padding: 26px 20px 32px;
+    gap: 18px;
+  }
+  .site-shell .home-hero h1 {
+    font-size: clamp(2.4rem, 10.6vw, 3.2rem);
+    line-height: 1.08;
+    margin-top: 15px;
+  }
+  .site-shell .home-hero .speakable {
+    font-size: 0.94rem;
+    line-height: 1.65;
+    margin-top: 17px;
+  }
+  .site-shell .home-hero .hero-explore-link {
+    font-size: 0.8rem;
+  }
+  .site-shell .home-hero .luxx-button {
+    min-height: 48px;
+    width: 100%;
+  }
+  .spatial-hero-world {
+    height: 335px;
+  }
+  .spatial-hero-main {
+    inset: 20px 12px 35px 24px;
+    border-width: 5px;
+    border-radius: 18px;
+  }
+  .spatial-hero-secondary {
+    left: 0;
+    height: 135px;
+    width: 48%;
+    border-width: 5px;
+    border-radius: 12px;
+  }
+  .spatial-hero-secondary span {
+    font-size: 0.7rem;
+    padding: 25px 8px 8px;
+  }
+  .spatial-hero-tertiary {
+    height: 100px;
+    width: 29%;
+    border-width: 4px;
+    border-radius: 10px;
+  }
+  .spatial-hero-caption {
+    left: 14px;
+    bottom: 16px;
+    font-size: 0.68rem;
+  }
+  .spatial-hero-invitation {
+    font-size: 0.7rem;
+    gap: 7px;
+    padding: 10px;
+    right: 1%;
+    max-width: 150px;
+    border-radius: 10px;
+    bottom: 2px;
+  }
+  .spatial-hero-invitation svg {
+    width: 18px;
+  }
+  .spatial-hero-footnote {
+    font-size: 0.66rem;
+    margin-top: 18px;
+  }
+  .site-shell .room-explorer {
+    margin: 18px 10px 40px;
+    padding: 25px 16px;
+    border-radius: 22px;
+  }
+  .site-shell .rx-heading {
+    padding-right: 0;
+    min-height: 0;
+    margin-bottom: 24px;
+  }
+  .site-shell .rx-heading h2 {
+    font-size: 1.95rem;
+    max-width: 310px;
+  }
+  .site-shell .rx-heading > p {
+    font-size: 0.86rem;
+    margin-top: 15px;
+    max-width: 300px;
+  }
+  .rx-sculpture {
+    display: none;
+  }
+  .site-shell .rx-choices {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+    margin-bottom: 22px;
+  }
+  .site-shell .rx-choices > button {
+    display: block;
+    padding: 7px;
+    min-height: 0;
+  }
+  .site-shell .rx-choices > button > img {
+    width: 100%;
+    height: 60px;
+    margin-bottom: 9px;
+    border-radius: 7px;
+  }
+  .site-shell .rx-choices strong {
+    font-size: 0.75rem;
+  }
+  .site-shell .rx-choices small {
+    font-size: 0.65rem;
+  }
+  .site-shell .rx-choices > button > span > span {
+    font-size: 0.74rem;
+  }
+  .site-shell .rx-choice-check {
+    width: 17px;
+    height: 17px;
+    top: 10px;
+    right: 10px;
+  }
+  .site-shell .rx-layout {
+    gap: 22px;
+  }
+  .site-shell .rx-info h3 {
+    font-size: 1.85rem;
+  }
+  .site-shell .rx-main-photo {
+    aspect-ratio: 4/3;
+  }
+  .site-shell .rx-info .rx-description {
+    font-size: 0.92rem;
+  }
+  .site-shell .rx-features {
+    margin-top: 18px;
+  }
+  .site-shell .rx-footer {
+    font-size: 0.75rem;
+    gap: 12px;
+  }
+  .site-shell .rx-footer span {
+    gap: 7px;
+  }
+  .luxx-motion-control {
+    bottom: calc(85px + env(safe-area-inset-bottom));
+    left: 10px;
+    padding: 9px;
+    min-height: 36px;
+    opacity: 0.93;
+  }
+  .luxx-motion-control span {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spatial-hero-world {
+    transform: none !important;
+  }
+  .spatial-hero *,
+  .rx-sculpture {
+    animation: none !important;
+    transition: none !important;
+  }
+  .site-shell .rx-scene {
+    transform: none !important;
+  }
+  .luxx-reading-progress {
+    display: none;
+  }
+}
+html[data-luxx-motion="off"] {
+  scroll-behavior: auto !important;
+}
+html[data-luxx-motion="off"] *,
+html[data-luxx-motion="off"] *::before,
+html[data-luxx-motion="off"] *::after {
+  animation: none !important;
+  transition: none !important;
+}
+html[data-luxx-motion="off"] .rx-scene,
+html[data-luxx-motion="off"] .spatial-hero-world {
+  transform: none !important;
+}
+@media (prefers-reduced-transparency: reduce) {
+  .luxx-motion-control {
+    background: #173125;
+    backdrop-filter: none;
+  }
+  .rt-overlay {
+    background: #08160f;
+    backdrop-filter: none;
+  }
+}

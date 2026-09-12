@@ -10,6 +10,7 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
+    "test:design": "bun test tests",
     "format": "prettier --write ."
   },
   "overrides": {
@@ -55,6 +56,8 @@
     "input-otp": "^1.4.2",
     "lucide-react": "^0.575.0",
     "marked": "^18.0.12",
+    "motion": "^12.23.24",
+    "three": "^0.180.0",
     "react": "^19.2.0",
     "react-day-picker": "^9.14.0",
     "react-dom": "^19.2.0",
@@ -73,6 +76,7 @@
     "@eslint/js": "^9.32.0",
     "@lovable.dev/vite-tanstack-config": "^2.20.0",
     "@types/node": "^22.16.5",
+    "@types/three": "^0.180.0",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^5.2.0",

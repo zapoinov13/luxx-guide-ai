@@ -1,7 +1,14 @@
-import { MessageCircle, ArrowUpRight, Plus } from "lucide-react";
+import { useId, useState } from "react";
+import { MessageCircle, ArrowUpRight, Plus, Search, X } from "lucide-react";
 import { SITE, type QA } from "@/lib/site";
 
+import { matchesFaq } from "@/lib/faq-search";
+
 export function QuickFaq({ items, en = false }: { items: readonly QA[]; en?: boolean }) {
+  const [query, setQuery] = useState("");
+  const id = useId();
+  const matches = items.map(([question, answer]) => matchesFaq(question, answer, query));
+  const count = matches.filter(Boolean).length;
   return (
     <div className="quick-faq">
       <aside className="faq-help">
@@ -21,8 +28,47 @@ export function QuickFaq({ items, en = false }: { items: readonly QA[]; en?: boo
         </a>
       </aside>
       <div className="faq-questions">
+        <div className="faq-search">
+          <label htmlFor={id}>{en ? "Find an answer" : "Найти ответ"}</label>
+          <div>
+            <Search size={18} aria-hidden="true" />
+            <input
+              id={id}
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder={en ? "Dates, payment, kitchen…" : "Заезд, оплата, кухня…"}
+            />
+            {query && (
+              <button
+                type="button"
+                onClick={() => setQuery("")}
+                aria-label={en ? "Clear search" : "Очистить поиск"}
+              >
+                <X size={18} aria-hidden="true" />
+              </button>
+            )}
+          </div>
+        </div>
+        {query && (
+          <p className="faq-results" role="status">
+            {en ? `${count} answers found` : `Найдено ответов: ${count}`}
+          </p>
+        )}
+        {count === 0 && (
+          <p className="faq-empty">
+            {en
+              ? "Try another word or ask reception on WhatsApp."
+              : "Попробуйте другое слово или задайте вопрос администратору в WhatsApp."}
+          </p>
+        )}
         {items.map(([question, answer], i) => (
-          <details key={question} open={i === 0} className="faq-question">
+          <details
+            key={question}
+            open={i === matches.indexOf(true)}
+            hidden={!matches[i]}
+            className="faq-question"
+          >
             <summary>
               <span className="faq-number" aria-hidden="true">
                 {String(i + 1).padStart(2, "0")}

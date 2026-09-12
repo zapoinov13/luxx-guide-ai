@@ -1,8 +1,10 @@
+import { PageOutline } from "@/components/section-navigation";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { ChevronDown, ChevronRight, MessageCircle, Phone } from "lucide-react";
 import type { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
-import { Photo, type PhotoRef } from "@/components/photo";
+import { type PhotoRef } from "@/components/photo";
+import { DepthPhoto } from "@/components/depth-photo";
 import { SITE, type Crumb, type QA } from "@/lib/site";
 import { UI, localeOf } from "@/lib/i18n";
 
@@ -70,17 +72,11 @@ export function ContentPage({
               </p>
             )}
           </div>
-          {photo && (
-            <Photo
-              photo={photo}
-              sizes="(min-width: 1024px) 40vw, 100vw"
-              className="content-hero-picture aspect-[16/10] w-full rounded-2xl object-cover shadow-photo lg:aspect-[4/3] lg:rounded-3xl"
-              priority
-            />
-          )}
+          {photo && <DepthPhoto photo={photo} className="content-depth-photo" priority />}
         </div>
       </div>
 
+      <PageOutline en={locale === "en"} />
       <div className="content-page-body mx-auto max-w-6xl px-5 py-10 lg:px-8 lg:py-16">
         <div className="max-w-3xl">{children}</div>
       </div>

@@ -75,6 +75,15 @@ export function RoomExplorer({ en = false }: { en?: boolean }) {
   return (
     <section id="room-explorer" className="room-explorer" aria-labelledby="explorer-title">
       <div className="rx-heading">
+        <img
+          className="rx-sculpture"
+          src="/design/luxx-key.webp"
+          alt=""
+          aria-hidden="true"
+          width="360"
+          height="360"
+          loading="lazy"
+        />
         <div>
           <p className="rx-eyebrow">
             <Layers3 size={16} aria-hidden="true" /> LUXX / INSIDE

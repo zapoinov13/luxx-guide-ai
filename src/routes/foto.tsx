@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { Gallery } from "@/components/gallery";
-import { Photo } from "@/components/photo";
+import { DepthPhoto } from "@/components/depth-photo";
 import { PHOTO_SECTIONS, PHOTOS } from "@/lib/photos";
 import { absolute, breadcrumbSchema, jsonLd, pageHead, webPageSchema } from "@/lib/site";
 
@@ -61,7 +61,7 @@ function PhotoPage() {
           </a>
         </div>
         <div className="photo-page-cover">
-          <Photo photo={PHOTOS.loungeSofa} priority sizes="(min-width: 1024px) 55vw, 100vw" />
+          <DepthPhoto photo={PHOTOS.loungeSofa} priority sizes="(min-width: 1024px) 55vw, 100vw" />
           <span className="photo-count">
             <strong>{total}</strong>КАДРОВ ИЗНУТРИ
           </span>

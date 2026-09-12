@@ -1,4 +1,6 @@
 import { BookingButton } from "@/components/booking-context";
+import { SectionNavigation } from "@/components/section-navigation";
+import { LocationActions } from "@/components/location-actions";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Baby,
@@ -31,7 +33,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RoomExplorer } from "@/components/room-explorer";
-import { StayDetails } from "@/components/stay-details";
+import { SpatialHero } from "@/components/spatial-hero";
 import { AmenitySpaces } from "@/components/amenity-spaces";
 import { StayRules } from "@/components/stay-rules";
 import { QuickFaq } from "@/components/quick-faq";
@@ -139,32 +141,7 @@ function HomePageEn() {
       {/* Hero */}
       <section className="home-hero bg-background">
         <div className="mx-auto grid max-w-6xl gap-5 px-5 py-4 lg:grid-cols-[1.08fr_1fr] lg:items-center lg:gap-12 lg:px-8 lg:py-14">
-          <div className="hero-photo hero-collage relative order-first lg:order-none">
-            <Photo
-              photo={PHOTOS.hero}
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              className="aspect-[16/10] w-full rounded-2xl object-cover shadow-photo lg:aspect-[4/3] lg:rounded-[1.75rem]"
-              priority
-            />
-            <div
-              className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 rounded-b-2xl bg-gradient-to-t from-black/45 to-transparent lg:rounded-b-[1.75rem]"
-              aria-hidden="true"
-            />
-            <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-3 text-white">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-white/90">
-                  Dorm bed
-                </p>
-                <p className="font-display text-2xl font-bold leading-none lg:text-3xl">
-                  from {price} ₸
-                </p>
-              </div>
-              <span className="hidden rounded-full bg-white/15 px-3 py-1.5 text-xs font-semibold backdrop-blur sm:inline-flex">
-                24/7 front desk
-              </span>
-            </div>
-            <StayDetails en />
-          </div>
+          <SpatialHero en />
 
           <div className="lg:order-first">
             <ul
@@ -237,7 +214,7 @@ function HomePageEn() {
 
       <RoomExplorer en />
       {/* Facts */}
-      <section className="border-b border-border">
+      <section className="home-facts border-b border-border">
         <ul className="mx-auto grid max-w-6xl grid-cols-2 gap-px bg-border lg:grid-cols-4">
           {facts.map(({ icon: Icon, value, label }) => (
             <li key={label} className="bg-background px-4 py-5 lg:px-8 lg:py-6">
@@ -249,6 +226,7 @@ function HomePageEn() {
         </ul>
       </section>
 
+      <SectionNavigation en />
       {/* Rooms */}
       <section className="mx-auto max-w-6xl px-5 py-12 lg:px-8 lg:py-20">
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
@@ -313,7 +291,10 @@ function HomePageEn() {
       </section>
 
       {/* Location */}
-      <section className="mx-auto max-w-6xl px-5 py-12 lg:px-8 lg:py-20">
+      <section
+        id="location"
+        className="home-location mx-auto max-w-6xl px-5 py-12 lg:px-8 lg:py-20"
+      >
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-10">
           <div>
             <p className="text-sm font-semibold text-primary">Location</p>
@@ -364,12 +345,15 @@ function HomePageEn() {
               Routes from the station and the airport{" "}
             </Link>
           </div>
-          <MapEmbed className="h-[300px] lg:h-[460px]" />
+          <div className="home-map">
+            <MapEmbed className="h-[300px] lg:h-[460px]" />
+            <LocationActions en />
+          </div>
         </div>
       </section>
 
       {/* Who it suits + booking */}
-      <section className="bg-secondary">
+      <section id="home-audiences" className="home-audiences bg-secondary">
         <div className="mx-auto grid max-w-6xl gap-10 px-5 py-12 lg:grid-cols-2 lg:px-8 lg:py-20">
           <div>
             <p className="text-sm font-semibold text-primary">Who it suits</p>
@@ -446,7 +430,7 @@ function HomePageEn() {
       </section>
 
       {/* Rules in short */}
-      <section className="mx-auto max-w-6xl px-5 py-12 lg:px-8 lg:py-20">
+      <section id="home-rules" className="home-rules mx-auto max-w-6xl px-5 py-12 lg:px-8 lg:py-20">
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
             <p className="text-sm font-semibold text-primary">House rules</p>
@@ -465,7 +449,7 @@ function HomePageEn() {
       </section>
 
       {/* FAQ */}
-      <section className="mx-auto max-w-6xl px-5 pb-12 lg:px-8 lg:pb-20">
+      <section id="home-faq" className="home-faq mx-auto max-w-6xl px-5 pb-12 lg:px-8 lg:pb-20">
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
             <p className="text-sm font-semibold text-primary">Before your trip</p>
