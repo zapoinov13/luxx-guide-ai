@@ -258,7 +258,10 @@ function HomePage() {
             Все номера <ArrowRight className="size-4" aria-hidden="true" />
           </Link>
         </div>
-        <p className="mt-4 max-w-2xl text-muted-foreground">
+        <p className="mt-4 text-sm text-muted-foreground sm:hidden">
+          Выберите вариант — форма бронирования откроется с уже отмеченным номером.
+        </p>
+        <p className="mt-4 hidden max-w-2xl text-muted-foreground sm:block">
           Койко-место в капсуле {price} ₸, одноместный номер от 10 000 ₸, двухместный 15 000 ₸ за
           номер. Для срока от недели и от месяца администратор считает индивидуально.
         </p>

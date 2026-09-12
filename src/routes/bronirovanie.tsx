@@ -3,6 +3,7 @@ import { AnswerSection, ContentPage } from "@/components/content-page";
 import { BookingForm, type BookingLabels, type BookingOption } from "@/components/booking-form";
 import { PHOTOS } from "@/lib/photos";
 import {
+  PRICE_LIST,
   ROOM_TYPES,
   SITE,
   breadcrumbSchema,
@@ -12,13 +13,22 @@ import {
   webPageSchema,
 } from "@/lib/site";
 
-type BookingSearch = { room?: string };
+type BookingSearch = { room?: string; variant?: string };
 
 export const Route = createFileRoute("/bronirovanie")({
-  validateSearch: (search: Record<string, unknown>): BookingSearch =>
-    typeof search["room"] === "string" && ROOM_TYPES.some((r) => r.slug === search["room"])
-      ? { room: search["room"] }
-      : {},
+  validateSearch: (search: Record<string, unknown>): BookingSearch => {
+    const room =
+      typeof search["room"] === "string" && ROOM_TYPES.some((r) => r.slug === search["room"])
+        ? search["room"]
+        : undefined;
+    const variant =
+      typeof search["variant"] === "string" &&
+      PRICE_LIST.some((option) => option.name === search["variant"])
+        ? search["variant"]
+        : undefined;
+
+    return { ...(room ? { room } : {}), ...(variant ? { variant } : {}) };
+  },
   head: () => ({
     ...pageHead(
       "Забронировать хостел в Алматы напрямую — Luxx Aparts",
@@ -49,6 +59,14 @@ const PRESET: Record<string, string> = {
   "koyko-mesto": OPTIONS[0]!.label,
   odnomestny: OPTIONS[2]!.label,
   dvukhmestny: OPTIONS[4]!.label,
+};
+
+const VARIANT_PRESET: Record<string, string> = {
+  "Спальное место в общем номере для мужчин": OPTIONS[0]!.label,
+  "Спальное место в общем номере для женщин": OPTIONS[1]!.label,
+  "Одноместный номер с окном": OPTIONS[2]!.label,
+  "Одноместный номер без окна": OPTIONS[3]!.label,
+  "Двухместный номер": OPTIONS[4]!.label,
 };
 
 const pluralDays = (n: number) => {
@@ -96,7 +114,7 @@ const LABELS: BookingLabels = {
 };
 
 function BookingPage() {
-  const { room } = Route.useSearch();
+  const { room, variant } = Route.useSearch();
   return (
     <ContentPage
       eyebrow="Бронирование"
@@ -109,7 +127,7 @@ function BookingPage() {
         <BookingForm
           locale="ru"
           options={OPTIONS}
-          preset={room ? PRESET[room] : undefined}
+          preset={variant ? VARIANT_PRESET[variant] : room ? PRESET[room] : undefined}
           labels={LABELS}
         />
       </AnswerSection>

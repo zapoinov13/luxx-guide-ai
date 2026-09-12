@@ -811,8 +811,80 @@ button {
   }
 }
 @media (max-width: 639px) {
+  .stay-rates {
+    align-items: stretch;
+  }
+  .stay-rate {
+    border-radius: 18px;
+  }
+  .rate-cover {
+    min-width: 0;
+  }
+  .rate-type {
+    top: 10px;
+    left: 10px;
+    max-width: calc(100% - 20px);
+    padding: 5px 8px;
+    overflow: hidden;
+    font-size: 9px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .rate-number {
+    display: none;
+  }
   .rate-body h3 {
     min-height: 0;
+  }
+  .rate-price {
+    display: block;
+    margin-top: 10px;
+  }
+  .rate-price strong {
+    display: block;
+    font-size: 24px;
+    line-height: 1.1;
+  }
+  .rate-price strong span {
+    font-size: 17px;
+  }
+  .rate-price > span {
+    display: block;
+    margin-top: 3px;
+    font-size: 10px;
+    line-height: 1.3;
+  }
+  .rate-mobile-wide {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  }
+  .rate-mobile-wide .rate-cover,
+  .rate-mobile-wide .rate-cover picture,
+  .rate-mobile-wide .rate-cover img {
+    height: 100%;
+  }
+  .rate-mobile-wide .rate-cover img {
+    aspect-ratio: auto;
+    min-height: 182px;
+  }
+  .rate-longstay {
+    padding: 22px;
+  }
+  .rate-longstay > svg {
+    margin-bottom: 14px;
+  }
+  .rate-longstay .design-eyebrow {
+    margin-bottom: 10px;
+  }
+  .rate-longstay h3 {
+    font-size: 25px;
+  }
+  .rate-longstay > p:not(.design-eyebrow) {
+    margin-top: 12px;
+    line-height: 1.65;
+  }
+  .rate-longstay > a {
+    margin-top: 16px;
   }
 }
 
