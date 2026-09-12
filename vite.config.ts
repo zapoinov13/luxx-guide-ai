@@ -40,7 +40,34 @@ const page = (
   lastmod = pageDate(path),
 ) => ({ path, sitemap: { priority, changefreq, lastmod, alternateRefs: alternates(path) } });
 
+/**
+ * @lovable.dev/vite-tanstack-config подставляет свой hooks.compiled, и при слиянии
+ * конфигов он вытесняет хук пресета Nitro. Из-за этого на Vercel не появлялись
+ * .vercel/output/config.json и .vc-config.json (сайт отдавал 404), а для Cloudflare
+ * не писался wrangler.json. Здесь хуки пресета вызываются вручную из слоёв c12.
+ */
+let presetCompiledRunning = false;
+const presetCompiled = async (nitro: {
+  options: { _c12?: { layers?: { config?: { hooks?: { compiled?: unknown } } }[] } };
+}) => {
+  // Первый слой c12 — этот же конфиг с обёрткой Lovable, которая снова вызовет нас: не зацикливаемся.
+  if (presetCompiledRunning) return;
+  presetCompiledRunning = true;
+  try {
+    for (const layer of nitro.options._c12?.layers ?? []) {
+      const hook = layer.config?.hooks?.compiled;
+      if (typeof hook === "function") await hook(nitro);
+    }
+  } finally {
+    presetCompiledRunning = false;
+  }
+};
+
+/** Тип опции nitro у Lovable не описывает hooks, хотя в рантайме они передаются в Nitro как есть. */
+const nitroOptions = { hooks: { compiled: presetCompiled } } as unknown as { preset?: string };
+
 export default defineConfig({
+  nitro: nitroOptions,
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
