@@ -30,7 +30,11 @@ bun run format       # prettier --write .
 src/
   routes/            страницы (см. таблицу ниже)
   routes/__root.tsx  общий каркас, базовая мета, шрифт, страницы 404 и ошибки
-  components/        site-shell (шапка, футер, мобильная панель), content-page (шаблон внутренней страницы)
+  components/        site-shell (шапка с переключателем RU/EN, футер), content-page (шаблон
+                     внутренней страницы), booking-form (форма бронирования для обеих версий)
+  routes/en/         английские версии основных страниц (/en/…)
+  lib/i18n.ts        карта адресов RU → EN, определение языка по пути, подписи интерфейса
+  lib/site-en.ts     английские тексты: удобства, номера, расстояния, FAQ, правила, форма
   lib/site.ts        ЕДИНЫЙ ИСТОЧНИК ФАКТОВ: адрес сайта, название, телефон, адрес, заезд/выезд,
                      удобства, типы номеров (ROOM_TYPES), навигация; хелперы для мета, Hostel,
                      HotelRoom + Offer, FAQPage, BreadcrumbList
@@ -47,25 +51,26 @@ docs/
   tz-sait-luxx-aparts.md   ТЗ заказчика
 ```
 
-| URL              | Страница                                                   | JSON-LD                                    |
-| ---------------- | ---------------------------------------------------------- | ------------------------------------------ |
-| `/`              | Главная                                                    | Hostel, WebSite, FAQPage                   |
-| `/nomera`        | Номера и цены                                              | BreadcrumbList, Hostel                     |
-| `/nomera/<тип>`  | Страница типа номера: фото, кровать, санузел, цена         | BreadcrumbList, HotelRoom + Offer, FAQPage |
-| `/bronirovanie`  | Прямое бронирование (форма → готовое сообщение в WhatsApp) | BreadcrumbList, Hostel                     |
-| `/udobstva`      | Удобства и услуги                                          | BreadcrumbList, Hostel, FAQPage            |
-| `/kak-dobratsya` | Как добраться                                              | BreadcrumbList, Hostel                     |
-| `/ryadom`        | Что рядом                                                  | BreadcrumbList, ItemList                   |
-| `/otzyvy`        | Отзывы с 2GIS, Ostrovok и Hostelworld со ссылками          | BreadcrumbList, Hostel + Review            |
-| `/pravila`       | Правила заселения и проживания                             | BreadcrumbList, FAQPage                    |
-| `/faq`           | Вопросы и ответы (17 вопросов)                             | BreadcrumbList, FAQPage                    |
-| `/kontakty`      | Контакты                                                   | BreadcrumbList, Hostel                     |
-| `/foto`          | Все 30 фото по разделам                                    | BreadcrumbList, ImageGallery               |
-| `/blog`          | Блог: список статей                                        | BreadcrumbList, Blog                       |
-| `/blog/<slug>`   | Статья из `content/blog/<slug>.md`                         | BreadcrumbList, Article                    |
-| `/blog/avtor`    | Об авторах блога (на неё ссылается `Article.author`)       | BreadcrumbList, Organization               |
-| `/blog/rss.xml`  | RSS-лента блога                                            |                                            |
-| `/llms-full.txt` | Полный текст фактов, цен, правил, FAQ и статей для ИИ      |                                            |
+| URL              | Страница                                                                                            | JSON-LD                                                |
+| ---------------- | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| `/`              | Главная                                                                                             | Hostel, WebSite, FAQPage                               |
+| `/nomera`        | Номера и цены                                                                                       | BreadcrumbList, Hostel                                 |
+| `/nomera/<тип>`  | Страница типа номера: фото, кровать, санузел, цена                                                  | BreadcrumbList, HotelRoom + Offer, FAQPage             |
+| `/bronirovanie`  | Прямое бронирование (форма → готовое сообщение в WhatsApp)                                          | BreadcrumbList, Hostel                                 |
+| `/udobstva`      | Удобства и услуги                                                                                   | BreadcrumbList, Hostel, FAQPage                        |
+| `/kak-dobratsya` | Как добраться                                                                                       | BreadcrumbList, Hostel                                 |
+| `/ryadom`        | Что рядом                                                                                           | BreadcrumbList, ItemList                               |
+| `/otzyvy`        | Отзывы с 2GIS, Ostrovok и Hostelworld со ссылками                                                   | BreadcrumbList, Hostel + Review                        |
+| `/pravila`       | Правила заселения и проживания                                                                      | BreadcrumbList, FAQPage                                |
+| `/faq`           | Вопросы и ответы (17 вопросов)                                                                      | BreadcrumbList, FAQPage                                |
+| `/kontakty`      | Контакты                                                                                            | BreadcrumbList, Hostel                                 |
+| `/foto`          | Все 30 фото по разделам                                                                             | BreadcrumbList, ImageGallery                           |
+| `/blog`          | Блог: список статей                                                                                 | BreadcrumbList, Blog                                   |
+| `/blog/<slug>`   | Статья из `content/blog/<slug>.md`                                                                  | BreadcrumbList, Article                                |
+| `/blog/avtor`    | Об авторах блога (на неё ссылается `Article.author`)                                                | BreadcrumbList, Organization                           |
+| `/blog/rss.xml`  | RSS-лента блога                                                                                     |                                                        |
+| `/llms-full.txt` | Полный текст фактов, цен, правил, FAQ и статей для ИИ                                               |                                                        |
+| `/en`, `/en/…`   | Английские версии: главная, rooms, booking, amenities, how-to-get-there, house-rules, faq, contacts | те же типы, `inLanguage: en`, hreflang ru/en/x-default |
 
 ## Правила для контента
 
@@ -78,6 +83,9 @@ docs/
 - Дата правки страницы — `PAGE_DATES` в `src/lib/site.ts`: она идёт в `lastmod` sitemap, меняйте её
   вместе с текстом. Оценки площадок (`RATINGS`) обновлять раз в месяц: первая из них уходит в
   `aggregateRating`.
+- Английская версия живёт под `/en/…` и повторяет факты русской: при правке цены, времени заезда
+  или правила меняйте `src/lib/site-en.ts` вместе с `site.ts` и `qa.ts`. Пары адресов — в
+  `LOCALE_PATHS` (`src/lib/i18n.ts`): из них строятся hreflang в `<head>` и в sitemap.
 
 ## Аналитика
 
@@ -111,7 +119,7 @@ Booking закрыт от автоматического скачивания, �
 - Цитаты отзывов с Booking, Яндекс Карт и 2GIS (сейчас только Ostrovok и Hostelworld).
 - Фото фасада и входа с улицы для страницы «Как добраться».
 - Номера автобусов и стоимость такси на странице «Как добраться».
-- Английская версия с `hreflang`.
+- Английские версии страниц типов номеров, отзывов, «Что рядом», фото и блога (сейчас на английском только восемь основных страниц).
 - Номера счётчиков Метрики / GA4 от заказчика (код и цели готовы, см. «Аналитика»).
 - Автор блога как реальный человек с фото: сейчас автор — «Команда Luxx Aparts» (`/blog/avtor`).
 - Собственные фото заказчика вместо фото с площадок, когда пришлёт.

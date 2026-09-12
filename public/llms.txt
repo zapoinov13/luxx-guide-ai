@@ -27,3 +27,7 @@ Instagram: https://www.instagram.com/luxx.aparts. 2GIS: https://go.2gis.com/DFrE
 - [Контакты](https://luxx-guide-ai.lovable.app/kontakty): телефон, WhatsApp, адрес, часы стойки
 - [Фото](https://luxx-guide-ai.lovable.app/foto): 30 фотографий номеров, кухни, санузлов и стойки
 - [Блог](https://luxx-guide-ai.lovable.app/blog): советы гостям Алматы; RSS: https://luxx-guide-ai.lovable.app/blog/rss.xml
+
+## English version
+
+Same facts in English under /en with hreflang: [Home](https://luxx-guide-ai.lovable.app/en), [Rooms and prices](https://luxx-guide-ai.lovable.app/en/rooms), [Booking](https://luxx-guide-ai.lovable.app/en/booking), [Amenities](https://luxx-guide-ai.lovable.app/en/amenities), [Getting here](https://luxx-guide-ai.lovable.app/en/how-to-get-there), [House rules](https://luxx-guide-ai.lovable.app/en/house-rules), [FAQ](https://luxx-guide-ai.lovable.app/en/faq), [Contacts](https://luxx-guide-ai.lovable.app/en/contacts).

@@ -6,6 +6,7 @@
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 import { readFileSync, readdirSync } from "node:fs";
+import { LOCALE_PATHS } from "./src/lib/i18n";
 import { ROOM_TYPES, SITE_URL, pageDate } from "./src/lib/site";
 
 const blogPosts = readdirSync("content/blog")
@@ -17,13 +18,27 @@ const blogPosts = readdirSync("content/blog")
     return { slug: f.replace(/\.md$/, ""), lastmod: field("updated") ?? field("date") };
   });
 
+const EN_TO_RU = Object.fromEntries(Object.entries(LOCALE_PATHS).map(([ru, en]) => [en, ru]));
+
+/** Ссылки hreflang в sitemap для страниц с русской и английской версиями. */
+const alternates = (path: string) => {
+  const ru = EN_TO_RU[path] ?? (LOCALE_PATHS[path] ? path : undefined);
+  if (!ru) return undefined;
+  const en = LOCALE_PATHS[ru]!;
+  return [
+    { href: `${SITE_URL}${ru}`, hreflang: "ru" },
+    { href: `${SITE_URL}${en}`, hreflang: "en" },
+    { href: `${SITE_URL}${ru}`, hreflang: "x-default" },
+  ];
+};
+
 /** Страница для пререндера и sitemap; lastmod — дата правки из PAGE_DATES. */
 const page = (
   path: string,
   priority: number,
   changefreq: "weekly" | "monthly" | "yearly",
   lastmod = pageDate(path),
-) => ({ path, sitemap: { priority, changefreq, lastmod } });
+) => ({ path, sitemap: { priority, changefreq, lastmod, alternateRefs: alternates(path) } });
 
 export default defineConfig({
   tanstackStart: {
@@ -43,6 +58,15 @@ export default defineConfig({
       page("/faq", 0.8, "monthly"),
       page("/kontakty", 0.8, "monthly"),
       page("/foto", 0.6, "monthly"),
+      // Английская версия (ТЗ, раздел 2): те же страницы под /en/…, hreflang выше.
+      page("/en", 0.8, "weekly"),
+      page("/en/rooms", 0.7, "weekly"),
+      page("/en/booking", 0.7, "monthly"),
+      page("/en/amenities", 0.6, "monthly"),
+      page("/en/how-to-get-there", 0.6, "monthly"),
+      page("/en/house-rules", 0.6, "monthly"),
+      page("/en/faq", 0.6, "monthly"),
+      page("/en/contacts", 0.6, "monthly"),
       page(
         "/blog",
         0.7,

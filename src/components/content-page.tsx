@@ -1,9 +1,10 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { ChevronRight, MessageCircle, Phone } from "lucide-react";
 import type { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { Photo, type PhotoRef } from "@/components/photo";
 import { SITE, type Crumb, type QA } from "@/lib/site";
+import { UI, localeOf } from "@/lib/i18n";
 
 type ContentPageProps = {
   title: string;
@@ -28,17 +29,20 @@ export function ContentPage({
   crumbs = [],
   children,
 }: ContentPageProps) {
+  const pathname = useRouterState({ select: (st) => st.location.pathname });
+  const locale = localeOf(pathname);
+  const t = UI[locale];
   return (
     <main>
       <div className="border-b border-border bg-secondary/60">
         <div className="mx-auto grid max-w-6xl items-center gap-6 px-5 py-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10 lg:px-8 lg:py-16">
           <div>
             <nav
-              aria-label="Хлебные крошки"
+              aria-label={t.breadcrumbs}
               className="mb-6 flex flex-wrap items-center gap-2 text-sm text-muted-foreground"
             >
-              <Link to="/" className="hover:text-foreground">
-                Главная
+              <Link to={locale === "en" ? "/en" : "/"} className="hover:text-foreground">
+                {t.home}
               </Link>
               {crumbs.map(([name, path]) => (
                 <span key={path} className="contents">
@@ -59,7 +63,7 @@ export function ContentPage({
             </p>
             {updated && (
               <p className="mt-4 text-sm text-muted-foreground">
-                Актуально на <time dateTime={SITE.factsUpdatedIso}>{updated}</time>
+                {t.updated} <time dateTime={SITE.factsUpdatedIso}>{updated}</time>
               </p>
             )}
           </div>
@@ -81,10 +85,8 @@ export function ContentPage({
       <section className="mx-auto max-w-6xl px-5 pb-16 lg:px-8">
         <div className="flex flex-col items-start justify-between gap-6 rounded-3xl bg-ink px-7 py-9 text-ink-foreground sm:flex-row sm:items-center lg:px-10">
           <div>
-            <h2 className="font-display text-2xl font-bold">Остались вопросы?</h2>
-            <p className="mt-2 text-sm text-ink-muted">
-              Напишите или позвоните, отвечаем круглосуточно.
-            </p>
+            <h2 className="font-display text-2xl font-bold">{t.questions}</h2>
+            <p className="mt-2 text-sm text-ink-muted">{t.questionsText}</p>
           </div>
           <div className="flex flex-wrap gap-3">
             <Button asChild size="lg">

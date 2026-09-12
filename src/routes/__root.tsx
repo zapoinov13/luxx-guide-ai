@@ -3,6 +3,7 @@ import {
   Link,
   createRootRoute,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -12,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteShell } from "../components/site-shell";
 import { SITE } from "../lib/site";
+import { localeOf } from "../lib/i18n";
 import { analyticsScripts } from "../lib/analytics";
 
 function NotFoundComponent() {
@@ -130,8 +132,9 @@ export const Route = createRootRoute({
 });
 
 function RootShell({ children }: { children: ReactNode }) {
+  const pathname = useRouterState({ select: (st) => st.location.pathname });
   return (
-    <html lang="ru">
+    <html lang={localeOf(pathname)}>
       <head>
         <HeadContent />
       </head>

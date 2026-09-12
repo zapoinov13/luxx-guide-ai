@@ -1,0 +1,74 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { AnswerSection, ContentPage } from "@/components/content-page";
+import { BookingForm } from "@/components/booking-form";
+import { PHOTOS } from "@/lib/photos";
+import { ROOM_TYPES, SITE, breadcrumbSchema, jsonLd, pageHead } from "@/lib/site";
+import {
+  BOOKING_LABELS_EN,
+  BOOKING_OPTIONS_EN,
+  BOOKING_PRESET_EN,
+  fmtEn,
+  hostelSchemaEn,
+} from "@/lib/site-en";
+
+type BookingSearch = { room?: string };
+
+export const Route = createFileRoute("/en/booking")({
+  validateSearch: (search: Record<string, unknown>): BookingSearch =>
+    typeof search["room"] === "string" && ROOM_TYPES.some((r) => r.slug === search["room"])
+      ? { room: search["room"] }
+      : {},
+  head: () => ({
+    ...pageHead(
+      "Book Luxx Aparts hostel in Almaty directly",
+      `Book Luxx Aparts hostel in Almaty with no commission: send a WhatsApp request or call ${SITE.phoneDisplay}. Dorm bed ${fmtEn(SITE.priceFrom)} ₸, rooms from ${fmtEn(10000)} ₸, reply 24/7.`,
+      "/en/booking",
+    ),
+    scripts: jsonLd(breadcrumbSchema("Booking", "/en/booking"), hostelSchemaEn()),
+  }),
+  component: BookingPageEn,
+});
+
+function BookingPageEn() {
+  const { room } = Route.useSearch();
+  return (
+    <ContentPage
+      eyebrow="Booking"
+      title="Book Luxx Aparts hostel in Almaty directly"
+      intro={`Fill in the form and your request opens as a ready message in WhatsApp. The desk confirms availability and payment. Dorm bed ${fmtEn(SITE.priceFrom)} ₸, single room from ${fmtEn(10000)} ₸, double room ${fmtEn(15000)} ₸. No prepayment, we reply around the clock. Faster by phone: ${SITE.phoneDisplay}.`}
+      photo={PHOTOS.privateRoom}
+    >
+      <AnswerSection title="How do I send a request?">
+        <BookingForm
+          locale="en"
+          options={BOOKING_OPTIONS_EN}
+          preset={room ? BOOKING_PRESET_EN[room] : undefined}
+          labels={BOOKING_LABELS_EN}
+        />
+      </AnswerSection>
+
+      <AnswerSection title="Why book directly?">
+        <ul>
+          <li>No platform commission.</li>
+          <li>Everything in one chat: room type, arrival time, payment.</li>
+          <li>A night arrival can be agreed right away.</li>
+        </ul>
+        <p>
+          The hostel is also listed on{" "}
+          <a href={SITE.links.booking} target="_blank" rel="noreferrer">
+            Booking.com
+          </a>
+          , but the terms there may differ.
+        </p>
+      </AnswerSection>
+
+      <AnswerSection title="What is the cancellation policy?">
+        <p>
+          For bookings through platforms, free cancellation applies until one day before arrival;
+          later cancellations and no-shows are charged the first night. For direct bookings the desk
+          confirms the terms before you pay. Payment at check-in, in cash or by card.
+        </p>
+      </AnswerSection>
+    </ContentPage>
+  );
+}

@@ -24,6 +24,14 @@ import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as BlogAvtorRouteImport } from './routes/blog.avtor'
 import { Route as BlogRssDotxmlRouteImport } from './routes/blog.rss[.]xml'
+import { Route as EnIndexRouteImport } from './routes/en/index'
+import { Route as EnAmenitiesRouteImport } from './routes/en/amenities'
+import { Route as EnBookingRouteImport } from './routes/en/booking'
+import { Route as EnContactsRouteImport } from './routes/en/contacts'
+import { Route as EnFaqRouteImport } from './routes/en/faq'
+import { Route as EnHouseRulesRouteImport } from './routes/en/house-rules'
+import { Route as EnHowToGetThereRouteImport } from './routes/en/how-to-get-there'
+import { Route as EnRoomsRouteImport } from './routes/en/rooms'
 import { Route as NomeraIndexRouteImport } from './routes/nomera.index'
 import { Route as NomeraTypeRouteImport } from './routes/nomera.$type'
 
@@ -102,6 +110,46 @@ const BlogRssDotxmlRoute = BlogRssDotxmlRouteImport.update({
   path: '/blog/rss.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EnIndexRoute = EnIndexRouteImport.update({
+  id: '/en/',
+  path: '/en/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnAmenitiesRoute = EnAmenitiesRouteImport.update({
+  id: '/en/amenities',
+  path: '/en/amenities',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnBookingRoute = EnBookingRouteImport.update({
+  id: '/en/booking',
+  path: '/en/booking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnContactsRoute = EnContactsRouteImport.update({
+  id: '/en/contacts',
+  path: '/en/contacts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnFaqRoute = EnFaqRouteImport.update({
+  id: '/en/faq',
+  path: '/en/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnHouseRulesRoute = EnHouseRulesRouteImport.update({
+  id: '/en/house-rules',
+  path: '/en/house-rules',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnHowToGetThereRoute = EnHowToGetThereRouteImport.update({
+  id: '/en/how-to-get-there',
+  path: '/en/how-to-get-there',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnRoomsRoute = EnRoomsRouteImport.update({
+  id: '/en/rooms',
+  path: '/en/rooms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NomeraIndexRoute = NomeraIndexRouteImport.update({
   id: '/nomera/',
   path: '/nomera/',
@@ -128,8 +176,16 @@ export interface FileRoutesByFullPath {
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/avtor': typeof BlogAvtorRoute
   '/blog/rss.xml': typeof BlogRssDotxmlRoute
+  '/en/amenities': typeof EnAmenitiesRoute
+  '/en/booking': typeof EnBookingRoute
+  '/en/contacts': typeof EnContactsRoute
+  '/en/faq': typeof EnFaqRoute
+  '/en/house-rules': typeof EnHouseRulesRoute
+  '/en/how-to-get-there': typeof EnHowToGetThereRoute
+  '/en/rooms': typeof EnRoomsRoute
   '/nomera/$type': typeof NomeraTypeRoute
   '/blog/': typeof BlogIndexRoute
+  '/en/': typeof EnIndexRoute
   '/nomera/': typeof NomeraIndexRoute
 }
 export interface FileRoutesByTo {
@@ -147,8 +203,16 @@ export interface FileRoutesByTo {
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/avtor': typeof BlogAvtorRoute
   '/blog/rss.xml': typeof BlogRssDotxmlRoute
+  '/en/amenities': typeof EnAmenitiesRoute
+  '/en/booking': typeof EnBookingRoute
+  '/en/contacts': typeof EnContactsRoute
+  '/en/faq': typeof EnFaqRoute
+  '/en/house-rules': typeof EnHouseRulesRoute
+  '/en/how-to-get-there': typeof EnHowToGetThereRoute
+  '/en/rooms': typeof EnRoomsRoute
   '/nomera/$type': typeof NomeraTypeRoute
   '/blog': typeof BlogIndexRoute
+  '/en': typeof EnIndexRoute
   '/nomera': typeof NomeraIndexRoute
 }
 export interface FileRoutesById {
@@ -167,8 +231,16 @@ export interface FileRoutesById {
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/avtor': typeof BlogAvtorRoute
   '/blog/rss.xml': typeof BlogRssDotxmlRoute
+  '/en/amenities': typeof EnAmenitiesRoute
+  '/en/booking': typeof EnBookingRoute
+  '/en/contacts': typeof EnContactsRoute
+  '/en/faq': typeof EnFaqRoute
+  '/en/house-rules': typeof EnHouseRulesRoute
+  '/en/how-to-get-there': typeof EnHowToGetThereRoute
+  '/en/rooms': typeof EnRoomsRoute
   '/nomera/$type': typeof NomeraTypeRoute
   '/blog/': typeof BlogIndexRoute
+  '/en/': typeof EnIndexRoute
   '/nomera/': typeof NomeraIndexRoute
 }
 export interface FileRouteTypes {
@@ -188,8 +260,16 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/blog/avtor'
     | '/blog/rss.xml'
+    | '/en/amenities'
+    | '/en/booking'
+    | '/en/contacts'
+    | '/en/faq'
+    | '/en/house-rules'
+    | '/en/how-to-get-there'
+    | '/en/rooms'
     | '/nomera/$type'
     | '/blog/'
+    | '/en/'
     | '/nomera/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -207,8 +287,16 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/blog/avtor'
     | '/blog/rss.xml'
+    | '/en/amenities'
+    | '/en/booking'
+    | '/en/contacts'
+    | '/en/faq'
+    | '/en/house-rules'
+    | '/en/how-to-get-there'
+    | '/en/rooms'
     | '/nomera/$type'
     | '/blog'
+    | '/en'
     | '/nomera'
   id:
     | '__root__'
@@ -226,8 +314,16 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/blog/avtor'
     | '/blog/rss.xml'
+    | '/en/amenities'
+    | '/en/booking'
+    | '/en/contacts'
+    | '/en/faq'
+    | '/en/house-rules'
+    | '/en/how-to-get-there'
+    | '/en/rooms'
     | '/nomera/$type'
     | '/blog/'
+    | '/en/'
     | '/nomera/'
   fileRoutesById: FileRoutesById
 }
@@ -246,8 +342,16 @@ export interface RootRouteChildren {
   BlogSlugRoute: typeof BlogSlugRoute
   BlogAvtorRoute: typeof BlogAvtorRoute
   BlogRssDotxmlRoute: typeof BlogRssDotxmlRoute
+  EnAmenitiesRoute: typeof EnAmenitiesRoute
+  EnBookingRoute: typeof EnBookingRoute
+  EnContactsRoute: typeof EnContactsRoute
+  EnFaqRoute: typeof EnFaqRoute
+  EnHouseRulesRoute: typeof EnHouseRulesRoute
+  EnHowToGetThereRoute: typeof EnHowToGetThereRoute
+  EnRoomsRoute: typeof EnRoomsRoute
   NomeraTypeRoute: typeof NomeraTypeRoute
   BlogIndexRoute: typeof BlogIndexRoute
+  EnIndexRoute: typeof EnIndexRoute
   NomeraIndexRoute: typeof NomeraIndexRoute
 }
 
@@ -358,6 +462,62 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogRssDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/en/': {
+      id: '/en/'
+      path: '/en'
+      fullPath: '/en/'
+      preLoaderRoute: typeof EnIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/amenities': {
+      id: '/en/amenities'
+      path: '/en/amenities'
+      fullPath: '/en/amenities'
+      preLoaderRoute: typeof EnAmenitiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/booking': {
+      id: '/en/booking'
+      path: '/en/booking'
+      fullPath: '/en/booking'
+      preLoaderRoute: typeof EnBookingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/contacts': {
+      id: '/en/contacts'
+      path: '/en/contacts'
+      fullPath: '/en/contacts'
+      preLoaderRoute: typeof EnContactsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/faq': {
+      id: '/en/faq'
+      path: '/en/faq'
+      fullPath: '/en/faq'
+      preLoaderRoute: typeof EnFaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/house-rules': {
+      id: '/en/house-rules'
+      path: '/en/house-rules'
+      fullPath: '/en/house-rules'
+      preLoaderRoute: typeof EnHouseRulesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/how-to-get-there': {
+      id: '/en/how-to-get-there'
+      path: '/en/how-to-get-there'
+      fullPath: '/en/how-to-get-there'
+      preLoaderRoute: typeof EnHowToGetThereRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/rooms': {
+      id: '/en/rooms'
+      path: '/en/rooms'
+      fullPath: '/en/rooms'
+      preLoaderRoute: typeof EnRoomsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/nomera/': {
       id: '/nomera/'
       path: '/nomera'
@@ -390,8 +550,16 @@ const rootRouteChildren: RootRouteChildren = {
   BlogSlugRoute: BlogSlugRoute,
   BlogAvtorRoute: BlogAvtorRoute,
   BlogRssDotxmlRoute: BlogRssDotxmlRoute,
+  EnAmenitiesRoute: EnAmenitiesRoute,
+  EnBookingRoute: EnBookingRoute,
+  EnContactsRoute: EnContactsRoute,
+  EnFaqRoute: EnFaqRoute,
+  EnHouseRulesRoute: EnHouseRulesRoute,
+  EnHowToGetThereRoute: EnHowToGetThereRoute,
+  EnRoomsRoute: EnRoomsRoute,
   NomeraTypeRoute: NomeraTypeRoute,
   BlogIndexRoute: BlogIndexRoute,
+  EnIndexRoute: EnIndexRoute,
   NomeraIndexRoute: NomeraIndexRoute,
 }
 export const routeTree = rootRouteImport

@@ -7,6 +7,8 @@
  * приоритет у ТЗ. Даты актуальности — в SITE.factsUpdated.
  */
 
+import { localeOf, localePair, type Locale } from "./i18n";
+
 /** Адрес сайта. Когда появится свой домен — заменить здесь, и все canonical,
  *  og:url, sitemap и JSON-LD станут ссылаться на него. */
 export const SITE_URL = "https://luxx-guide-ai.lovable.app";
@@ -74,6 +76,14 @@ export const PAGE_DATES: Record<string, string> = {
   "/foto": "2026-09-11",
   "/blog": "2026-09-11",
   "/blog/avtor": "2026-09-11",
+  "/en": "2026-09-12",
+  "/en/rooms": "2026-09-12",
+  "/en/booking": "2026-09-12",
+  "/en/amenities": "2026-09-12",
+  "/en/how-to-get-there": "2026-09-12",
+  "/en/house-rules": "2026-09-12",
+  "/en/faq": "2026-09-12",
+  "/en/contacts": "2026-09-12",
 };
 
 export const pageDate = (path: string) => PAGE_DATES[path] ?? SITE.factsUpdatedIso;
@@ -455,22 +465,37 @@ export const NAV = [
 
 export const absolute = (path: string) => new URL(path, SITE.url).toString();
 
+/** Ссылки hreflang для страниц, у которых есть русская и английская версии. */
+export const hreflangLinks = (path: string) => {
+  const pair = localePair(path);
+  if (!pair) return [];
+  return [
+    { rel: "alternate", hrefLang: "ru", href: absolute(pair.ru) },
+    { rel: "alternate", hrefLang: "en", href: absolute(pair.en) },
+    { rel: "alternate", hrefLang: "x-default", href: absolute(pair.ru) },
+  ];
+};
+
 export const whatsappWithText = (text: string) =>
   `${SITE.whatsapp}?text=${encodeURIComponent(text)}`;
 
 export type Crumb = [name: string, path: string];
 
-/** Хлебные крошки: «Главная» добавляется автоматически. */
-export const breadcrumbsSchema = (crumbs: readonly Crumb[]) => ({
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [["Главная", "/"] as Crumb, ...crumbs].map(([name, path], i) => ({
-    "@type": "ListItem",
-    position: i + 1,
-    name,
-    item: absolute(path),
-  })),
-});
+/** Хлебные крошки: «Главная» (или Home для /en/…) добавляется автоматически. */
+export const breadcrumbsSchema = (crumbs: readonly Crumb[]) => {
+  const last = crumbs.at(-1)?.[1] ?? "/";
+  const home: Crumb = localeOf(last) === "en" ? ["Home", "/en"] : ["Главная", "/"];
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [home, ...crumbs].map(([name, path], i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name,
+      item: absolute(path),
+    })),
+  };
+};
 
 export const breadcrumbSchema = (name: string, path: string) => breadcrumbsSchema([[name, path]]);
 
@@ -645,12 +670,12 @@ export const hostelSchema = () => ({
   dateModified: SITE.factsUpdatedIso,
 });
 
-export const webSiteSchema = () => ({
+export const webSiteSchema = (locale: Locale = "ru") => ({
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: SITE.name,
-  url: absolute("/"),
-  inLanguage: "ru",
+  url: absolute(locale === "en" ? "/en" : "/"),
+  inLanguage: locale,
 });
 
 export const jsonLd = (...nodes: unknown[]) => [
@@ -684,11 +709,11 @@ export const pageHead = (
             { property: "og:image:height", content: "630" },
           ]
         : []),
-      { property: "og:locale", content: "ru_RU" },
+      { property: "og:locale", content: localeOf(path) === "en" ? "en_US" : "ru_RU" },
       { property: "og:site_name", content: SITE.name },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: url }],
+    links: [{ rel: "canonical", href: url }, ...hreflangLinks(path)],
   };
 };
 
