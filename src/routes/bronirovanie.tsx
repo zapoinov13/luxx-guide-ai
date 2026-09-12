@@ -28,7 +28,7 @@ export const Route = createFileRoute("/bronirovanie")({
   head: () => ({
     ...pageHead(
       "Забронировать хостел в Алматы напрямую — Luxx Aparts",
-      `Бронирование хостела Luxx Aparts в Алматы без комиссии: заявка в WhatsApp или звонок ${SITE.phoneDisplay}. Койко-место ${SITE.priceFrom.toLocaleString("ru-RU")} ₸, номера от 10 000 ₸, ответ круглосуточно.`,
+      `Бронирование хостела Luxx Aparts в Алматы без комиссии: заявка в WhatsApp или звонок ${SITE.phoneDisplay}. Койко-место ${SITE.priceFrom.toLocaleString("ru-RU")} ₸, номера от 10 000 ₸, ответ 24/7.`,
       "/bronirovanie",
     ),
     scripts: jsonLd(breadcrumbSchema("Бронирование", "/bronirovanie"), hostelSchema()),
