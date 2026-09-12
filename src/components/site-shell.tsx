@@ -256,11 +256,12 @@ export function SiteShell({ children }: { children: ReactNode }) {
           <div className="footer-columns">
             <div>
               <p className="font-display text-lg font-bold">Luxx Aparts</p>
-              <address className="mt-2 text-sm not-italic leading-6 text-muted-foreground">
+              <address className="footer-address mt-2 text-sm not-italic leading-6 text-muted-foreground">
                 {en ? `${EN.address}, ${EN.complex}` : `${SITE.address}, ${SITE.complex}`}
-                <br />
-                {t.checkIn} {SITE.checkIn.from}–{SITE.checkIn.to}, {t.checkOut} {SITE.checkOut},{" "}
-                {t.desk247}
+                <span className="footer-hours">
+                  {t.checkIn} {SITE.checkIn.from}–{SITE.checkIn.to}, {t.checkOut} {SITE.checkOut},{" "}
+                  {t.desk247}
+                </span>
               </address>
               <div className="footer-contacts mt-4 flex flex-wrap gap-2">
                 <Button asChild size="sm">
@@ -294,7 +295,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
                 </Link>
               ))}
             </nav>
-            <div>
+            <div className="footer-platforms">
               <p className="text-sm font-semibold">{t.platforms}</p>
               <ul className="mt-3 flex flex-wrap gap-2">
                 {PLATFORMS.map(([label, href]) => (
@@ -312,7 +313,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
               </ul>
             </div>
           </div>
-          <div className="mt-8 flex flex-col gap-2 border-t border-border/70 pt-5 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+          <div className="footer-bottom mt-8 flex flex-col gap-2 border-t border-border/70 pt-5 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
             <p>
               © {new Date().getFullYear()} Luxx Aparts, {en ? "Almaty" : "Алматы"}. {t.pricesNote}{" "}
               {t.factsUpdated}.
