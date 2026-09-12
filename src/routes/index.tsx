@@ -30,14 +30,15 @@ import {
   Wifi,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { PhotoTour } from "@/components/photo-tour";
+import { RoomExplorer } from "@/components/room-explorer";
+import { HomeMotion } from "@/components/home-motion";
 import { StayDetails } from "@/components/stay-details";
 import { AmenitySpaces } from "@/components/amenity-spaces";
 import { StayRules } from "@/components/stay-rules";
 import { QuickFaq } from "@/components/quick-faq";
 import { Photo } from "@/components/photo";
 import { MapEmbed } from "@/components/map-embed";
-import { TariffCards } from "@/components/tariff-cards";
+import "@/components/home-sections.css";
 import { PHOTOS } from "@/lib/photos";
 import {
   AMENITIES,
@@ -84,7 +85,7 @@ const audiences = [
   },
   {
     icon: Briefcase,
-    title: "Командировочным",
+    title: "В командировке",
     text: "Отдельная комната на одну-три ночи, быстрый Wi-Fi, стол для работы.",
   },
   {
@@ -129,7 +130,8 @@ const amenityIcons = [
 function HomePage() {
   const price = SITE.priceFrom.toLocaleString("ru-RU");
   return (
-    <main>
+    <main className="home-page">
+      <HomeMotion />
       {/* Первый экран */}
       <section className="home-hero bg-background">
         <div className="mx-auto grid max-w-6xl gap-5 px-5 py-4 lg:grid-cols-[1.08fr_1fr] lg:items-center lg:gap-12 lg:px-8 lg:py-14">
@@ -146,7 +148,7 @@ function HomePage() {
             />
             <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-3 text-white">
               <div>
-                <p className="text-[11px] font-semibold uppercase tracking-wider text-white/75">
+                <p className="text-xs font-semibold uppercase tracking-wider text-white/90">
                   Койко-место
                 </p>
                 <p className="font-display text-2xl font-bold leading-none lg:text-3xl">
@@ -207,6 +209,9 @@ function HomePage() {
                 <Link to="/nomera">Номера и цены</Link>
               </Button>
             </div>
+            <a className="hero-explore-link" href="#room-explorer">
+              Заглянуть внутрь · интерактивный просмотр
+            </a>
             <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-1.5 text-sm text-muted-foreground lg:mt-5">
               {trust.map((t) => (
                 <li key={t} className="inline-flex items-center gap-1.5">
@@ -225,7 +230,7 @@ function HomePage() {
         </div>
       </section>
 
-      <PhotoTour showGalleryLink />
+      <RoomExplorer />
       {/* Факты */}
       <section className="border-b border-border">
         <ul className="mx-auto grid max-w-6xl grid-cols-2 gap-px bg-border lg:grid-cols-4">
@@ -239,47 +244,26 @@ function HomePage() {
         </ul>
       </section>
 
-      {/* Номера */}
-      <section className="mx-auto max-w-6xl px-5 py-12 lg:px-8 lg:py-20">
-        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
-          <div>
-            <p className="text-sm font-semibold text-primary">Номера и цены</p>
-            <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl lg:text-4xl">
-              Сколько стоит проживание в Luxx Aparts?
-            </h2>
-          </div>
-          <Link
-            to="/nomera"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-primary"
-          >
-            Все номера
-          </Link>
-        </div>
-        <p className="mt-4 text-sm text-muted-foreground sm:hidden">
-          Выберите вариант — укажите даты в открывшемся окне бронирования.
-        </p>
-        <p className="mt-4 hidden max-w-2xl text-muted-foreground sm:block">
-          Койко-место в капсуле {price} ₸, одноместный номер от 10 000 ₸, двухместный 15 000 ₸ за
-          номер. Для срока от недели и от месяца администратор считает индивидуально.
-        </p>
-        <TariffCards className="mt-6 lg:mt-8" />
-        <p className="mt-4 text-sm text-muted-foreground">
-          Цены актуальны на {SITE.factsUpdated}: койко-место — за место, номера — за номер целиком.
-          Оплата при заселении, предоплаты нет.
-        </p>
-      </section>
+      <nav className="home-section-nav" aria-label="Разделы главной страницы">
+        <a href="#hostel-amenities">Комфорт</a>
+        <a href="#location">Расположение</a>
+        <a href="#home-audiences">Для кого</a>
+        <a href="#home-rules">Заселение</a>
+        <a href="#guest-stories">Отзывы</a>
+        <a href="#home-faq">Вопросы</a>
+      </nav>
 
       {/* Удобства */}
-      <section className="amenities-section" id="hostel-amenities">
+      <section className="amenities-section home-section" id="hostel-amenities">
         <div className="mx-auto max-w-6xl px-5 py-12 lg:px-8 lg:py-20">
           <div>
-            <p className="text-sm font-semibold text-primary">Удобства</p>
+            <p className="home-kicker">01 / ПОВСЕДНЕВНЫЙ КОМФОРТ</p>
             <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl lg:text-4xl">
               Что есть в хостеле?
             </h2>
             <p className="mt-4 text-muted-foreground">
-              Хостел с кухней, стиральной машиной и коворкингом: всё, что нужно и на одну ночь, и на
-              месяц. Комнаты звукоизолированы, у каждой кровати розетка и лампа для чтения.
+              Приготовить завтрак, поработать в тишине, освежить вещи после дороги. Всё для
+              привычного ритма — даже в новом городе.
             </p>
             <AmenitySpaces />
           </div>
@@ -306,10 +290,13 @@ function HomePage() {
       </section>
 
       {/* Расположение */}
-      <section id="location" className="mx-auto max-w-6xl px-5 py-12 lg:px-8 lg:py-20">
+      <section
+        id="location"
+        className="home-section home-location mx-auto max-w-6xl px-5 py-12 lg:px-8 lg:py-20"
+      >
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-10">
           <div>
-            <p className="text-sm font-semibold text-primary">Расположение</p>
+            <p className="home-kicker">02 / ВСТРЕЧАЕМСЯ В АЛМАТЫ</p>
             <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl lg:text-4xl">
               Где находится и как добраться?
             </h2>
@@ -317,7 +304,7 @@ function HomePage() {
               Западная часть Алматы, у автовокзала Сайран: до центра около 6 км, 15–25 минут на
               такси или на метро от «Сайрана».
             </p>
-            <div className="mt-5 flex items-start gap-3 rounded-2xl bg-ink p-4 text-ink-foreground lg:p-5">
+            <div className="home-address mt-5 flex items-start gap-3 rounded-2xl bg-ink p-4 text-ink-foreground lg:p-5">
               <MapPin className="mt-1 size-5 shrink-0 text-primary" aria-hidden="true" />
               <div>
                 <p className="font-display text-lg font-bold leading-snug lg:text-xl">
@@ -328,7 +315,7 @@ function HomePage() {
                 </p>
               </div>
             </div>
-            <ul className="mt-4 grid grid-cols-2 gap-2.5 sm:gap-3">
+            <ul className="home-distances mt-4 grid grid-cols-2 gap-2.5 sm:gap-3">
               {DISTANCES.map((d) => {
                 const Icon = distanceIcons[d.kind];
                 return (
@@ -357,15 +344,20 @@ function HomePage() {
               Маршруты от вокзала и аэропорта
             </Link>
           </div>
-          <MapEmbed className="h-[300px] lg:h-[460px]" />
+          <div className="home-map">
+            <p>
+              <MapPin size={16} aria-hidden="true" /> LUXX APARTS / АЛМАТЫ
+            </p>
+            <MapEmbed className="h-[300px] lg:h-[540px]" />
+          </div>
         </div>
       </section>
 
       {/* Кому подходит + бронирование */}
-      <section className="bg-secondary">
-        <div className="mx-auto grid max-w-6xl gap-10 px-5 py-12 lg:grid-cols-2 lg:px-8 lg:py-20">
+      <section className="home-section home-audiences" id="home-audiences">
+        <div className="home-audiences-inner mx-auto grid max-w-6xl gap-10 px-5 py-12 lg:px-8 lg:py-20">
           <div>
-            <p className="text-sm font-semibold text-primary">Кому подходит</p>
+            <p className="home-kicker">03 / КАЖДОМУ — СВОЙ РИТМ</p>
             <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl lg:text-4xl">
               Кому подходит Luxx Aparts?
             </h2>
@@ -445,10 +437,13 @@ function HomePage() {
       </section>
 
       {/* Правила кратко */}
-      <section className="mx-auto max-w-6xl px-5 py-12 lg:px-8 lg:py-20">
+      <section
+        id="home-rules"
+        className="home-section home-rules mx-auto max-w-6xl px-5 py-12 lg:px-8 lg:py-20"
+      >
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
-            <p className="text-sm font-semibold text-primary">Правила</p>
+            <p className="home-kicker">04 / ПЕРЕД ПРИЕЗДОМ</p>
             <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl lg:text-4xl">
               Правила заселения коротко
             </h2>
@@ -464,11 +459,11 @@ function HomePage() {
       </section>
 
       {/* Отзывы */}
-      <section className="guest-stories bg-ink text-ink-foreground" id="guest-stories">
+      <section className="home-section guest-stories bg-ink text-ink-foreground" id="guest-stories">
         <div className="mx-auto max-w-6xl px-5 py-12 lg:px-8 lg:py-20">
           <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
             <div>
-              <p className="text-sm font-semibold text-ink-muted">Отзывы</p>
+              <p className="home-kicker">05 / ОПЫТ НАШИХ ГОСТЕЙ</p>
               <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl lg:text-4xl">
                 Что говорят гости?
               </h2>
@@ -531,10 +526,13 @@ function HomePage() {
       </section>
 
       {/* FAQ */}
-      <section className="mx-auto max-w-6xl px-5 py-12 lg:px-8 lg:py-20">
+      <section
+        id="home-faq"
+        className="home-section home-faq mx-auto max-w-6xl px-5 py-12 lg:px-8 lg:py-20"
+      >
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
-            <p className="text-sm font-semibold text-primary">Перед поездкой</p>
+            <p className="home-kicker">06 / ВСЁ, ЧТО ВАЖНО ЗНАТЬ</p>
             <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl lg:text-4xl">
               Частые вопросы
             </h2>

@@ -13,9 +13,9 @@ export function StayDetails({ en = false }: { en?: boolean }) {
         </figcaption>
       </figure>
       <a
-        href="#photo-tour"
+        href="#room-explorer"
         className="explore-seal"
-        aria-label={en ? "Explore the hostel photos" : "Посмотреть фотопрогулку"}
+        aria-label={en ? "Explore the rooms" : "Рассмотреть номера"}
       >
         <ArrowUpRight aria-hidden="true" />
         <span>

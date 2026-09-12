@@ -1,4 +1,6 @@
 import { createContext, useContext, forwardRef, type ButtonHTMLAttributes } from "react";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 
 export type BookingSelection = {
   en: boolean;
@@ -16,11 +18,12 @@ export const BookingButton = forwardRef<
     to: string;
     search?: { room?: string; variant?: string };
   }
->(({ to, search, onClick, ...props }, ref) => {
+>(({ to, search, onClick, className, ...props }, ref) => {
   const openBooking = useContext(BookingContext);
   return (
     <button
       {...props}
+      className={cn(!className?.includes("luxx-button") && buttonVariants(), className)}
       ref={ref}
       type="button"
       aria-haspopup="dialog"

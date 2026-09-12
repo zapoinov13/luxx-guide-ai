@@ -30,7 +30,7 @@ import {
   Wifi,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { PhotoTour } from "@/components/photo-tour";
+import { RoomExplorer } from "@/components/room-explorer";
 import { StayDetails } from "@/components/stay-details";
 import { AmenitySpaces } from "@/components/amenity-spaces";
 import { StayRules } from "@/components/stay-rules";
@@ -152,7 +152,7 @@ function HomePageEn() {
             />
             <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-3 text-white">
               <div>
-                <p className="text-[11px] font-semibold uppercase tracking-wider text-white/75">
+                <p className="text-xs font-semibold uppercase tracking-wider text-white/90">
                   Dorm bed
                 </p>
                 <p className="font-display text-2xl font-bold leading-none lg:text-3xl">
@@ -214,6 +214,9 @@ function HomePageEn() {
                 <Link to="/en/rooms">Rooms and prices</Link>
               </Button>
             </div>
+            <a className="hero-explore-link" href="#room-explorer">
+              Explore inside · interactive room viewer
+            </a>
             <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-1.5 text-sm text-muted-foreground lg:mt-5">
               {trust.map((t) => (
                 <li key={t} className="inline-flex items-center gap-1.5">
@@ -232,7 +235,7 @@ function HomePageEn() {
         </div>
       </section>
 
-      <PhotoTour en showGalleryLink />
+      <RoomExplorer en />
       {/* Facts */}
       <section className="border-b border-border">
         <ul className="mx-auto grid max-w-6xl grid-cols-2 gap-px bg-border lg:grid-cols-4">
