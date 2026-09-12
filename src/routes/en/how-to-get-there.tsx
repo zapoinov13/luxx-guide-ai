@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AnswerSection, ContentPage } from "@/components/content-page";
 import { PHOTOS } from "@/lib/photos";
 import { MapEmbed } from "@/components/map-embed";
-import { SITE, breadcrumbSchema, jsonLd, pageHead } from "@/lib/site";
+import { SITE, breadcrumbSchema, jsonLd, pageHead, webPageSchema } from "@/lib/site";
 import { DISTANCES_EN, EN, hostelSchemaEn } from "@/lib/site-en";
 
 export const Route = createFileRoute("/en/how-to-get-there")({
@@ -12,7 +12,11 @@ export const Route = createFileRoute("/en/how-to-get-there")({
       "Hostel by Sairan bus station in Almaty: how to reach Luxx Aparts from Almaty-2 railway station (7 km), the airport (about 20 km) and by metro. Map and entrance.",
       "/en/how-to-get-there",
     ),
-    scripts: jsonLd(breadcrumbSchema("Getting here", "/en/how-to-get-there"), hostelSchemaEn()),
+    scripts: jsonLd(
+      webPageSchema("/en/how-to-get-there"),
+      breadcrumbSchema("Getting here", "/en/how-to-get-there"),
+      hostelSchemaEn(),
+    ),
   }),
   component: DirectionsPageEn,
 });

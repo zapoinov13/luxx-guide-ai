@@ -48,6 +48,7 @@ import {
   pageHead,
   pluralReviews,
   webSiteSchema,
+  webPageSchema,
 } from "@/lib/site";
 import { HOME_FAQ } from "@/lib/qa";
 
@@ -58,7 +59,7 @@ export const Route = createFileRoute("/")({
       `Недорогой хостел в Алматы рядом с автовокзалом Сайран: капсулы от ${SITE.priceFrom.toLocaleString("ru-RU")} ₸, отдельные номера, кухня, коворкинг, стойка 24/7. Бронируйте напрямую в WhatsApp.`,
       "/",
     ),
-    scripts: jsonLd(hostelSchema(), webSiteSchema(), faqSchema(HOME_FAQ)),
+    scripts: jsonLd(webPageSchema("/"), hostelSchema(), webSiteSchema(), faqSchema(HOME_FAQ)),
   }),
   component: HomePage,
 });
@@ -182,7 +183,7 @@ function HomePage() {
             <h1 className="mt-4 font-display text-[1.9rem] font-bold leading-[1.1] sm:text-5xl lg:mt-5 lg:text-[2.75rem] lg:leading-[1.08] xl:text-[3rem]">
               Хостел и апартаменты <span className="whitespace-nowrap">Luxx Aparts</span> в Алматы
             </h1>
-            <p className="mt-3 max-w-xl text-base leading-7 text-muted-foreground lg:mt-5 lg:text-lg lg:leading-8">
+            <p className="speakable mt-3 max-w-xl text-base leading-7 text-muted-foreground lg:mt-5 lg:text-lg lg:leading-8">
               Недорогой хостел на улице Толе би 286/8
               <br />
               44 номера, капсульные койко-места 

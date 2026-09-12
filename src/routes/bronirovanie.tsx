@@ -2,7 +2,15 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AnswerSection, ContentPage } from "@/components/content-page";
 import { BookingForm, type BookingLabels, type BookingOption } from "@/components/booking-form";
 import { PHOTOS } from "@/lib/photos";
-import { ROOM_TYPES, SITE, breadcrumbSchema, hostelSchema, jsonLd, pageHead } from "@/lib/site";
+import {
+  ROOM_TYPES,
+  SITE,
+  breadcrumbSchema,
+  hostelSchema,
+  jsonLd,
+  pageHead,
+  webPageSchema,
+} from "@/lib/site";
 
 type BookingSearch = { room?: string };
 
@@ -17,7 +25,11 @@ export const Route = createFileRoute("/bronirovanie")({
       `Бронирование хостела Luxx Aparts в Алматы без комиссии: заявка в WhatsApp или звонок ${SITE.phoneDisplay}. Койко-место ${SITE.priceFrom.toLocaleString("ru-RU")} ₸, номера от 10 000 ₸, ответ 24/7.`,
       "/bronirovanie",
     ),
-    scripts: jsonLd(breadcrumbSchema("Бронирование", "/bronirovanie"), hostelSchema()),
+    scripts: jsonLd(
+      webPageSchema("/bronirovanie"),
+      breadcrumbSchema("Бронирование", "/bronirovanie"),
+      hostelSchema(),
+    ),
   }),
   component: BookingPage,
 });

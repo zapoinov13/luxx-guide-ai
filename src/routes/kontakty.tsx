@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { AnswerSection, ContentPage } from "@/components/content-page";
 import { PHOTOS } from "@/lib/photos";
 import { MapEmbed } from "@/components/map-embed";
-import { SITE, breadcrumbSchema, hostelSchema, jsonLd, pageHead } from "@/lib/site";
+import { SITE, breadcrumbSchema, hostelSchema, jsonLd, pageHead, webPageSchema } from "@/lib/site";
 
 export const Route = createFileRoute("/kontakty")({
   head: () => ({
@@ -13,7 +13,11 @@ export const Route = createFileRoute("/kontakty")({
       `Телефон и WhatsApp ${SITE.phoneDisplay}, e-mail ${SITE.email}, адрес ${SITE.address}. Стойка регистрации работает круглосуточно.`,
       "/kontakty",
     ),
-    scripts: jsonLd(breadcrumbSchema("Контакты", "/kontakty"), hostelSchema()),
+    scripts: jsonLd(
+      webPageSchema("/kontakty"),
+      breadcrumbSchema("Контакты", "/kontakty"),
+      hostelSchema(),
+    ),
   }),
   component: ContactsPage,
 });

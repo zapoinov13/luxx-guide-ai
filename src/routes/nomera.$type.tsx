@@ -13,6 +13,7 @@ import {
   hotelRoomSchema,
   jsonLd,
   pageHead,
+  webPageSchema,
 } from "@/lib/site";
 
 export const Route = createFileRoute("/nomera/$type")({
@@ -29,6 +30,7 @@ export const Route = createFileRoute("/nomera/$type")({
         ...(photos[0] ? { image: `/photos/${photos[0].id}-1600.webp` } : {}),
       }),
       scripts: jsonLd(
+        webPageSchema(`/nomera/${room.slug}`),
         breadcrumbsSchema([
           ["Номера и цены", "/nomera"],
           [room.name, `/nomera/${room.slug}`],

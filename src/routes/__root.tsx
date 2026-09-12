@@ -14,7 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteShell } from "../components/site-shell";
 import { SITE } from "../lib/site";
 import { localeOf } from "../lib/i18n";
-import { analyticsScripts } from "../lib/analytics";
+import { analyticsScripts, verificationMeta } from "../lib/analytics";
 
 function NotFoundComponent() {
   return (
@@ -98,6 +98,7 @@ export const Route = createRootRoute({
       { name: "description", content: SITE.whoWeAre },
       { name: "author", content: SITE.name },
       { name: "theme-color", content: "#1c1f2b" },
+      ...verificationMeta(),
     ],
     links: [
       { rel: "stylesheet", href: appCss },

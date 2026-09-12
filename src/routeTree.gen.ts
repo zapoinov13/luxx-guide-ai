@@ -13,6 +13,8 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as BronirovanieRouteImport } from './routes/bronirovanie'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as FotoRouteImport } from './routes/foto'
+import { Route as HostelNaMesyacRouteImport } from './routes/hostel-na-mesyac'
+import { Route as HostelRyadomSAvtovokzalomSayranRouteImport } from './routes/hostel-ryadom-s-avtovokzalom-sayran'
 import { Route as KakDobratsyaRouteImport } from './routes/kak-dobratsya'
 import { Route as KontaktyRouteImport } from './routes/kontakty'
 import { Route as LlmsFullDottxtRouteImport } from './routes/llms-full[.]txt'
@@ -55,6 +57,17 @@ const FotoRoute = FotoRouteImport.update({
   path: '/foto',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HostelNaMesyacRoute = HostelNaMesyacRouteImport.update({
+  id: '/hostel-na-mesyac',
+  path: '/hostel-na-mesyac',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HostelRyadomSAvtovokzalomSayranRoute =
+  HostelRyadomSAvtovokzalomSayranRouteImport.update({
+    id: '/hostel-ryadom-s-avtovokzalom-sayran',
+    path: '/hostel-ryadom-s-avtovokzalom-sayran',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const KakDobratsyaRoute = KakDobratsyaRouteImport.update({
   id: '/kak-dobratsya',
   path: '/kak-dobratsya',
@@ -166,6 +179,8 @@ export interface FileRoutesByFullPath {
   '/bronirovanie': typeof BronirovanieRoute
   '/faq': typeof FaqRoute
   '/foto': typeof FotoRoute
+  '/hostel-na-mesyac': typeof HostelNaMesyacRoute
+  '/hostel-ryadom-s-avtovokzalom-sayran': typeof HostelRyadomSAvtovokzalomSayranRoute
   '/kak-dobratsya': typeof KakDobratsyaRoute
   '/kontakty': typeof KontaktyRoute
   '/llms-full.txt': typeof LlmsFullDottxtRoute
@@ -193,6 +208,8 @@ export interface FileRoutesByTo {
   '/bronirovanie': typeof BronirovanieRoute
   '/faq': typeof FaqRoute
   '/foto': typeof FotoRoute
+  '/hostel-na-mesyac': typeof HostelNaMesyacRoute
+  '/hostel-ryadom-s-avtovokzalom-sayran': typeof HostelRyadomSAvtovokzalomSayranRoute
   '/kak-dobratsya': typeof KakDobratsyaRoute
   '/kontakty': typeof KontaktyRoute
   '/llms-full.txt': typeof LlmsFullDottxtRoute
@@ -221,6 +238,8 @@ export interface FileRoutesById {
   '/bronirovanie': typeof BronirovanieRoute
   '/faq': typeof FaqRoute
   '/foto': typeof FotoRoute
+  '/hostel-na-mesyac': typeof HostelNaMesyacRoute
+  '/hostel-ryadom-s-avtovokzalom-sayran': typeof HostelRyadomSAvtovokzalomSayranRoute
   '/kak-dobratsya': typeof KakDobratsyaRoute
   '/kontakty': typeof KontaktyRoute
   '/llms-full.txt': typeof LlmsFullDottxtRoute
@@ -250,6 +269,8 @@ export interface FileRouteTypes {
     | '/bronirovanie'
     | '/faq'
     | '/foto'
+    | '/hostel-na-mesyac'
+    | '/hostel-ryadom-s-avtovokzalom-sayran'
     | '/kak-dobratsya'
     | '/kontakty'
     | '/llms-full.txt'
@@ -277,6 +298,8 @@ export interface FileRouteTypes {
     | '/bronirovanie'
     | '/faq'
     | '/foto'
+    | '/hostel-na-mesyac'
+    | '/hostel-ryadom-s-avtovokzalom-sayran'
     | '/kak-dobratsya'
     | '/kontakty'
     | '/llms-full.txt'
@@ -304,6 +327,8 @@ export interface FileRouteTypes {
     | '/bronirovanie'
     | '/faq'
     | '/foto'
+    | '/hostel-na-mesyac'
+    | '/hostel-ryadom-s-avtovokzalom-sayran'
     | '/kak-dobratsya'
     | '/kontakty'
     | '/llms-full.txt'
@@ -332,6 +357,8 @@ export interface RootRouteChildren {
   BronirovanieRoute: typeof BronirovanieRoute
   FaqRoute: typeof FaqRoute
   FotoRoute: typeof FotoRoute
+  HostelNaMesyacRoute: typeof HostelNaMesyacRoute
+  HostelRyadomSAvtovokzalomSayranRoute: typeof HostelRyadomSAvtovokzalomSayranRoute
   KakDobratsyaRoute: typeof KakDobratsyaRoute
   KontaktyRoute: typeof KontaktyRoute
   LlmsFullDottxtRoute: typeof LlmsFullDottxtRoute
@@ -383,6 +410,20 @@ declare module '@tanstack/react-router' {
       path: '/foto'
       fullPath: '/foto'
       preLoaderRoute: typeof FotoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hostel-na-mesyac': {
+      id: '/hostel-na-mesyac'
+      path: '/hostel-na-mesyac'
+      fullPath: '/hostel-na-mesyac'
+      preLoaderRoute: typeof HostelNaMesyacRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hostel-ryadom-s-avtovokzalom-sayran': {
+      id: '/hostel-ryadom-s-avtovokzalom-sayran'
+      path: '/hostel-ryadom-s-avtovokzalom-sayran'
+      fullPath: '/hostel-ryadom-s-avtovokzalom-sayran'
+      preLoaderRoute: typeof HostelRyadomSAvtovokzalomSayranRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/kak-dobratsya': {
@@ -540,6 +581,8 @@ const rootRouteChildren: RootRouteChildren = {
   BronirovanieRoute: BronirovanieRoute,
   FaqRoute: FaqRoute,
   FotoRoute: FotoRoute,
+  HostelNaMesyacRoute: HostelNaMesyacRoute,
+  HostelRyadomSAvtovokzalomSayranRoute: HostelRyadomSAvtovokzalomSayranRoute,
   KakDobratsyaRoute: KakDobratsyaRoute,
   KontaktyRoute: KontaktyRoute,
   LlmsFullDottxtRoute: LlmsFullDottxtRoute,

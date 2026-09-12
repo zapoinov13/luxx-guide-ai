@@ -36,7 +36,15 @@ import { Photo } from "@/components/photo";
 import { MapEmbed } from "@/components/map-embed";
 import { RoomCardsEn } from "@/components/room-cards-en";
 import { GALLERY, PHOTOS } from "@/lib/photos";
-import { RATINGS, SITE, faqSchema, jsonLd, pageHead, webSiteSchema } from "@/lib/site";
+import {
+  RATINGS,
+  SITE,
+  faqSchema,
+  jsonLd,
+  pageHead,
+  webSiteSchema,
+  webPageSchema,
+} from "@/lib/site";
 import {
   AMENITIES_EN,
   DISTANCES_EN,
@@ -55,7 +63,12 @@ export const Route = createFileRoute("/en/")({
       `Budget hostel in Almaty near Sairan bus station: capsule beds from ${fmtEn(SITE.priceFrom)} ₸, private rooms, kitchen, coworking, 24/7 desk. Book directly on WhatsApp.`,
       "/en",
     ),
-    scripts: jsonLd(hostelSchemaEn(), webSiteSchema("en"), faqSchema(HOME_FAQ_EN)),
+    scripts: jsonLd(
+      webPageSchema("/en"),
+      hostelSchemaEn(),
+      webSiteSchema("en"),
+      faqSchema(HOME_FAQ_EN),
+    ),
   }),
   component: HomePageEn,
 });
@@ -179,7 +192,7 @@ function HomePageEn() {
             <h1 className="mt-4 font-display text-[1.9rem] font-bold leading-[1.1] sm:text-5xl lg:mt-5 lg:text-[2.75rem] lg:leading-[1.08] xl:text-[3rem]">
               Hostel and apartments <span className="whitespace-nowrap">Luxx Aparts</span> in Almaty
             </h1>
-            <p className="mt-3 max-w-xl text-base leading-7 text-muted-foreground lg:mt-5 lg:text-lg lg:leading-8">
+            <p className="speakable mt-3 max-w-xl text-base leading-7 text-muted-foreground lg:mt-5 lg:text-lg lg:leading-8">
               Budget hostel at 286/8 Tole Bi Street: {SITE.rooms} rooms, capsule dorm beds from{" "}
               {price} ₸ and private rooms with a window.
               <span className="hidden sm:inline">

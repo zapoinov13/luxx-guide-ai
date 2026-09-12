@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ContentPage, QaList } from "@/components/content-page";
 import { PHOTOS } from "@/lib/photos";
-import { SITE, breadcrumbSchema, faqSchema, jsonLd, pageHead } from "@/lib/site";
+import { SITE, breadcrumbSchema, faqSchema, jsonLd, pageHead, webPageSchema } from "@/lib/site";
 import { EN, RULES_EN } from "@/lib/site-en";
 
 export const Route = createFileRoute("/en/house-rules")({
@@ -11,7 +11,11 @@ export const Route = createFileRoute("/en/house-rules")({
       `Check-in ${SITE.checkIn.from}–${SITE.checkIn.to}, check-out by ${SITE.checkOut}, ID or passport, children with parents, no pets, no smoking indoors, payment at check-in, cancellation terms.`,
       "/en/house-rules",
     ),
-    scripts: jsonLd(breadcrumbSchema("House rules", "/en/house-rules"), faqSchema(RULES_EN)),
+    scripts: jsonLd(
+      webPageSchema("/en/house-rules"),
+      breadcrumbSchema("House rules", "/en/house-rules"),
+      faqSchema(RULES_EN),
+    ),
   }),
   component: RulesPageEn,
 });

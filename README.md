@@ -51,26 +51,28 @@ docs/
   tz-sait-luxx-aparts.md   ТЗ заказчика
 ```
 
-| URL              | Страница                                                                                            | JSON-LD                                                |
-| ---------------- | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
-| `/`              | Главная                                                                                             | Hostel, WebSite, FAQPage                               |
-| `/nomera`        | Номера и цены                                                                                       | BreadcrumbList, Hostel                                 |
-| `/nomera/<тип>`  | Страница типа номера: фото, кровать, санузел, цена                                                  | BreadcrumbList, HotelRoom + Offer, FAQPage             |
-| `/bronirovanie`  | Прямое бронирование (форма → готовое сообщение в WhatsApp)                                          | BreadcrumbList, Hostel                                 |
-| `/udobstva`      | Удобства и услуги                                                                                   | BreadcrumbList, Hostel, FAQPage                        |
-| `/kak-dobratsya` | Как добраться                                                                                       | BreadcrumbList, Hostel                                 |
-| `/ryadom`        | Что рядом                                                                                           | BreadcrumbList, ItemList                               |
-| `/otzyvy`        | Отзывы с 2GIS, Ostrovok и Hostelworld со ссылками                                                   | BreadcrumbList, Hostel + Review                        |
-| `/pravila`       | Правила заселения и проживания                                                                      | BreadcrumbList, FAQPage                                |
-| `/faq`           | Вопросы и ответы (17 вопросов)                                                                      | BreadcrumbList, FAQPage                                |
-| `/kontakty`      | Контакты                                                                                            | BreadcrumbList, Hostel                                 |
-| `/foto`          | Все 30 фото по разделам                                                                             | BreadcrumbList, ImageGallery                           |
-| `/blog`          | Блог: список статей                                                                                 | BreadcrumbList, Blog                                   |
-| `/blog/<slug>`   | Статья из `content/blog/<slug>.md`                                                                  | BreadcrumbList, Article                                |
-| `/blog/avtor`    | Об авторах блога (на неё ссылается `Article.author`)                                                | BreadcrumbList, Organization                           |
-| `/blog/rss.xml`  | RSS-лента блога                                                                                     |                                                        |
-| `/llms-full.txt` | Полный текст фактов, цен, правил, FAQ и статей для ИИ                                               |                                                        |
-| `/en`, `/en/…`   | Английские версии: главная, rooms, booking, amenities, how-to-get-there, house-rules, faq, contacts | те же типы, `inLanguage: en`, hreflang ru/en/x-default |
+| URL                                    | Страница                                                                                            | JSON-LD                                                |
+| -------------------------------------- | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| `/`                                    | Главная                                                                                             | Hostel, WebSite, FAQPage                               |
+| `/nomera`                              | Номера и цены                                                                                       | BreadcrumbList, Hostel                                 |
+| `/nomera/<тип>`                        | Страница типа номера: фото, кровать, санузел, цена                                                  | BreadcrumbList, HotelRoom + Offer, FAQPage             |
+| `/bronirovanie`                        | Прямое бронирование (форма → готовое сообщение в WhatsApp)                                          | BreadcrumbList, Hostel                                 |
+| `/udobstva`                            | Удобства и услуги                                                                                   | BreadcrumbList, Hostel, FAQPage                        |
+| `/kak-dobratsya`                       | Как добраться                                                                                       | BreadcrumbList, Hostel                                 |
+| `/ryadom`                              | Что рядом                                                                                           | BreadcrumbList, ItemList                               |
+| `/otzyvy`                              | Отзывы с 2GIS, Ostrovok и Hostelworld со ссылками                                                   | BreadcrumbList, Hostel + Review                        |
+| `/pravila`                             | Правила заселения и проживания                                                                      | BreadcrumbList, FAQPage                                |
+| `/faq`                                 | Вопросы и ответы (17 вопросов)                                                                      | BreadcrumbList, FAQPage                                |
+| `/kontakty`                            | Контакты                                                                                            | BreadcrumbList, Hostel                                 |
+| `/foto`                                | Все 30 фото по разделам                                                                             | BreadcrumbList, ImageGallery                           |
+| `/hostel-ryadom-s-avtovokzalom-sayran` | Посадочная под запрос «хостел рядом с автовокзалом Сайран»                                          | BreadcrumbList, Hostel, FAQPage                        |
+| `/hostel-na-mesyac`                    | Посадочная под запрос «хостел на месяц»: расчёт за 30 ночей                                         | BreadcrumbList, Hostel, FAQPage                        |
+| `/blog`                                | Блог: список статей                                                                                 | BreadcrumbList, Blog                                   |
+| `/blog/<slug>`                         | Статья из `content/blog/<slug>.md`                                                                  | BreadcrumbList, Article                                |
+| `/blog/avtor`                          | Об авторах блога (на неё ссылается `Article.author`)                                                | BreadcrumbList, Organization                           |
+| `/blog/rss.xml`                        | RSS-лента блога                                                                                     |                                                        |
+| `/llms-full.txt`                       | Полный текст фактов, цен, правил, FAQ и статей для ИИ                                               |                                                        |
+| `/en`, `/en/…`                         | Английские версии: главная, rooms, booking, amenities, how-to-get-there, house-rules, faq, contacts | те же типы, `inLanguage: en`, hreflang ru/en/x-default |
 
 ## Правила для контента
 
@@ -86,6 +88,21 @@ docs/
 - Английская версия живёт под `/en/…` и повторяет факты русской: при правке цены, времени заезда
   или правила меняйте `src/lib/site-en.ts` вместе с `site.ts` и `qa.ts`. Пары адресов — в
   `LOCALE_PATHS` (`src/lib/i18n.ts`): из них строятся hreflang в `<head>` и в sitemap.
+
+## SEO и видимость в ИИ-ответах
+
+- На каждой странице, кроме статей блога, есть узел `WebPage` (название, описание, язык, дата
+  правки, картинка, `speakable` для H1 и первого абзаца-ответа) — см. `webPageSchema` в
+  `src/lib/site.ts`. У статей ту же роль играет `Article`.
+- `Hostel` содержит `ReserveAction` со ссылкой на `/bronirovanie`, `WebSite` связан с хостелом
+  через `publisher`.
+- В `sitemap.xml` у главной, страниц номеров и `/foto` перечислены картинки с подписями.
+- Один канонический адрес: `*.vercel.app`, хвостовой слеш и `index.html` отдают 308 на
+  `https://luxx-aparts.kz` (правила в `vite.config.ts`, `vercelRoutes`).
+- Подтверждение прав в Google Search Console, Яндекс Вебмастере и Bing — переменными
+  `VITE_GOOGLE_SITE_VERIFICATION`, `VITE_YANDEX_VERIFICATION`, `VITE_BING_VERIFICATION`.
+- IndexNow: ключ лежит в `public/` (файл `<ключ>.txt`), после публикации новых страниц запустите
+  `node scripts/indexnow.mjs` — он отправит адреса из sitemap в Яндекс и Bing.
 
 ## Аналитика
 

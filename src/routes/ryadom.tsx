@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AnswerSection, ContentPage } from "@/components/content-page";
 import { PHOTOS } from "@/lib/photos";
-import { NEARBY, SITE, breadcrumbSchema, jsonLd, pageHead } from "@/lib/site";
+import { NEARBY, SITE, breadcrumbSchema, jsonLd, pageHead, webPageSchema } from "@/lib/site";
 
 const itemListSchema = () => ({
   "@context": "https://schema.org",
@@ -22,7 +22,11 @@ export const Route = createFileRoute("/ryadom")({
       "Хостел на Толе би в Алматы: что рядом с Luxx Aparts. Автовокзал Сайран, аквапарк Family Park, Ботанический сад, центр и Оперный театр. Расстояния и как доехать.",
       "/ryadom",
     ),
-    scripts: jsonLd(breadcrumbSchema("Что рядом", "/ryadom"), itemListSchema()),
+    scripts: jsonLd(
+      webPageSchema("/ryadom"),
+      breadcrumbSchema("Что рядом", "/ryadom"),
+      itemListSchema(),
+    ),
   }),
   component: NearbyPage,
 });

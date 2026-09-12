@@ -76,6 +76,8 @@ export const PAGE_DATES: Record<string, string> = {
   "/foto": "2026-09-11",
   "/blog": "2026-09-11",
   "/blog/avtor": "2026-09-11",
+  "/hostel-ryadom-s-avtovokzalom-sayran": "2026-09-12",
+  "/hostel-na-mesyac": "2026-09-12",
   "/en": "2026-09-12",
   "/en/rooms": "2026-09-12",
   "/en/booking": "2026-09-12",
@@ -449,7 +451,11 @@ export const RATINGS = [
 ] as const;
 
 /** Ссылки, которых нет в шапке: подвал и внутренние переходы. */
-export const EXTRA_NAV = [["/foto", "Фото хостела"]] as const;
+export const EXTRA_NAV = [
+  ["/foto", "Фото хостела"],
+  ["/hostel-ryadom-s-avtovokzalom-sayran", "Рядом с автовокзалом Сайран"],
+  ["/hostel-na-mesyac", "Проживание на месяц"],
+] as const;
 
 export const NAV = [
   ["/nomera", "Номера"],
@@ -667,16 +673,63 @@ export const hostelSchema = () => ({
     },
   },
   sameAs: Object.values(SITE.links),
+  knowsLanguage: ["ru", "en"],
+  potentialAction: {
+    "@type": "ReserveAction",
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate: absolute("/bronirovanie"),
+      inLanguage: "ru",
+      actionPlatform: [
+        "https://schema.org/DesktopWebPlatform",
+        "https://schema.org/MobileWebPlatform",
+      ],
+    },
+    result: { "@type": "LodgingReservation", name: "Бронирование в Luxx Aparts" },
+  },
   dateModified: SITE.factsUpdatedIso,
 });
 
 export const webSiteSchema = (locale: Locale = "ru") => ({
   "@context": "https://schema.org",
   "@type": "WebSite",
+  "@id": absolute("/#website"),
   name: SITE.name,
   url: absolute(locale === "en" ? "/en" : "/"),
   inLanguage: locale,
+  publisher: { "@id": absolute("/#hostel") },
 });
+
+/**
+ * Мета последней вызванной pageHead по адресу: webPageSchema берёт отсюда title,
+ * description и картинку, чтобы не дублировать их в каждом маршруте. pageHead
+ * всегда вызывается в том же head(), что и jsonLd, поэтому запись уже есть.
+ */
+const PAGE_META = new Map<string, { title: string; description: string; image: string }>();
+
+/**
+ * Узел WebPage (ТЗ, раздел 6, и подсказки для ИИ-поиска): имя, описание, язык,
+ * дата правки, главная картинка, связь с сайтом и хостелом, speakable-блоки
+ * (H1 и первый абзац-ответ, помеченный классом speakable).
+ */
+export const webPageSchema = (path: string) => {
+  const meta = PAGE_META.get(path);
+  const locale = localeOf(path);
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${absolute(path)}#webpage`,
+    url: absolute(path),
+    name: meta?.title,
+    description: meta?.description,
+    inLanguage: locale,
+    isPartOf: { "@id": absolute("/#website") },
+    about: { "@id": absolute("/#hostel") },
+    primaryImageOfPage: { "@type": "ImageObject", url: absolute(meta?.image ?? "/og-image.jpg") },
+    dateModified: pageDate(path),
+    speakable: { "@type": "SpeakableSpecification", cssSelector: ["h1", ".speakable"] },
+  };
+};
 
 export const jsonLd = (...nodes: unknown[]) => [
   { type: "application/ld+json", children: JSON.stringify(nodes.length === 1 ? nodes[0] : nodes) },
@@ -694,6 +747,7 @@ export const pageHead = (
   { image = "/og-image.jpg" }: PageHeadOptions = {},
 ) => {
   const url = absolute(path);
+  PAGE_META.set(path, { title, description, image });
   return {
     meta: [
       { title },

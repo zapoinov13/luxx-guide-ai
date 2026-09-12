@@ -3,7 +3,14 @@ import { AnswerSection, ContentPage, QaList } from "@/components/content-page";
 import { Photo } from "@/components/photo";
 import { PHOTOS } from "@/lib/photos";
 import { AMENITY_ITEMS } from "@/lib/qa";
-import { breadcrumbSchema, faqSchema, hostelSchema, jsonLd, pageHead } from "@/lib/site";
+import {
+  breadcrumbSchema,
+  faqSchema,
+  hostelSchema,
+  jsonLd,
+  pageHead,
+  webPageSchema,
+} from "@/lib/site";
 
 export const Route = createFileRoute("/udobstva")({
   head: () => ({
@@ -13,6 +20,7 @@ export const Route = createFileRoute("/udobstva")({
       "/udobstva",
     ),
     scripts: jsonLd(
+      webPageSchema("/udobstva"),
       breadcrumbSchema("Удобства", "/udobstva"),
       hostelSchema(),
       faqSchema(AMENITY_ITEMS),

@@ -4,7 +4,7 @@ import { ContentPage } from "@/components/content-page";
 import { Photo } from "@/components/photo";
 import { formatDate, getPosts } from "@/lib/blog";
 import { PHOTOS } from "@/lib/photos";
-import { SITE, absolute, breadcrumbSchema, jsonLd, pageHead } from "@/lib/site";
+import { SITE, absolute, breadcrumbSchema, jsonLd, pageHead, webPageSchema } from "@/lib/site";
 
 const blogSchema = () => ({
   "@context": "https://schema.org",
@@ -31,7 +31,7 @@ export const Route = createFileRoute("/blog/")({
       "Где остановиться в Алматы недорого, как доехать из аэропорта ночью, хостел или квартира посуточно, что посмотреть за два дня: статьи от хостела Luxx Aparts.",
       "/blog",
     ),
-    scripts: jsonLd(breadcrumbSchema("Блог", "/blog"), blogSchema()),
+    scripts: jsonLd(webPageSchema("/blog"), breadcrumbSchema("Блог", "/blog"), blogSchema()),
   }),
   component: BlogIndexPage,
 });

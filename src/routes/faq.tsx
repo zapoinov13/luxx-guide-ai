@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ContentPage, QaList } from "@/components/content-page";
 import { PHOTOS } from "@/lib/photos";
 import { FAQ_ITEMS } from "@/lib/qa";
-import { SITE, breadcrumbSchema, faqSchema, jsonLd, pageHead } from "@/lib/site";
+import { SITE, breadcrumbSchema, faqSchema, jsonLd, pageHead, webPageSchema } from "@/lib/site";
 
 export const Route = createFileRoute("/faq")({
   head: () => ({
@@ -11,7 +11,11 @@ export const Route = createFileRoute("/faq")({
       "Ответы на вопросы гостей Luxx Aparts: цена, отдельные номера, проживание на месяц, оплата картой, кухня, дети, дорога от вокзала, заезд без брони.",
       "/faq",
     ),
-    scripts: jsonLd(breadcrumbSchema("Вопросы и ответы", "/faq"), faqSchema(FAQ_ITEMS)),
+    scripts: jsonLd(
+      webPageSchema("/faq"),
+      breadcrumbSchema("Вопросы и ответы", "/faq"),
+      faqSchema(FAQ_ITEMS),
+    ),
   }),
   component: FaqPage,
 });

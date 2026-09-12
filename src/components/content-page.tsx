@@ -58,7 +58,7 @@ export function ContentPage({
             <h1 className="max-w-2xl font-display text-[2rem] font-bold leading-[1.1] sm:text-4xl lg:text-5xl">
               {title}
             </h1>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-muted-foreground lg:mt-6 lg:text-lg lg:leading-8">
+            <p className="speakable mt-4 max-w-2xl text-base leading-7 text-muted-foreground lg:mt-6 lg:text-lg lg:leading-8">
               {intro}
             </p>
             {updated && (

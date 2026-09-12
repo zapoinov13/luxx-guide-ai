@@ -12,6 +12,7 @@ import {
   jsonLd,
   pageHead,
   pluralReviews,
+  webPageSchema,
 } from "@/lib/site";
 
 const reviewsSchema = () => ({
@@ -37,7 +38,11 @@ export const Route = createFileRoute("/otzyvy")({
       "Реальные отзывы о Luxx Aparts: Booking 8,8 из 10 (315 отзывов), Яндекс Карты 5,0 (192), 2GIS 4,8 (83), Ostrovok 8,7 (11). Чистота, тишина, коворкинг, персонал.",
       "/otzyvy",
     ),
-    scripts: jsonLd(breadcrumbSchema("Отзывы", "/otzyvy"), reviewsSchema()),
+    scripts: jsonLd(
+      webPageSchema("/otzyvy"),
+      breadcrumbSchema("Отзывы", "/otzyvy"),
+      reviewsSchema(),
+    ),
   }),
   component: ReviewsPage,
 });

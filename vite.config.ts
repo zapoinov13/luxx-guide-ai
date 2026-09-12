@@ -5,8 +5,10 @@
 //     React/TanStack dedupe, error logger plugins, and sandbox detection (port/host/strictPort).
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
-import { readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import type { Plugin } from "vite";
 import { LOCALE_PATHS } from "./src/lib/i18n";
+import { PHOTOS, PHOTO_SECTIONS, ROOM_PHOTOS } from "./src/lib/photos";
 import { ROOM_TYPES, SITE_URL, pageDate } from "./src/lib/site";
 
 const blogPosts = readdirSync("content/blog")
@@ -32,13 +34,34 @@ const alternates = (path: string) => {
   ];
 };
 
+/** Картинки страницы для sitemap (image:image): поиск по картинкам и карточки в ИИ-ответах. */
+const images = (photos: readonly { id: string; alt: string }[]) =>
+  [...new Map(photos.map((p) => [p.id, p])).values()].map((p) => ({
+    loc: `${SITE_URL}/photos/${p.id}-1600.webp`,
+    title: p.alt,
+  }));
+
+const HOME_IMAGES = images([PHOTOS.hero, PHOTOS.dorm, PHOTOS.privateRoom, PHOTOS.kitchen]);
+const ROOMS_IMAGES = images(Object.values(ROOM_PHOTOS).map((list) => list[0]!));
+const ALL_IMAGES = images(PHOTO_SECTIONS.flatMap((s) => s.photos));
+
 /** Страница для пререндера и sitemap; lastmod — дата правки из PAGE_DATES. */
 const page = (
   path: string,
   priority: number,
   changefreq: "weekly" | "monthly" | "yearly",
   lastmod = pageDate(path),
-) => ({ path, sitemap: { priority, changefreq, lastmod, alternateRefs: alternates(path) } });
+  pageImages?: ReturnType<typeof images>,
+) => ({
+  path,
+  sitemap: {
+    priority,
+    changefreq,
+    lastmod,
+    alternateRefs: alternates(path),
+    ...(pageImages?.length ? { images: pageImages } : {}),
+  },
+});
 
 /**
  * @lovable.dev/vite-tanstack-config подставляет свой hooks.compiled, и при слиянии
@@ -63,19 +86,86 @@ const presetCompiled = async (nitro: {
   }
 };
 
-/** Тип опции nitro у Lovable не описывает hooks, хотя в рантайме они передаются в Nitro как есть. */
-const nitroOptions = { hooks: { compiled: presetCompiled } } as unknown as { preset?: string };
+/**
+ * Правила для Vercel (config.json, раздел routes), идут раньше раздачи файлов:
+ * один канонический адрес (ТЗ, раздел 10). Адреса *.vercel.app, хвостовой слеш
+ * и index.html отдают 308 на https://luxx-aparts.kz без дублей в индексе.
+ */
+const HOST = new URL(SITE_URL).host;
+const vercelRoutes = [
+  {
+    src: "/(?<path>.*)",
+    has: [{ type: "host", value: "(.*)\\.vercel\\.app" }],
+    status: 308,
+    headers: { Location: `${SITE_URL}/$path` },
+  },
+  { src: "/(?<path>.+)/index\\.html", status: 308, headers: { Location: "/$path" } },
+  { src: "/index\\.html", status: 308, headers: { Location: "/" } },
+  { src: "/(?<path>.+)/", status: 308, headers: { Location: "/$path" } },
+];
+
+/** Тип опции nitro у Lovable не описывает hooks и vercel, хотя в рантайме они уходят в Nitro как есть. */
+const nitroOptions = {
+  hooks: { compiled: presetCompiled },
+  vercel: { config: { routes: vercelRoutes } },
+} as unknown as { preset?: string };
+void HOST;
+
+/**
+ * TanStack пишет картинки в sitemap.xml без объявления пространства имён image
+ * (unbound prefix), и Google такой файл отклоняет. Дописываем xmlns:image в urlset
+ * и убираем пустые xmlns="" у <image:image>. Хук идёт после buildApp TanStack.
+ */
+const fixSitemapFile = (file: string) => {
+  if (!existsSync(file)) return false;
+  let xml = readFileSync(file, "utf8");
+  if (!xml.includes("<image:image") || xml.includes("xmlns:image=")) return false;
+  xml = xml
+    .replace(/<image:image xmlns="">/g, "<image:image>")
+    .replace(
+      '<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9"',
+      '<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"',
+    );
+  writeFileSync(file, xml);
+  console.log(`[sitemap] Added image namespace to ${file}`);
+  return true;
+};
+
+const SITEMAP_FILES = [".vercel/output/static", ".output/public", "dist/client"].map(
+  (dir) => `${dir}/sitemap.xml`,
+);
+
+const fixSitemapNamespaces = (): Plugin => ({
+  name: "luxx-fix-sitemap-namespaces",
+  apply: "build",
+  configResolved() {
+    // TanStack пишет sitemap в своём buildApp; на случай, если наш buildApp отработает
+    // раньше него, повторяем правку перед завершением процесса сборки.
+    process.once("beforeExit", () => SITEMAP_FILES.forEach(fixSitemapFile));
+  },
+  buildApp: {
+    order: "post",
+    async handler() {
+      SITEMAP_FILES.forEach(fixSitemapFile);
+    },
+  },
+});
 
 export default defineConfig({
   nitro: nitroOptions,
+  vite: { plugins: [fixSitemapNamespaces()] },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
     server: { entry: "server" },
     pages: [
-      page("/", 1, "weekly"),
-      page("/nomera", 0.9, "weekly"),
-      ...ROOM_TYPES.map((r) => page(`/nomera/${r.slug}`, 0.8, "monthly")),
+      page("/", 1, "weekly", undefined, HOME_IMAGES),
+      page("/nomera", 0.9, "weekly", undefined, ROOMS_IMAGES),
+      ...ROOM_TYPES.map((r) =>
+        page(`/nomera/${r.slug}`, 0.8, "monthly", undefined, images(ROOM_PHOTOS[r.slug] ?? [])),
+      ),
+      page("/hostel-ryadom-s-avtovokzalom-sayran", 0.7, "monthly"),
+      page("/hostel-na-mesyac", 0.7, "monthly"),
       page("/bronirovanie", 0.9, "monthly"),
       page("/udobstva", 0.8, "monthly"),
       page("/kak-dobratsya", 0.8, "monthly"),
@@ -84,10 +174,10 @@ export default defineConfig({
       page("/pravila", 0.8, "monthly"),
       page("/faq", 0.8, "monthly"),
       page("/kontakty", 0.8, "monthly"),
-      page("/foto", 0.6, "monthly"),
+      page("/foto", 0.6, "monthly", undefined, ALL_IMAGES),
       // Английская версия (ТЗ, раздел 2): те же страницы под /en/…, hreflang выше.
-      page("/en", 0.8, "weekly"),
-      page("/en/rooms", 0.7, "weekly"),
+      page("/en", 0.8, "weekly", undefined, HOME_IMAGES),
+      page("/en/rooms", 0.7, "weekly", undefined, ROOMS_IMAGES),
       page("/en/booking", 0.7, "monthly"),
       page("/en/amenities", 0.6, "monthly"),
       page("/en/how-to-get-there", 0.6, "monthly"),

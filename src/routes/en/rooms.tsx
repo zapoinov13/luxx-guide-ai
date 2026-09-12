@@ -5,7 +5,7 @@ import { AnswerSection, ContentPage } from "@/components/content-page";
 import { RoomCardsEn } from "@/components/room-cards-en";
 import { Photo } from "@/components/photo";
 import { PHOTOS, roomCover } from "@/lib/photos";
-import { SITE, breadcrumbSchema, jsonLd, pageHead } from "@/lib/site";
+import { SITE, breadcrumbSchema, jsonLd, pageHead, webPageSchema } from "@/lib/site";
 import { EN, ROOM_TYPES_EN, fmtEn, hostelSchemaEn } from "@/lib/site-en";
 
 export const Route = createFileRoute("/en/rooms")({
@@ -15,7 +15,11 @@ export const Route = createFileRoute("/en/rooms")({
       `Hostel prices in Almaty: dorm bed ${fmtEn(SITE.priceFrom)} ₸, single room from ${fmtEn(10000)} ₸, double room ${fmtEn(15000)} ₸ per room. What is included, monthly stays, payment.`,
       "/en/rooms",
     ),
-    scripts: jsonLd(breadcrumbSchema("Rooms and prices", "/en/rooms"), hostelSchemaEn()),
+    scripts: jsonLd(
+      webPageSchema("/en/rooms"),
+      breadcrumbSchema("Rooms and prices", "/en/rooms"),
+      hostelSchemaEn(),
+    ),
   }),
   component: RoomsPageEn,
 });

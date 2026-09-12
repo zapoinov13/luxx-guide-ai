@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AnswerSection, ContentPage } from "@/components/content-page";
 import { Gallery } from "@/components/gallery";
 import { PHOTO_SECTIONS } from "@/lib/photos";
-import { SITE, absolute, breadcrumbSchema, jsonLd, pageHead } from "@/lib/site";
+import { SITE, absolute, breadcrumbSchema, jsonLd, pageHead, webPageSchema } from "@/lib/site";
 
 const gallerySchema = () => ({
   "@context": "https://schema.org",
@@ -29,7 +29,7 @@ export const Route = createFileRoute("/foto")({
       "/foto",
       { image: "/photos/04-1600.webp" },
     ),
-    scripts: jsonLd(breadcrumbSchema("Фото", "/foto"), gallerySchema()),
+    scripts: jsonLd(webPageSchema("/foto"), breadcrumbSchema("Фото", "/foto"), gallerySchema()),
   }),
   component: PhotoPage,
 });

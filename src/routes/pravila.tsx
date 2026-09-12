@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AnswerSection, ContentPage, QaList } from "@/components/content-page";
 import { PHOTOS } from "@/lib/photos";
 import { RULES } from "@/lib/qa";
-import { SITE, breadcrumbSchema, faqSchema, jsonLd, pageHead } from "@/lib/site";
+import { SITE, breadcrumbSchema, faqSchema, jsonLd, pageHead, webPageSchema } from "@/lib/site";
 
 export const Route = createFileRoute("/pravila")({
   head: () => ({
@@ -11,7 +11,11 @@ export const Route = createFileRoute("/pravila")({
       `Заезд с ${SITE.checkIn.from} до ${SITE.checkIn.to}, выезд до ${SITE.checkOut}. Документы, дети, животные, курение, оплата, отмена: правила хостела Luxx Aparts в Алматы.`,
       "/pravila",
     ),
-    scripts: jsonLd(breadcrumbSchema("Правила", "/pravila"), faqSchema(RULES)),
+    scripts: jsonLd(
+      webPageSchema("/pravila"),
+      breadcrumbSchema("Правила", "/pravila"),
+      faqSchema(RULES),
+    ),
   }),
   component: RulesPage,
 });

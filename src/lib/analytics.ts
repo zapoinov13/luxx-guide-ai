@@ -56,3 +56,20 @@ export const analyticsScripts = (): { src?: string; async?: boolean; children?: 
   }
   return scripts;
 };
+
+/**
+ * Подтверждение прав в кабинетах вебмастеров (ТЗ, раздел 2, «Кабинеты») без правки кода:
+ *   VITE_GOOGLE_SITE_VERIFICATION — код из Google Search Console (метод «HTML-тег»)
+ *   VITE_YANDEX_VERIFICATION      — код из Яндекс Вебмастера (метод «Мета-тег»)
+ *   VITE_BING_VERIFICATION        — код из Bing Webmaster Tools (msvalidate.01)
+ * Пустые переменные не добавляют в <head> ничего.
+ */
+export const verificationMeta = (): { name: string; content: string }[] => {
+  const env = import.meta.env as Record<string, string | undefined>;
+  const pairs: [string, string | undefined][] = [
+    ["google-site-verification", env["VITE_GOOGLE_SITE_VERIFICATION"]],
+    ["yandex-verification", env["VITE_YANDEX_VERIFICATION"]],
+    ["msvalidate.01", env["VITE_BING_VERIFICATION"]],
+  ];
+  return pairs.flatMap(([name, value]) => (value?.trim() ? [{ name, content: value.trim() }] : []));
+};

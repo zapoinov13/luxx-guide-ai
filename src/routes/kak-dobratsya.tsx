@@ -2,7 +2,15 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AnswerSection, ContentPage } from "@/components/content-page";
 import { PHOTOS } from "@/lib/photos";
 import { MapEmbed } from "@/components/map-embed";
-import { DISTANCES, SITE, breadcrumbSchema, hostelSchema, jsonLd, pageHead } from "@/lib/site";
+import {
+  DISTANCES,
+  SITE,
+  breadcrumbSchema,
+  hostelSchema,
+  jsonLd,
+  pageHead,
+  webPageSchema,
+} from "@/lib/site";
 
 export const Route = createFileRoute("/kak-dobratsya")({
   head: () => ({
@@ -11,7 +19,11 @@ export const Route = createFileRoute("/kak-dobratsya")({
       "Хостел рядом с автовокзалом Сайран в Алматы: как доехать до Luxx Aparts от вокзала Алматы-2 (7 км), из аэропорта (около 20 км), на метро. Карта и вход.",
       "/kak-dobratsya",
     ),
-    scripts: jsonLd(breadcrumbSchema("Как добраться", "/kak-dobratsya"), hostelSchema()),
+    scripts: jsonLd(
+      webPageSchema("/kak-dobratsya"),
+      breadcrumbSchema("Как добраться", "/kak-dobratsya"),
+      hostelSchema(),
+    ),
   }),
   component: DirectionsPage,
 });

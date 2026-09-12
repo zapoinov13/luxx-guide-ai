@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AnswerSection, ContentPage, QaList } from "@/components/content-page";
 import { Photo } from "@/components/photo";
 import { PHOTOS } from "@/lib/photos";
-import { breadcrumbSchema, faqSchema, jsonLd, pageHead } from "@/lib/site";
+import { breadcrumbSchema, faqSchema, jsonLd, pageHead, webPageSchema } from "@/lib/site";
 import { AMENITIES_EN, AMENITY_QA_EN, hostelSchemaEn } from "@/lib/site-en";
 
 export const Route = createFileRoute("/en/amenities")({
@@ -13,6 +13,7 @@ export const Route = createFileRoute("/en/amenities")({
       "/en/amenities",
     ),
     scripts: jsonLd(
+      webPageSchema("/en/amenities"),
       breadcrumbSchema("Amenities", "/en/amenities"),
       hostelSchemaEn(),
       faqSchema(AMENITY_QA_EN),

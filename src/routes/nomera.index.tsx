@@ -13,6 +13,7 @@ import {
   hostelSchema,
   jsonLd,
   pageHead,
+  webPageSchema,
 } from "@/lib/site";
 
 export const Route = createFileRoute("/nomera/")({
@@ -22,7 +23,11 @@ export const Route = createFileRoute("/nomera/")({
       `Сколько стоит хостел в Алматы: койко-место ${SITE.priceFrom.toLocaleString("ru-RU")} ₸, одноместный номер от 10 000 ₸, двухместный 15 000 ₸. Что входит в цену, скидки на месяц.`,
       "/nomera",
     ),
-    scripts: jsonLd(breadcrumbSchema("Номера и цены", "/nomera"), hostelSchema()),
+    scripts: jsonLd(
+      webPageSchema("/nomera"),
+      breadcrumbSchema("Номера и цены", "/nomera"),
+      hostelSchema(),
+    ),
   }),
   component: RoomsPage,
 });
