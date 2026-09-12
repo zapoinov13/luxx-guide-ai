@@ -18,7 +18,6 @@ const PLATFORMS = [
 
 export function SiteShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
-  const [showMobileBooking, setShowMobileBooking] = useState(false);
   const menuButton = useRef<HTMLButtonElement>(null);
   const pathname = useRouterState({ select: (st) => st.location.pathname });
   const locale = localeOf(pathname);
@@ -78,29 +77,6 @@ export function SiteShell({ children }: { children: ReactNode }) {
     return () => observer.disconnect();
   }, [pathname]);
 
-  useEffect(() => {
-    if (pathname === booking) {
-      setShowMobileBooking(false);
-      return;
-    }
-
-    const primaryBookingCta = document.querySelector<HTMLElement>("[data-primary-booking-cta]");
-    const updateVisibility = () => {
-      const hasPassedPrimaryCta = primaryBookingCta
-        ? primaryBookingCta.getBoundingClientRect().bottom < 0
-        : window.scrollY > 320;
-      setShowMobileBooking(hasPassedPrimaryCta);
-    };
-
-    updateVisibility();
-    window.addEventListener("scroll", updateVisibility, { passive: true });
-    window.addEventListener("resize", updateVisibility);
-    return () => {
-      window.removeEventListener("scroll", updateVisibility);
-      window.removeEventListener("resize", updateVisibility);
-    };
-  }, [booking, pathname]);
-
   // Цели аналитики: любой клик по ссылке tel: или wa.me на любой странице.
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
@@ -128,9 +104,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
   );
 
   return (
-    <div
-      className={`site-shell min-h-screen bg-background text-foreground ${showMobileBooking ? "has-mobile-booking" : ""}`}
-    >
+    <div className="site-shell min-h-screen bg-background text-foreground">
       <a className="skip-link" href="#site-content">
         {en ? "Skip to content" : "Перейти к содержимому"}
       </a>
@@ -368,24 +342,6 @@ export function SiteShell({ children }: { children: ReactNode }) {
           LUXX APARTS<span>ALMATY, KZ</span>
         </div>
       </footer>
-      {pathname !== booking && !open && showMobileBooking && (
-        <aside
-          className="mobile-booking"
-          aria-label={en ? "Quick booking" : "Быстрое бронирование"}
-        >
-          <a
-            href={`tel:${SITE.phoneHref}`}
-            className="mobile-call"
-            aria-label={`${t.call} ${SITE.phoneDisplay}`}
-          >
-            <Phone size={20} aria-hidden="true" />
-          </a>
-          <Link to={booking}>
-            {en ? "Choose dates" : "Выбрать даты"}
-            <span>{en ? "No prepayment" : "Без предоплаты"}</span>
-          </Link>
-        </aside>
-      )}
     </div>
   );
 }

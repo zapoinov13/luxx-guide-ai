@@ -208,7 +208,7 @@ function HomePageEn() {
             </p>
             <div className="mt-5 grid gap-3 sm:flex sm:flex-wrap lg:mt-7">
               <Button asChild size="lg" className="w-full sm:w-auto">
-                <Link to="/en/booking" data-primary-booking-cta>
+                <Link to="/en/booking">
                   Book directly
                   <ArrowRight />
                 </Link>

@@ -201,7 +201,7 @@ function HomePage() {
             </p>
             <div className="mt-5 grid gap-3 sm:flex sm:flex-wrap lg:mt-7">
               <Button asChild size="lg" className="w-full sm:w-auto">
-                <Link to="/bronirovanie" data-primary-booking-cta>
+                <Link to="/bronirovanie">
                   Забронировать напрямую
                   <ArrowRight />
                 </Link>
