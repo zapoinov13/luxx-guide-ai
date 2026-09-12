@@ -34,7 +34,7 @@ export function ContentPage({
   const t = UI[locale];
   return (
     <main>
-      <div className="border-b border-border bg-secondary/60">
+      <div className="content-hero border-b border-border bg-secondary/60">
         <div className="mx-auto grid max-w-6xl items-center gap-6 px-5 py-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10 lg:px-8 lg:py-16">
           <div>
             <nav
@@ -115,7 +115,7 @@ export function ContentPage({
 
 export function AnswerSection({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <section className="border-b border-border py-8 first:pt-0 last:border-0 lg:py-9">
+    <section className="answer-section border-b border-border py-8 first:pt-0 last:border-0 lg:py-9">
       <h2 className="font-display text-xl font-bold sm:text-2xl lg:text-[1.75rem]">{title}</h2>
       <div className="prose-copy mt-4 text-base leading-7 text-muted-foreground">{children}</div>
     </section>

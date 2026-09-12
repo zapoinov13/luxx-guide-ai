@@ -3,7 +3,13 @@ import { useCallback, useEffect, useState } from "react";
 import { Photo, photoSrc, type PhotoRef } from "@/components/photo";
 
 /** Сетка фото с лайтбоксом: первое фото крупное, остальные квадратами. */
-export function Gallery({ photos }: { photos: readonly PhotoRef[] }) {
+export function Gallery({
+  photos,
+  editorial = false,
+}: {
+  photos: readonly PhotoRef[];
+  editorial?: boolean;
+}) {
   const [index, setIndex] = useState<number | null>(null);
   const close = useCallback(() => setIndex(null), []);
   const step = useCallback(
@@ -31,7 +37,13 @@ export function Gallery({ photos }: { photos: readonly PhotoRef[] }) {
 
   return (
     <>
-      <ul className="list-none grid grid-cols-2 gap-2 p-0 md:grid-cols-4 md:gap-3">
+      <ul
+        className={
+          editorial
+            ? "editorial-gallery"
+            : "list-none grid grid-cols-2 gap-2 p-0 md:grid-cols-4 md:gap-3"
+        }
+      >
         {photos.map((photo, i) => (
           <li key={photo.id} className={i === 0 ? "col-span-2 row-span-2" : ""}>
             <button
@@ -45,6 +57,11 @@ export function Gallery({ photos }: { photos: readonly PhotoRef[] }) {
                 sizes={i === 0 ? "(min-width: 768px) 50vw, 100vw" : "(min-width: 768px) 25vw, 50vw"}
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
               />
+              {editorial && (
+                <span className="photo-expand" aria-hidden="true">
+                  {String(i + 1).padStart(2, "0")} <span>Открыть ↗</span>
+                </span>
+              )}
             </button>
           </li>
         ))}

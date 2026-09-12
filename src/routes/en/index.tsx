@@ -8,7 +8,6 @@ import {
   Bus,
   Car,
   Check,
-  ChevronDown,
   Clock3,
   CookingPot,
   ExternalLink,
@@ -31,11 +30,15 @@ import {
   Wifi,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Gallery } from "@/components/gallery";
+import { PhotoTour } from "@/components/photo-tour";
+import { StayDetails } from "@/components/stay-details";
+import { AmenitySpaces } from "@/components/amenity-spaces";
+import { StayRules } from "@/components/stay-rules";
+import { QuickFaq } from "@/components/quick-faq";
 import { Photo } from "@/components/photo";
 import { MapEmbed } from "@/components/map-embed";
 import { RoomCardsEn } from "@/components/room-cards-en";
-import { GALLERY, PHOTOS } from "@/lib/photos";
+import { PHOTOS } from "@/lib/photos";
 import {
   RATINGS,
   SITE,
@@ -134,9 +137,9 @@ function HomePageEn() {
   return (
     <main>
       {/* Hero */}
-      <section className="bg-background">
+      <section className="home-hero bg-background">
         <div className="mx-auto grid max-w-6xl gap-5 px-5 py-4 lg:grid-cols-[1.08fr_1fr] lg:items-center lg:gap-12 lg:px-8 lg:py-14">
-          <div className="relative order-first lg:order-none">
+          <div className="hero-photo hero-collage relative order-first lg:order-none">
             <Photo
               photo={PHOTOS.hero}
               sizes="(min-width: 1024px) 50vw, 100vw"
@@ -160,6 +163,7 @@ function HomePageEn() {
                 24/7 front desk
               </span>
             </div>
+            <StayDetails en />
           </div>
 
           <div className="lg:order-first">
@@ -231,6 +235,7 @@ function HomePageEn() {
         </div>
       </section>
 
+      <PhotoTour en showGalleryLink />
       {/* Facts */}
       <section className="border-b border-border">
         <ul className="mx-auto grid max-w-6xl grid-cols-2 gap-px bg-border lg:grid-cols-4">
@@ -242,25 +247,6 @@ function HomePageEn() {
             </li>
           ))}
         </ul>
-      </section>
-
-      {/* Gallery */}
-      <section className="mx-auto max-w-6xl px-5 pt-12 lg:px-8 lg:pt-20">
-        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
-          <div>
-            <p className="text-sm font-semibold text-primary">Photos</p>
-            <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl lg:text-4xl">
-              What does the hostel look like?
-            </h2>
-          </div>
-          <p className="max-w-md text-sm text-muted-foreground">
-            Capsules with curtains, rooms with a window, the kitchen, coworking and bathrooms. Tap a
-            photo to enlarge it.
-          </p>
-        </div>
-        <div className="mt-6 lg:mt-8">
-          <Gallery photos={GALLERY} />
-        </div>
       </section>
 
       {/* Rooms */}
@@ -291,8 +277,8 @@ function HomePageEn() {
       </section>
 
       {/* Amenities */}
-      <section className="bg-secondary">
-        <div className="mx-auto grid max-w-6xl gap-8 px-5 py-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-10 lg:px-8 lg:py-20">
+      <section className="amenities-section" id="hostel-amenities">
+        <div className="mx-auto max-w-6xl px-5 py-12 lg:px-8 lg:py-20">
           <div>
             <p className="text-sm font-semibold text-primary">Amenities</p>
             <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl lg:text-4xl">
@@ -302,11 +288,7 @@ function HomePageEn() {
               A hostel with a kitchen, a washing machine and coworking: everything you need for one
               night or a month. Rooms are soundproofed, every bed has a socket and a reading lamp.
             </p>
-            <Photo
-              photo={PHOTOS.kitchen}
-              sizes="(min-width: 1024px) 40vw, 100vw"
-              className="mt-6 aspect-[4/3] w-full rounded-3xl object-cover shadow-card lg:mt-8"
-            />
+            <AmenitySpaces en />
           </div>
           <ul className="grid grid-cols-2 gap-2.5 sm:gap-3">
             {AMENITIES_EN.map((a, i) => {
@@ -395,29 +377,44 @@ function HomePageEn() {
             <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl lg:text-4xl">
               Who is Luxx Aparts for?
             </h2>
-            <ul className="mt-6 grid gap-3 sm:grid-cols-2">
-              {audiences.map(({ icon: Icon, title, text }) => (
-                <li key={title} className="rounded-2xl bg-background p-5 shadow-card">
-                  <span className="grid size-10 place-items-center rounded-xl bg-brand-soft text-primary">
-                    <Icon className="size-5" aria-hidden="true" />
-                  </span>
-                  <h3 className="mt-3 font-semibold">{title}</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">{text}</p>
+            <p className="audience-intro">Different journeys. A place to feel at home.</p>
+            <ul className="audience-cards">
+              {audiences.map(({ icon: Icon, title, text }, i) => (
+                <li key={title} className="audience-card">
+                  <div className="audience-card-top">
+                    <span className="audience-icon">
+                      <Icon className="size-5" aria-hidden="true" />
+                    </span>
+                    <span className="audience-number" aria-hidden="true">
+                      0{i + 1}
+                    </span>
+                  </div>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                  <Link
+                    to={i === 0 ? "/en/booking" : i === 3 ? "/en/how-to-get-there" : "/en/rooms"}
+                    className="audience-link"
+                  >
+                    {i === 0 ? "Plan a longer stay" : i === 3 ? "Find your way" : "Explore rooms"}
+                    <ArrowRight size={17} aria-hidden="true" />
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
-          <div>
-            <p className="text-sm font-semibold text-primary">Booking</p>
+          <div className="direct-booking">
+            <p className="booking-eyebrow">
+              <ShieldCheck size={15} aria-hidden="true" />
+              DIRECT BOOKING
+            </p>
             <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl lg:text-4xl">
               How do I book directly?
             </h2>
-            <ol className="mt-6 space-y-3">
+            <p className="booking-intro">Choose your dates. We will take care of the details.</p>
+            <ol className="booking-steps">
               {steps.map(([title, text], i) => (
-                <li key={title} className="flex gap-4 rounded-2xl bg-background p-5 shadow-card">
-                  <span className="grid size-9 shrink-0 place-items-center rounded-full bg-primary font-display font-bold text-primary-foreground">
-                    {i + 1}
-                  </span>
+                <li key={title}>
+                  <span className="booking-step-number">0{i + 1}</span>
                   <div>
                     <h3 className="font-semibold">{title}</h3>
                     <p className="mt-1 text-sm text-muted-foreground">{text}</p>
@@ -425,11 +422,19 @@ function HomePageEn() {
                 </li>
               ))}
             </ol>
-            <div className="mt-6 grid gap-3 sm:flex sm:flex-wrap">
+            <div className="booking-guarantee">
+              <Check size={18} aria-hidden="true" />
+              <div>
+                <strong>No prepayment</strong>
+                <span>Pay at check-in, after your booking is confirmed.</span>
+              </div>
+            </div>
+            <div className="booking-actions mt-6 grid gap-3 sm:flex sm:flex-wrap">
               <Button asChild size="lg" className="w-full sm:w-auto">
                 <Link to="/en/booking">
                   <MessageCircle />
-                  Send a request
+                  Choose dates
+                  <ArrowRight size={17} aria-hidden="true" />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
@@ -459,22 +464,7 @@ function HomePageEn() {
             All rules <ArrowRight className="size-4" aria-hidden="true" />
           </Link>
         </div>
-        <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            [
-              "Check-in and check-out",
-              `Check-in ${SITE.checkIn.from}–${SITE.checkIn.to}, check-out by ${SITE.checkOut}.`,
-            ],
-            ["Documents", "A photo ID; foreign guests need a passport."],
-            ["Children", "Guests under 18 only with a parent or guardian."],
-            ["Not allowed", "Parties, smoking indoors, pets."],
-          ].map(([title, text]) => (
-            <li key={title} className="rounded-2xl border border-border p-5">
-              <h3 className="font-semibold">{title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{text}</p>
-            </li>
-          ))}
-        </ul>
+        <StayRules en />
       </section>
 
       {/* FAQ */}
@@ -493,21 +483,7 @@ function HomePageEn() {
             All questions <ArrowRight className="size-4" aria-hidden="true" />
           </Link>
         </div>
-        <div className="mt-6 divide-y divide-border rounded-2xl border border-border lg:mt-8 lg:rounded-3xl">
-          {HOME_FAQ_EN.map(([q, a], i) => (
-            <details key={q} open={i === 0} className="group px-4 sm:px-6">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 [&::-webkit-details-marker]:hidden sm:py-5">
-                <h3 className="font-display text-base font-bold sm:text-lg">{q}</h3>
-                <span className="grid size-8 shrink-0 place-items-center rounded-full bg-secondary text-foreground transition-transform group-open:rotate-180">
-                  <ChevronDown className="size-4" aria-hidden="true" />
-                </span>
-              </summary>
-              <p className="pb-5 text-sm leading-6 text-muted-foreground sm:pr-16 sm:text-base sm:leading-7">
-                {a}
-              </p>
-            </details>
-          ))}
-        </div>
+        <QuickFaq items={HOME_FAQ_EN} en />
       </section>
     </main>
   );

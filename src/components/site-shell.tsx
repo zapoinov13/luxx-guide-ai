@@ -1,6 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Globe, Mail, Menu, MessageCircle, Phone, X } from "lucide-react";
-import { useEffect, useState, type ReactNode } from "react";
+import { ArrowUpRight, Globe, Mail, Menu, MessageCircle, Phone, X } from "lucide-react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { goalForLink, trackGoal } from "@/lib/analytics";
 import { UI, localeOf, switchTarget } from "@/lib/i18n";
@@ -18,6 +18,7 @@ const PLATFORMS = [
 
 export function SiteShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
   const pathname = useRouterState({ select: (st) => st.location.pathname });
   const locale = localeOf(pathname);
   const en = locale === "en";
@@ -28,6 +29,53 @@ export function SiteShell({ children }: { children: ReactNode }) {
   const home = en ? "/en" : "/";
   const booking = en ? "/en/booking" : "/bronirovanie";
   const other = switchTarget(pathname, en ? "ru" : "en");
+
+  useEffect(() => {
+    if (!open) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const closeOnDesktop = () => {
+      if (window.innerWidth >= 1280) setOpen(false);
+    };
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        menuButton.current?.focus();
+      }
+    };
+    document.addEventListener("keydown", closeOnEscape);
+    window.addEventListener("resize", closeOnDesktop);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", closeOnEscape);
+      window.removeEventListener("resize", closeOnDesktop);
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.animate(
+              [
+                { transform: "translateY(22px)", opacity: 0.65 },
+                { transform: "translateY(0)", opacity: 1 },
+              ],
+              { duration: 550, easing: "cubic-bezier(.2,.7,.2,1)" },
+            );
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.08 },
+    );
+    document
+      .querySelectorAll("main > section:not(:first-child), .answer-section, .photo-tour")
+      .forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, [pathname]);
 
   // Цели аналитики: любой клик по ссылке tel: или wa.me на любой странице.
   useEffect(() => {
@@ -56,8 +104,13 @@ export function SiteShell({ children }: { children: ReactNode }) {
   );
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <header className="sticky top-0 z-50 border-b border-border/70 bg-background/90 backdrop-blur">
+    <div
+      className={`site-shell min-h-screen bg-background text-foreground ${pathname !== booking ? "has-mobile-booking" : ""}`}
+    >
+      <a className="skip-link" href="#site-content">
+        {en ? "Skip to content" : "Перейти к содержимому"}
+      </a>
+      <header className="site-header sticky top-0 z-50 border-b border-border/70 bg-background/90 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5 lg:px-8">
           <Link
             to={home}
@@ -115,6 +168,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
               onClick={() => setOpen(!open)}
               aria-expanded={open}
               aria-controls="mobile-nav"
+              ref={menuButton}
               aria-label={open ? t.closeMenu : t.openMenu}
             >
               {open ? <X /> : <Menu />}
@@ -123,27 +177,48 @@ export function SiteShell({ children }: { children: ReactNode }) {
         </div>
 
         {open && (
-          <nav
-            id="mobile-nav"
-            aria-label={t.mobileNav}
-            className="border-t border-border bg-background px-5 py-3 xl:hidden"
-          >
-            {mobileNav.map(([to, label]) => (
-              <Link
-                key={to}
-                to={to}
-                onClick={() => setOpen(false)}
-                className="block border-b border-border py-3 text-base"
-                activeProps={{
-                  className: "block border-b border-border py-3 text-base font-semibold",
-                }}
-              >
-                {label}
-              </Link>
-            ))}
-            <div className="grid gap-2 py-4">
+          <nav id="mobile-nav" aria-label={t.mobileNav} className="mobile-menu-panel xl:hidden">
+            <div className="menu-heading">
+              <span>LUXX / {en ? "EXPLORE" : "НАВИГАЦИЯ"}</span>
+              <span>{en ? "ALMATY, KZ" : "АЛМАТЫ, KZ"}</span>
+            </div>
+            <div className="menu-primary">
+              {mobileNav.slice(0, 4).map(([to, label], i) => (
+                <Link
+                  key={to}
+                  to={to}
+                  onClick={() => setOpen(false)}
+                  className="menu-primary-link"
+                  activeProps={{
+                    className: "menu-primary-link menu-link-active",
+                  }}
+                >
+                  <span className="menu-link-number">0{i + 1}</span>
+                  <span>{label}</span>
+                  <ArrowUpRight size={22} aria-hidden="true" />
+                </Link>
+              ))}
+            </div>
+            <p className="menu-more-label">{en ? "MORE ABOUT YOUR STAY" : "ЕЩЁ О ПРОЖИВАНИИ"}</p>
+            <div className="menu-secondary">
+              {mobileNav.slice(4).map(([to, label]) => (
+                <Link
+                  key={to}
+                  to={to}
+                  onClick={() => setOpen(false)}
+                  activeProps={{ className: "menu-link-active" }}
+                >
+                  {label}
+                  <ArrowUpRight size={14} aria-hidden="true" />
+                </Link>
+              ))}
+            </div>
+            <div className="menu-actions grid gap-2 py-4">
               <Button asChild size="lg" onClick={() => setOpen(false)}>
-                <Link to={booking}>{t.bookDirect}</Link>
+                <Link to={booking}>
+                  {t.bookDirect}
+                  <ArrowUpRight size={19} aria-hidden="true" />
+                </Link>
               </Button>
               <div className="grid grid-cols-2 gap-2">
                 <Button asChild variant="outline" size="lg">
@@ -164,11 +239,23 @@ export function SiteShell({ children }: { children: ReactNode }) {
         )}
       </header>
 
-      {children}
+      <div id="site-content" tabIndex={-1} inert={open}>
+        {children}
+      </div>
 
-      <footer className="border-t border-border bg-secondary">
+      <footer className="site-footer border-t border-border bg-secondary" inert={open}>
         <div className="mx-auto max-w-6xl px-5 py-10 lg:px-8 lg:py-12">
-          <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:gap-12">
+          <div className="footer-invitation">
+            <div>
+              <p>ALMATY / LUXX APARTS</p>
+              <h2>{en ? "Your next stop." : "Ваша следующая остановка."}</h2>
+            </div>
+            <Link to={booking}>
+              {en ? "Choose dates" : "Выбрать даты"}
+              <ArrowUpRight size={24} aria-hidden="true" />
+            </Link>
+          </div>
+          <div className="footer-columns">
             <div>
               <p className="font-display text-lg font-bold">Luxx Aparts</p>
               <address className="mt-2 text-sm not-italic leading-6 text-muted-foreground">
@@ -177,7 +264,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
                 {t.checkIn} {SITE.checkIn.from}–{SITE.checkIn.to}, {t.checkOut} {SITE.checkOut},{" "}
                 {t.desk247}
               </address>
-              <div className="mt-4 flex flex-wrap gap-2">
+              <div className="footer-contacts mt-4 flex flex-wrap gap-2">
                 <Button asChild size="sm">
                   <a href={SITE.whatsapp} target="_blank" rel="noreferrer">
                     <MessageCircle />
@@ -198,6 +285,17 @@ export function SiteShell({ children }: { children: ReactNode }) {
                 </Button>
               </div>
             </div>
+            <nav
+              className="footer-navigation"
+              aria-label={en ? "Explore the site" : "Разделы сайта"}
+            >
+              <p>{en ? "Explore" : "Исследуйте"}</p>
+              {nav.map(([to, label]) => (
+                <Link key={to} to={to}>
+                  {label}
+                </Link>
+              ))}
+            </nav>
             <div>
               <p className="text-sm font-semibold">{t.platforms}</p>
               <ul className="mt-3 flex flex-wrap gap-2">
@@ -242,7 +340,28 @@ export function SiteShell({ children }: { children: ReactNode }) {
             </p>
           </div>
         </div>
+        <div className="footer-wordmark" aria-hidden="true">
+          LUXX APARTS<span>ALMATY, KZ</span>
+        </div>
       </footer>
+      {pathname !== booking && !open && (
+        <aside
+          className="mobile-booking"
+          aria-label={en ? "Quick booking" : "Быстрое бронирование"}
+        >
+          <a
+            href={`tel:${SITE.phoneHref}`}
+            className="mobile-call"
+            aria-label={`${t.call} ${SITE.phoneDisplay}`}
+          >
+            <Phone size={20} aria-hidden="true" />
+          </a>
+          <Link to={booking}>
+            {en ? "Choose dates" : "Выбрать даты"}
+            <span>{en ? "No prepayment" : "Без предоплаты"}</span>
+          </Link>
+        </aside>
+      )}
     </div>
   );
 }

@@ -8,7 +8,6 @@ import {
   Bus,
   Car,
   Check,
-  ChevronDown,
   Clock3,
   CookingPot,
   ExternalLink,
@@ -31,11 +30,15 @@ import {
   Wifi,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Gallery } from "@/components/gallery";
+import { PhotoTour } from "@/components/photo-tour";
+import { StayDetails } from "@/components/stay-details";
+import { AmenitySpaces } from "@/components/amenity-spaces";
+import { StayRules } from "@/components/stay-rules";
+import { QuickFaq } from "@/components/quick-faq";
 import { Photo } from "@/components/photo";
 import { MapEmbed } from "@/components/map-embed";
 import { TariffCards } from "@/components/tariff-cards";
-import { GALLERY, PHOTOS } from "@/lib/photos";
+import { PHOTOS } from "@/lib/photos";
 import {
   AMENITIES,
   DISTANCES,
@@ -128,9 +131,9 @@ function HomePage() {
   return (
     <main>
       {/* Первый экран */}
-      <section className="bg-background">
+      <section className="home-hero bg-background">
         <div className="mx-auto grid max-w-6xl gap-5 px-5 py-4 lg:grid-cols-[1.08fr_1fr] lg:items-center lg:gap-12 lg:px-8 lg:py-14">
-          <div className="relative order-first lg:order-none">
+          <div className="hero-photo hero-collage relative order-first lg:order-none">
             <Photo
               photo={PHOTOS.hero}
               sizes="(min-width: 1024px) 50vw, 100vw"
@@ -154,9 +157,11 @@ function HomePage() {
                 Стойка 24/7
               </span>
             </div>
+            <StayDetails />
           </div>
 
           <div className="lg:order-first">
+            <p className="design-eyebrow">LUXX APARTS / АЛМАТЫ</p>
             <ul className="flex flex-wrap items-center gap-2" aria-label="Оценки на площадках">
               {RATINGS.slice(0, 3).map((r) => (
                 <li key={r.source}>
@@ -181,10 +186,14 @@ function HomePage() {
               ))}
             </ul>
             <h1 className="mt-4 font-display text-[1.9rem] font-bold leading-[1.1] sm:text-5xl lg:mt-5 lg:text-[2.75rem] lg:leading-[1.08] xl:text-[3rem]">
-              Хостел и апартаменты <span className="whitespace-nowrap">Luxx Aparts</span> в Алматы
+              Большой город.
+              <br />
+              <span className="hero-serif">Ваш уютный</span>
+              <br />
+              маленький мир.
             </h1>
             <p className="speakable mt-3 max-w-xl text-base leading-7 text-muted-foreground lg:mt-5 lg:text-lg lg:leading-8">
-              Недорогой хостел на улице Толе би 286/8
+              Хостел и апартаменты Luxx Aparts в Алматы.
               <br />
               44 номера, капсульные койко-места 
               <br />
@@ -219,6 +228,7 @@ function HomePage() {
         </div>
       </section>
 
+      <PhotoTour showGalleryLink />
       {/* Факты */}
       <section className="border-b border-border">
         <ul className="mx-auto grid max-w-6xl grid-cols-2 gap-px bg-border lg:grid-cols-4">
@@ -230,28 +240,6 @@ function HomePage() {
             </li>
           ))}
         </ul>
-      </section>
-
-      {/* Галерея */}
-      <section className="mx-auto max-w-6xl px-5 pt-12 lg:px-8 lg:pt-20">
-        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
-          <div>
-            <p className="text-sm font-semibold text-primary">Фото</p>
-            <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl lg:text-4xl">
-              Как выглядит хостел?
-            </h2>
-          </div>
-          <p className="max-w-md text-sm text-muted-foreground">
-            Капсулы со шторками, комнаты с окном, кухня, коворкинг и санузлы. Нажмите на фото, чтобы
-            открыть крупнее.{" "}
-            <Link to="/foto" className="font-semibold text-primary">
-              Все 30 фото
-            </Link>
-          </p>
-        </div>
-        <div className="mt-6 lg:mt-8">
-          <Gallery photos={GALLERY} />
-        </div>
       </section>
 
       {/* Номера */}
@@ -282,8 +270,8 @@ function HomePage() {
       </section>
 
       {/* Удобства */}
-      <section className="bg-secondary">
-        <div className="mx-auto grid max-w-6xl gap-8 px-5 py-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-10 lg:px-8 lg:py-20">
+      <section className="amenities-section" id="hostel-amenities">
+        <div className="mx-auto max-w-6xl px-5 py-12 lg:px-8 lg:py-20">
           <div>
             <p className="text-sm font-semibold text-primary">Удобства</p>
             <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl lg:text-4xl">
@@ -293,11 +281,7 @@ function HomePage() {
               Хостел с кухней, стиральной машиной и коворкингом: всё, что нужно и на одну ночь, и на
               месяц. Комнаты звукоизолированы, у каждой кровати розетка и лампа для чтения.
             </p>
-            <Photo
-              photo={PHOTOS.kitchen}
-              sizes="(min-width: 1024px) 40vw, 100vw"
-              className="mt-6 aspect-[4/3] w-full rounded-3xl object-cover shadow-card lg:mt-8"
-            />
+            <AmenitySpaces />
           </div>
           <ul id="amenities" className="grid grid-cols-2 gap-2.5 sm:gap-3">
             {AMENITIES.map((a, i) => {
@@ -385,29 +369,50 @@ function HomePage() {
             <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl lg:text-4xl">
               Кому подходит Luxx Aparts?
             </h2>
-            <ul className="mt-6 grid gap-3 sm:grid-cols-2">
-              {audiences.map(({ icon: Icon, title, text }) => (
-                <li key={title} className="rounded-2xl bg-background p-5 shadow-card">
-                  <span className="grid size-10 place-items-center rounded-xl bg-brand-soft text-primary">
-                    <Icon className="size-5" aria-hidden="true" />
-                  </span>
-                  <h3 className="mt-3 font-semibold">{title}</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">{text}</p>
+            <p className="audience-intro">
+              Разные планы на поездку. Одно место, где удобно быть собой.
+            </p>
+            <ul className="audience-cards">
+              {audiences.map(({ icon: Icon, title, text }, i) => (
+                <li key={title} className="audience-card">
+                  <div className="audience-card-top">
+                    <span className="audience-icon">
+                      <Icon className="size-5" aria-hidden="true" />
+                    </span>
+                    <span className="audience-number" aria-hidden="true">
+                      0{i + 1}
+                    </span>
+                  </div>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                  <Link
+                    to={i === 0 ? "/hostel-na-mesyac" : i === 3 ? "/kak-dobratsya" : "/nomera"}
+                    className="audience-link"
+                  >
+                    {i === 0
+                      ? "Проживание на месяц"
+                      : i === 3
+                        ? "Как добраться"
+                        : "Подобрать номер"}
+                    <ArrowRight size={17} aria-hidden="true" />
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
-          <div>
-            <p className="text-sm font-semibold text-primary">Бронирование</p>
+          <div className="direct-booking">
+            <p className="booking-eyebrow">
+              <ShieldCheck size={15} aria-hidden="true" />
+              НАПРЯМУЮ С ХОСТЕЛОМ
+            </p>
             <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl lg:text-4xl">
               Как забронировать напрямую?
             </h2>
-            <ol className="mt-6 space-y-3">
+            <p className="booking-intro">Выберите даты. Остальное обсудим лично.</p>
+            <ol className="booking-steps">
               {steps.map(([title, text], i) => (
-                <li key={title} className="flex gap-4 rounded-2xl bg-background p-5 shadow-card">
-                  <span className="grid size-9 shrink-0 place-items-center rounded-full bg-primary font-display font-bold text-primary-foreground">
-                    {i + 1}
-                  </span>
+                <li key={title}>
+                  <span className="booking-step-number">0{i + 1}</span>
                   <div>
                     <h3 className="font-semibold">{title}</h3>
                     <p className="mt-1 text-sm text-muted-foreground">{text}</p>
@@ -415,11 +420,19 @@ function HomePage() {
                 </li>
               ))}
             </ol>
-            <div className="mt-6 grid gap-3 sm:flex sm:flex-wrap">
+            <div className="booking-guarantee">
+              <Check size={18} aria-hidden="true" />
+              <div>
+                <strong>Без предоплаты</strong>
+                <span>Оплата при заселении, после подтверждения бронирования.</span>
+              </div>
+            </div>
+            <div className="booking-actions mt-6 grid gap-3 sm:flex sm:flex-wrap">
               <Button asChild size="lg" className="w-full sm:w-auto">
                 <Link to="/bronirovanie">
                   <MessageCircle />
-                  Оставить заявку
+                  Выбрать даты
+                  <ArrowRight size={17} aria-hidden="true" />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
@@ -449,26 +462,11 @@ function HomePage() {
             Все правила <ArrowRight className="size-4" aria-hidden="true" />
           </Link>
         </div>
-        <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            [
-              "Заезд и выезд",
-              `Заезд с ${SITE.checkIn.from} до ${SITE.checkIn.to}, выезд до ${SITE.checkOut}.`,
-            ],
-            ["Документы", "Удостоверение личности с фото, иностранцам паспорт."],
-            ["Дети", "Гости до 18 лет только с родителем или опекуном."],
-            ["Не допускаются", "Вечеринки, курение в помещениях, животные."],
-          ].map(([title, text]) => (
-            <li key={title} className="rounded-2xl border border-border p-5">
-              <h3 className="font-semibold">{title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{text}</p>
-            </li>
-          ))}
-        </ul>
+        <StayRules />
       </section>
 
       {/* Отзывы */}
-      <section className="bg-ink text-ink-foreground">
+      <section className="guest-stories bg-ink text-ink-foreground" id="guest-stories">
         <div className="mx-auto max-w-6xl px-5 py-12 lg:px-8 lg:py-20">
           <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
             <div>
@@ -476,35 +474,56 @@ function HomePage() {
               <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl lg:text-4xl">
                 Что говорят гости?
               </h2>
-              <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-sm text-ink-muted">
+              <p className="stories-intro">Впечатления тех, кто уже останавливался у нас.</p>
+              <ul className="platform-scores">
                 {RATINGS.slice(0, 4).map((r) => (
                   <li key={r.source}>
-                    <a href={r.url} target="_blank" rel="noreferrer" className="hover:text-white">
-                      <strong className="text-white">{r.score}</strong> {r.source}
+                    <a href={r.url} target="_blank" rel="noreferrer">
+                      <span className="platform-name">
+                        {r.source}
+                        <ExternalLink size={12} aria-hidden="true" />
+                      </span>
+                      <span className="platform-value">
+                        <strong>{r.score}</strong>
+                        <span> / {r.scale}</span>
+                      </span>
+                      <span className="platform-count">{pluralReviews(r.count)}</span>
                     </a>
                   </li>
                 ))}
               </ul>
             </div>
-            <Link to="/otzyvy" className="inline-flex items-center gap-2 text-sm font-semibold">
+            <Link
+              to="/otzyvy"
+              className="stories-all inline-flex items-center gap-2 text-sm font-semibold"
+            >
               Все отзывы <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
           </div>
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
+          <div className="stories-grid">
             {REVIEWS.slice(0, 3).map((r) => (
-              <blockquote
-                key={r.author + r.date}
-                className="flex flex-col rounded-3xl bg-white/5 p-6"
-              >
-                <p className="flex items-center gap-1 text-sm font-semibold">
-                  <Star className="size-4 fill-current" aria-hidden="true" />
-                  {r.score} / {r.scale}
-                </p>
-                <p className="mt-3 flex-1 text-sm leading-6 text-ink-muted">«{r.text}»</p>
-                <footer className="mt-4 text-xs text-ink-muted">
-                  {r.author}, {r.date} ·{" "}
+              <blockquote key={r.author + r.date} className="guest-story">
+                <div className="story-top">
+                  <span className="story-quote" aria-hidden="true">
+                    “
+                  </span>
+                  <p className="story-score">
+                    <Star className="size-4 fill-current" aria-hidden="true" />
+                    {r.score} / {r.scale}
+                  </p>
+                </div>
+                <p className="story-text">«{r.text}»</p>
+                <footer className="story-author">
+                  <span className="author-initial" aria-hidden="true">
+                    {r.author.slice(0, 1)}
+                  </span>
+                  <div>
+                    <strong>{r.author}</strong>
+                    <span>{r.date}</span>
+                  </div>
                   <a href={r.url} target="_blank" rel="noreferrer" className="underline">
                     {r.source}
+                    <ExternalLink size={12} aria-hidden="true" />
                   </a>
                 </footer>
               </blockquote>
@@ -529,21 +548,7 @@ function HomePage() {
             Все вопросы <ArrowRight className="size-4" aria-hidden="true" />
           </Link>
         </div>
-        <div className="mt-6 divide-y divide-border rounded-2xl border border-border lg:mt-8 lg:rounded-3xl">
-          {HOME_FAQ.map(([q, a], i) => (
-            <details key={q} open={i === 0} className="group px-4 sm:px-6">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 [&::-webkit-details-marker]:hidden sm:py-5">
-                <h3 className="font-display text-base font-bold sm:text-lg">{q}</h3>
-                <span className="grid size-8 shrink-0 place-items-center rounded-full bg-secondary text-foreground transition-transform group-open:rotate-180">
-                  <ChevronDown className="size-4" aria-hidden="true" />
-                </span>
-              </summary>
-              <p className="pb-5 text-sm leading-6 text-muted-foreground sm:pr-16 sm:text-base sm:leading-7">
-                {a}
-              </p>
-            </details>
-          ))}
-        </div>
+        <QuickFaq items={HOME_FAQ} />
       </section>
     </main>
   );
