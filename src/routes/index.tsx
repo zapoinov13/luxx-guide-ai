@@ -161,7 +161,7 @@ function HomePage() {
           </div>
 
           <div className="lg:order-first">
-            <p className="design-eyebrow">LUXX APARTS / АЛМАТЫ</p>
+            <p className="design-eyebrow">ХОСТЕЛ И АПАРТАМЕНТЫ / АЛМАТЫ</p>
             <ul className="flex flex-wrap items-center gap-2" aria-label="Оценки на площадках">
               {RATINGS.slice(0, 3).map((r) => (
                 <li key={r.source}>
@@ -201,7 +201,7 @@ function HomePage() {
             </p>
             <div className="mt-5 grid gap-3 sm:flex sm:flex-wrap lg:mt-7">
               <Button asChild size="lg" className="w-full sm:w-auto">
-                <Link to="/bronirovanie">
+                <Link to="/bronirovanie" data-primary-booking-cta>
                   Забронировать напрямую
                   <ArrowRight />
                 </Link>

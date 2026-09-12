@@ -18,6 +18,7 @@ const PLATFORMS = [
 
 export function SiteShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
+  const [showMobileBooking, setShowMobileBooking] = useState(false);
   const menuButton = useRef<HTMLButtonElement>(null);
   const pathname = useRouterState({ select: (st) => st.location.pathname });
   const locale = localeOf(pathname);
@@ -60,10 +61,10 @@ export function SiteShell({ children }: { children: ReactNode }) {
           if (entry.isIntersecting) {
             entry.target.animate(
               [
-                { transform: "translateY(22px)", opacity: 0.65 },
+                { transform: "translateY(12px)", opacity: 0.82 },
                 { transform: "translateY(0)", opacity: 1 },
               ],
-              { duration: 550, easing: "cubic-bezier(.2,.7,.2,1)" },
+              { duration: 380, easing: "cubic-bezier(.2,.7,.2,1)" },
             );
             observer.unobserve(entry.target);
           }
@@ -76,6 +77,29 @@ export function SiteShell({ children }: { children: ReactNode }) {
       .forEach((element) => observer.observe(element));
     return () => observer.disconnect();
   }, [pathname]);
+
+  useEffect(() => {
+    if (pathname === booking) {
+      setShowMobileBooking(false);
+      return;
+    }
+
+    const primaryBookingCta = document.querySelector<HTMLElement>("[data-primary-booking-cta]");
+    const updateVisibility = () => {
+      const hasPassedPrimaryCta = primaryBookingCta
+        ? primaryBookingCta.getBoundingClientRect().bottom < 0
+        : window.scrollY > 320;
+      setShowMobileBooking(hasPassedPrimaryCta);
+    };
+
+    updateVisibility();
+    window.addEventListener("scroll", updateVisibility, { passive: true });
+    window.addEventListener("resize", updateVisibility);
+    return () => {
+      window.removeEventListener("scroll", updateVisibility);
+      window.removeEventListener("resize", updateVisibility);
+    };
+  }, [booking, pathname]);
 
   // Цели аналитики: любой клик по ссылке tel: или wa.me на любой странице.
   useEffect(() => {
@@ -105,7 +129,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
 
   return (
     <div
-      className={`site-shell min-h-screen bg-background text-foreground ${pathname !== booking ? "has-mobile-booking" : ""}`}
+      className={`site-shell min-h-screen bg-background text-foreground ${showMobileBooking ? "has-mobile-booking" : ""}`}
     >
       <a className="skip-link" href="#site-content">
         {en ? "Skip to content" : "Перейти к содержимому"}
@@ -344,7 +368,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
           LUXX APARTS<span>ALMATY, KZ</span>
         </div>
       </footer>
-      {pathname !== booking && !open && (
+      {pathname !== booking && !open && showMobileBooking && (
         <aside
           className="mobile-booking"
           aria-label={en ? "Quick booking" : "Быстрое бронирование"}

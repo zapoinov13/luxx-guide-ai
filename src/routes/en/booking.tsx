@@ -39,8 +39,9 @@ function BookingPageEn() {
     <ContentPage
       eyebrow="Booking"
       title="Book Luxx Aparts hostel in Almaty directly"
-      intro={`Fill in the form and your request opens as a ready message in WhatsApp. The desk confirms availability and payment. Dorm bed ${fmtEn(SITE.priceFrom)} ₸, single room from ${fmtEn(10000)} ₸, double room ${fmtEn(15000)} ₸. No prepayment, we reply around the clock. Faster by phone: ${SITE.phoneDisplay}.`}
+      intro="Choose your dates and room type, and we will prepare a ready WhatsApp request. The desk confirms availability and the final price. No prepayment; we reply around the clock."
       photo={PHOTOS.privateRoom}
+      compact
     >
       <AnswerSection title="How do I send a request?">
         <BookingForm

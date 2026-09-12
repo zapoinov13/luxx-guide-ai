@@ -15,6 +15,8 @@ type ContentPageProps = {
   updated?: string;
   /** Фото справа от заголовка. */
   photo?: PhotoRef | undefined;
+  /** Компактный первый экран для страниц, где основное действие должно быть видно быстрее. */
+  compact?: boolean;
   /** Промежуточные хлебные крошки между «Главная» и текущей страницей. */
   crumbs?: readonly Crumb[];
   children: ReactNode;
@@ -26,6 +28,7 @@ export function ContentPage({
   intro,
   updated,
   photo,
+  compact = false,
   crumbs = [],
   children,
 }: ContentPageProps) {
@@ -33,9 +36,9 @@ export function ContentPage({
   const locale = localeOf(pathname);
   const t = UI[locale];
   return (
-    <main>
+    <main className={compact ? "content-page content-page-compact" : "content-page"}>
       <div className="content-hero border-b border-border bg-secondary/60">
-        <div className="mx-auto grid max-w-6xl items-center gap-6 px-5 py-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10 lg:px-8 lg:py-16">
+        <div className="content-hero-layout mx-auto grid max-w-6xl items-center gap-6 px-5 py-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10 lg:px-8 lg:py-16">
           <div>
             <nav
               aria-label={t.breadcrumbs}
@@ -71,14 +74,14 @@ export function ContentPage({
             <Photo
               photo={photo}
               sizes="(min-width: 1024px) 40vw, 100vw"
-              className="aspect-[16/10] w-full rounded-2xl object-cover shadow-photo lg:aspect-[4/3] lg:rounded-3xl"
+              className="content-hero-picture aspect-[16/10] w-full rounded-2xl object-cover shadow-photo lg:aspect-[4/3] lg:rounded-3xl"
               priority
             />
           )}
         </div>
       </div>
 
-      <div className="mx-auto max-w-6xl px-5 py-10 lg:px-8 lg:py-16">
+      <div className="content-page-body mx-auto max-w-6xl px-5 py-10 lg:px-8 lg:py-16">
         <div className="max-w-3xl">{children}</div>
       </div>
 
