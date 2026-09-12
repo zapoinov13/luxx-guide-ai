@@ -1,3 +1,4 @@
+import { BookingButton } from "@/components/booking-context";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { AnswerSection, ContentPage, QaList } from "@/components/content-page";
@@ -109,7 +110,7 @@ function SayranPage() {
         </p>
         <TariffCards />
         <Button asChild className="mt-2">
-          <Link to="/bronirovanie">Забронировать напрямую</Link>
+          <BookingButton to="/bronirovanie">Забронировать напрямую</BookingButton>
         </Button>
       </AnswerSection>
 

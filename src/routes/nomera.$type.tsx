@@ -1,3 +1,4 @@
+import { BookingButton } from "@/components/booking-context";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { BedDouble, Check, ShowerHead, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -102,9 +103,9 @@ function RoomTypePage() {
         <p>Кому подходит: {room.forWhom.toLowerCase()}.</p>
         <div className="flex flex-wrap gap-3">
           <Button asChild size="lg">
-            <Link to="/bronirovanie" search={{ room: room.slug }}>
+            <BookingButton to="/bronirovanie" search={{ room: room.slug }}>
               Забронировать
-            </Link>
+            </BookingButton>
           </Button>
           <Button asChild size="lg" variant="outline">
             <a href={`tel:${SITE.phoneHref}`}>Позвонить {SITE.phoneDisplay}</a>

@@ -1,3 +1,4 @@
+import { BookingButton } from "@/components/booking-context";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -102,13 +103,13 @@ function RoomsPageEn() {
                   ))}
                 </ul>
                 <p className="mt-3 text-sm">Good for: {r.forWhom.toLowerCase()}.</p>
-                <Link
+                <BookingButton
                   to="/en/booking"
                   search={{ room: r.slug }}
                   className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-primary"
                 >
                   Book this room
-                </Link>
+                </BookingButton>
               </div>
             </article>
           ))}
@@ -119,7 +120,7 @@ function RoomsPageEn() {
           with or without a window, the double room has a window and a double bed.
         </p>
         <Button asChild className="mt-2">
-          <Link to="/en/booking">Book now</Link>
+          <BookingButton to="/en/booking">Book now</BookingButton>
         </Button>
       </AnswerSection>
 

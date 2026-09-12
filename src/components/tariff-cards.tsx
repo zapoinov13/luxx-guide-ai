@@ -1,3 +1,4 @@
+import { BookingButton } from "@/components/booking-context";
 import { Link } from "@tanstack/react-router";
 import { CalendarDays, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -66,14 +67,14 @@ export function TariffCards({ className = "" }: { className?: string }) {
                 Оплата при заселении
               </p>
               <Button asChild size="lg" className="mt-3 min-h-11 w-full justify-center sm:mt-4">
-                <Link
+                <BookingButton
                   to="/bronirovanie"
                   search={{ room: row.slug, variant: row.name }}
                   aria-label={`Выбрать: ${row.name}, ${row.price.toLocaleString("ru-RU")} ₸`}
                 >
                   <span className="sm:hidden">Выбрать</span>
                   <span className="hidden sm:inline">Забронировать</span>
-                </Link>
+                </BookingButton>
               </Button>
             </div>
           </li>

@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { BookingButton } from "@/components/booking-context";
 import { Button } from "@/components/ui/button";
 import { Photo } from "@/components/photo";
 import { roomCover } from "@/lib/photos";
@@ -32,9 +32,9 @@ export function RoomCardsEn({ className = "" }: { className?: string }) {
               size="sm"
               className="mt-3 w-full sm:mt-5 sm:w-auto sm:self-start"
             >
-              <Link to="/en/booking" search={{ room: r.slug }}>
+              <BookingButton to="/en/booking" search={{ room: r.slug }}>
                 Book
-              </Link>
+              </BookingButton>
             </Button>
           </div>
         </li>

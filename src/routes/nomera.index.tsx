@@ -1,3 +1,4 @@
+import { BookingButton } from "@/components/booking-context";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -197,7 +198,7 @@ function RoomsPage() {
           ответ придёт подтверждение и точная стоимость.
         </p>
         <Button asChild className="mt-2">
-          <Link to="/bronirovanie">Забронировать</Link>
+          <BookingButton to="/bronirovanie">Забронировать</BookingButton>
         </Button>
       </AnswerSection>
 

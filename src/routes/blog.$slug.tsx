@@ -1,3 +1,4 @@
+import { BookingButton } from "@/components/booking-context";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, ChevronRight, Clock3, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -155,10 +156,10 @@ function BlogPostPage() {
             </p>
           </div>
           <Button asChild size="lg">
-            <Link to="/bronirovanie">
+            <BookingButton to="/bronirovanie">
               <MessageCircle />
               Забронировать
-            </Link>
+            </BookingButton>
           </Button>
         </div>
       </section>

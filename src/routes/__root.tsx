@@ -1,3 +1,4 @@
+import { BookingButton } from "@/components/booking-context";
 import {
   Outlet,
   Link,
@@ -39,12 +40,12 @@ function NotFoundComponent() {
           >
             Номера и цены
           </Link>
-          <Link
+          <BookingButton
             to="/bronirovanie"
             className="inline-flex h-11 items-center justify-center rounded-full border border-input px-5 text-sm font-semibold hover:bg-secondary"
           >
             Забронировать
-          </Link>
+          </BookingButton>
         </div>
       </div>
     </main>

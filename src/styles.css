@@ -1476,12 +1476,12 @@ button {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
 }
-.booking-actions a:first-child {
+.booking-actions :is(a, button):first-child {
   width: 100%;
   min-height: 52px;
   justify-content: space-between;
 }
-.booking-actions a:last-child {
+.booking-actions :is(a, button):last-child {
   justify-self: center;
   min-height: 44px;
   width: auto;
@@ -2260,7 +2260,7 @@ button {
   margin-top: 14px;
   max-width: 550px;
 }
-.footer-invitation > a {
+.footer-invitation > :is(a, button) {
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
@@ -2323,7 +2323,7 @@ button {
   color: #d5f47b;
   border-color: #d5f47b;
 }
-.site-footer a.text-primary {
+.site-footer :is(a, button).text-primary {
   color: #d5f47b;
 }
 .site-footer .footer-wordmark {
@@ -2366,7 +2366,7 @@ button {
     font-size: 30px;
     max-width: 300px;
   }
-  .footer-invitation > a {
+  .footer-invitation > :is(a, button) {
     width: 100%;
   }
   .footer-columns {
@@ -2449,7 +2449,7 @@ button {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 4px 12px;
   }
-  .footer-bottom a {
+  .footer-bottom :is(a, button) {
     display: flex;
     align-items: center;
     min-height: 44px;

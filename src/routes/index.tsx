@@ -1,3 +1,4 @@
+import { BookingButton } from "@/components/booking-context";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Baby,
@@ -200,7 +201,7 @@ function HomePage() {
             </p>
             <div className="mt-5 grid gap-3 sm:flex sm:flex-wrap lg:mt-7">
               <Button asChild size="lg" className="w-full sm:w-auto">
-                <Link to="/bronirovanie">Забронировать напрямую</Link>
+                <BookingButton to="/bronirovanie">Забронировать напрямую</BookingButton>
               </Button>
               <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
                 <Link to="/nomera">Номера и цены</Link>
@@ -427,10 +428,10 @@ function HomePage() {
             </div>
             <div className="booking-actions mt-6 grid gap-3 sm:flex sm:flex-wrap">
               <Button asChild size="lg" className="w-full sm:w-auto">
-                <Link to="/bronirovanie">
+                <BookingButton to="/bronirovanie">
                   <MessageCircle />
                   Выбрать даты
-                </Link>
+                </BookingButton>
               </Button>
               <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
                 <a href={SITE.links.booking} target="_blank" rel="noreferrer">
