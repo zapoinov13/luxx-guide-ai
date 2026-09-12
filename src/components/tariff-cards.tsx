@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, CalendarDays, Check } from "lucide-react";
+import { CalendarDays, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Photo } from "@/components/photo";
 import { tariffPhoto } from "@/lib/photos";
@@ -65,7 +65,7 @@ export function TariffCards({ className = "" }: { className?: string }) {
                 <Check size={14} />
                 Оплата при заселении
               </p>
-              <Button asChild size="lg" className="mt-3 min-h-11 w-full justify-between sm:mt-4">
+              <Button asChild size="lg" className="mt-3 min-h-11 w-full justify-center sm:mt-4">
                 <Link
                   to="/bronirovanie"
                   search={{ room: row.slug, variant: row.name }}
@@ -73,7 +73,6 @@ export function TariffCards({ className = "" }: { className?: string }) {
                 >
                   <span className="sm:hidden">Выбрать</span>
                   <span className="hidden sm:inline">Забронировать</span>
-                  <ArrowRight />
                 </Link>
               </Button>
             </div>
@@ -93,7 +92,7 @@ export function TariffCards({ className = "" }: { className?: string }) {
           рассчитает под ваши даты.
         </p>
         <a href={SITE.whatsapp} target="_blank" rel="noreferrer">
-          Узнать условия <ArrowRight size={18} aria-hidden="true" />
+          Узнать условия
         </a>
       </li>
     </ul>

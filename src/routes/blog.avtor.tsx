@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
 import { AnswerSection, ContentPage } from "@/components/content-page";
 import { getPosts } from "@/lib/blog";
 import { PHOTOS } from "@/lib/photos";
@@ -85,7 +84,7 @@ function AuthorPage() {
         </ul>
         <p>
           <Link to="/blog" className="inline-flex items-center gap-1.5 font-semibold">
-            Все статьи <ArrowRight className="size-4" aria-hidden="true" />
+            Все статьи
           </Link>
         </p>
       </AnswerSection>

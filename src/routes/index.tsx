@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
-  ArrowRight,
   Baby,
   Backpack,
   BedDouble,
@@ -201,10 +200,7 @@ function HomePage() {
             </p>
             <div className="mt-5 grid gap-3 sm:flex sm:flex-wrap lg:mt-7">
               <Button asChild size="lg" className="w-full sm:w-auto">
-                <Link to="/bronirovanie">
-                  Забронировать напрямую
-                  <ArrowRight />
-                </Link>
+                <Link to="/bronirovanie">Забронировать напрямую</Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
                 <Link to="/nomera">Номера и цены</Link>
@@ -255,7 +251,7 @@ function HomePage() {
             to="/nomera"
             className="inline-flex items-center gap-2 text-sm font-semibold text-primary"
           >
-            Все номера <ArrowRight className="size-4" aria-hidden="true" />
+            Все номера
           </Link>
         </div>
         <p className="mt-4 text-sm text-muted-foreground sm:hidden">
@@ -357,7 +353,7 @@ function HomePage() {
               to="/kak-dobratsya"
               className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary"
             >
-              Маршруты от вокзала и аэропорта <ArrowRight className="size-4" aria-hidden="true" />
+              Маршруты от вокзала и аэропорта
             </Link>
           </div>
           <MapEmbed className="h-[300px] lg:h-[460px]" />
@@ -397,7 +393,6 @@ function HomePage() {
                       : i === 3
                         ? "Как добраться"
                         : "Подобрать номер"}
-                    <ArrowRight size={17} aria-hidden="true" />
                   </Link>
                 </li>
               ))}
@@ -435,7 +430,6 @@ function HomePage() {
                 <Link to="/bronirovanie">
                   <MessageCircle />
                   Выбрать даты
-                  <ArrowRight size={17} aria-hidden="true" />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
@@ -462,7 +456,7 @@ function HomePage() {
             to="/pravila"
             className="inline-flex items-center gap-2 text-sm font-semibold text-primary"
           >
-            Все правила <ArrowRight className="size-4" aria-hidden="true" />
+            Все правила
           </Link>
         </div>
         <StayRules />
@@ -500,7 +494,7 @@ function HomePage() {
               to="/otzyvy"
               className="stories-all inline-flex items-center gap-2 text-sm font-semibold"
             >
-              Все отзывы <ArrowRight className="size-4" aria-hidden="true" />
+              Все отзывы
             </Link>
           </div>
           <div className="stories-grid">
@@ -548,7 +542,7 @@ function HomePage() {
             to="/faq"
             className="inline-flex items-center gap-2 text-sm font-semibold text-primary"
           >
-            Все вопросы <ArrowRight className="size-4" aria-hidden="true" />
+            Все вопросы
           </Link>
         </div>
         <QuickFaq items={HOME_FAQ} />

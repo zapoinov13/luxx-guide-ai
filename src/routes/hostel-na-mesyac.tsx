@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Check } from "lucide-react";
+import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnswerSection, ContentPage, QaList } from "@/components/content-page";
 import { PHOTOS } from "@/lib/photos";
@@ -117,10 +117,7 @@ function MonthlyPage() {
           ответ придёт точная стоимость.
         </p>
         <Button asChild className="mt-2">
-          <Link to="/bronirovanie">
-            Узнать цену на месяц
-            <ArrowRight />
-          </Link>
+          <Link to="/bronirovanie">Узнать цену на месяц</Link>
         </Button>
       </AnswerSection>
 

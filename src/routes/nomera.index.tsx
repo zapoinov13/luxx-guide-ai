@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Check } from "lucide-react";
+import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnswerSection, ContentPage } from "@/components/content-page";
 import { Photo } from "@/components/photo";
@@ -186,7 +186,7 @@ function RoomsPage() {
                   params={{ type: r.slug }}
                   className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-primary"
                 >
-                  Подробнее и фото <ArrowRight className="size-4" aria-hidden="true" />
+                  Подробнее и фото
                 </Link>
               </div>
             </article>
@@ -197,10 +197,7 @@ function RoomsPage() {
           ответ придёт подтверждение и точная стоимость.
         </p>
         <Button asChild className="mt-2">
-          <Link to="/bronirovanie">
-            Забронировать
-            <ArrowRight />
-          </Link>
+          <Link to="/bronirovanie">Забронировать</Link>
         </Button>
       </AnswerSection>
 

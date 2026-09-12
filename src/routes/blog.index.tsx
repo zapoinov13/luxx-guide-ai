@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Clock3 } from "lucide-react";
+import { Clock3 } from "lucide-react";
 import { ContentPage } from "@/components/content-page";
 import { Photo } from "@/components/photo";
 import { formatDate, getPosts } from "@/lib/blog";
@@ -77,7 +77,7 @@ function BlogIndexPage() {
                   params={{ slug: p.slug }}
                   className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary"
                 >
-                  Читать <ArrowRight className="size-4" aria-hidden="true" />
+                  Читать
                 </Link>
               </div>
             </article>

@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Check } from "lucide-react";
+import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnswerSection, ContentPage } from "@/components/content-page";
 import { RoomCardsEn } from "@/components/room-cards-en";
@@ -107,7 +107,7 @@ function RoomsPageEn() {
                   search={{ room: r.slug }}
                   className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-primary"
                 >
-                  Book this room <ArrowRight className="size-4" aria-hidden="true" />
+                  Book this room
                 </Link>
               </div>
             </article>
@@ -119,10 +119,7 @@ function RoomsPageEn() {
           with or without a window, the double room has a window and a double bed.
         </p>
         <Button asChild className="mt-2">
-          <Link to="/en/booking">
-            Book now
-            <ArrowRight />
-          </Link>
+          <Link to="/en/booking">Book now</Link>
         </Button>
       </AnswerSection>
 

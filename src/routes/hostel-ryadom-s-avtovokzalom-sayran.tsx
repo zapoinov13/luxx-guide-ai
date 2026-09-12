@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnswerSection, ContentPage, QaList } from "@/components/content-page";
 import { MapEmbed } from "@/components/map-embed";
@@ -110,10 +109,7 @@ function SayranPage() {
         </p>
         <TariffCards />
         <Button asChild className="mt-2">
-          <Link to="/bronirovanie">
-            Забронировать напрямую
-            <ArrowRight />
-          </Link>
+          <Link to="/bronirovanie">Забронировать напрямую</Link>
         </Button>
       </AnswerSection>
 

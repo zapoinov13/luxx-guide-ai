@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight, Compass } from "lucide-react";
+import { ArrowLeft, ChevronRight, Compass } from "lucide-react";
 import { Photo } from "@/components/photo";
 import { PHOTOS } from "@/lib/photos";
 
@@ -112,7 +112,7 @@ export function PhotoTour({
             onClick={() => step(1)}
             aria-label={en ? "Next space" : "Следующая зона"}
           >
-            <ArrowRight />
+            <ChevronRight />
           </button>
         </div>
       </div>
@@ -136,7 +136,6 @@ export function PhotoTour({
             className="inline-flex min-h-11 items-center gap-3 rounded-full border border-white/30 px-5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
           >
             {en ? "View all 30 photos" : "Все 30 фотографий"}
-            <ArrowRight size={16} aria-hidden="true" />
           </Link>
         </div>
       )}

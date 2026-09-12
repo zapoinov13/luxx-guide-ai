@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowRight, BedDouble, Check, ShowerHead, Users } from "lucide-react";
+import { BedDouble, Check, ShowerHead, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnswerSection, ContentPage, QaList } from "@/components/content-page";
 import { Gallery } from "@/components/gallery";
@@ -104,7 +104,6 @@ function RoomTypePage() {
           <Button asChild size="lg">
             <Link to="/bronirovanie" search={{ room: room.slug }}>
               Забронировать
-              <ArrowRight />
             </Link>
           </Button>
           <Button asChild size="lg" variant="outline">

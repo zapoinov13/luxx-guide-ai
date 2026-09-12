@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
-  ArrowRight,
   Baby,
   Backpack,
   BedDouble,
@@ -208,10 +207,7 @@ function HomePageEn() {
             </p>
             <div className="mt-5 grid gap-3 sm:flex sm:flex-wrap lg:mt-7">
               <Button asChild size="lg" className="w-full sm:w-auto">
-                <Link to="/en/booking">
-                  Book directly
-                  <ArrowRight />
-                </Link>
+                <Link to="/en/booking">Book directly</Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
                 <Link to="/en/rooms">Rooms and prices</Link>
@@ -262,7 +258,7 @@ function HomePageEn() {
             to="/en/rooms"
             className="inline-flex items-center gap-2 text-sm font-semibold text-primary"
           >
-            All rooms <ArrowRight className="size-4" aria-hidden="true" />
+            All rooms
           </Link>
         </div>
         <p className="mt-4 max-w-2xl text-muted-foreground">
@@ -362,7 +358,6 @@ function HomePageEn() {
               className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary"
             >
               Routes from the station and the airport{" "}
-              <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
           </div>
           <MapEmbed className="h-[300px] lg:h-[460px]" />
@@ -396,7 +391,6 @@ function HomePageEn() {
                     className="audience-link"
                   >
                     {i === 0 ? "Plan a longer stay" : i === 3 ? "Find your way" : "Explore rooms"}
-                    <ArrowRight size={17} aria-hidden="true" />
                   </Link>
                 </li>
               ))}
@@ -434,7 +428,6 @@ function HomePageEn() {
                 <Link to="/en/booking">
                   <MessageCircle />
                   Choose dates
-                  <ArrowRight size={17} aria-hidden="true" />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
@@ -461,7 +454,7 @@ function HomePageEn() {
             to="/en/house-rules"
             className="inline-flex items-center gap-2 text-sm font-semibold text-primary"
           >
-            All rules <ArrowRight className="size-4" aria-hidden="true" />
+            All rules
           </Link>
         </div>
         <StayRules en />
@@ -480,7 +473,7 @@ function HomePageEn() {
             to="/en/faq"
             className="inline-flex items-center gap-2 text-sm font-semibold text-primary"
           >
-            All questions <ArrowRight className="size-4" aria-hidden="true" />
+            All questions
           </Link>
         </div>
         <QuickFaq items={HOME_FAQ_EN} en />

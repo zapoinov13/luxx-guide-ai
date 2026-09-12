@@ -1,5 +1,4 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Photo } from "@/components/photo";
 import { roomCover } from "@/lib/photos";
@@ -35,7 +34,6 @@ export function RoomCardsEn({ className = "" }: { className?: string }) {
             >
               <Link to="/en/booking" search={{ room: r.slug }}>
                 Book
-                <ArrowRight />
               </Link>
             </Button>
           </div>
