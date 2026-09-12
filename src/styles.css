@@ -259,7 +259,9 @@
   .prose-copy ul.list-none li + li {
     margin-top: 0;
   }
-  .prose-copy a {
+  /* Подчёркиваем только ссылки внутри текста: кнопки и карточки-ссылки
+   * (оценки площадок, тарифы, чипы) оформляются своими стилями. */
+  .prose-copy :is(p, li, td, th, dd, dt, blockquote, figcaption) a {
     color: var(--color-primary);
     text-decoration: underline;
     text-underline-offset: 3px;
@@ -289,16 +291,16 @@
     font-weight: 600;
   }
 
-  /* Карточки тарифов внутри текстового блока: без подчёркиваний ссылок */
-  .prose-copy .tariff-cards a {
-    color: inherit;
-    text-decoration: none;
-  }
-  .prose-copy .tariff-cards ul,
+  /* Сетка карточек тарифов внутри текстового блока: без маркеров и подчёркиваний */
+  .prose-copy .tariff-cards,
   .prose-copy .tariff-cards li + li {
     margin: 0;
     padding: 0;
     list-style: none;
+  }
+  .prose-copy .tariff-cards a {
+    color: inherit;
+    text-decoration: none;
   }
 
   .article-body h2 {
