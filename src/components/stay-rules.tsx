@@ -1,3 +1,4 @@
+import { ArrivalChecklist } from "./arrival-checklist";
 import { Clock3, ContactRound, Users, ShieldCheck } from "lucide-react";
 import { SITE } from "@/lib/site";
 
@@ -29,39 +30,42 @@ export function StayRules({ en = false }: { en?: boolean }) {
     },
   ];
   return (
-    <ul className="stay-rules">
-      <li className="rule-time">
-        <div className="rule-icon">
-          <Clock3 size={22} aria-hidden="true" />
-        </div>
-        <h3>{en ? "Your arrival & departure" : "Ваш заезд и выезд"}</h3>
-        <dl className="rule-times">
-          <div>
-            <dt>{en ? "Check-in" : "Заезд"}</dt>
-            <dd>
-              {SITE.checkIn.from}
-              <span> — {SITE.checkIn.to}</span>
-            </dd>
-          </div>
-          <div>
-            <dt>{en ? "Check-out by" : "Выезд до"}</dt>
-            <dd>{SITE.checkOut}</dd>
-          </div>
-        </dl>
-        <p className="rule-time-note">
-          {en ? "24-hour reception" : "Стойка регистрации работает 24/7"}
-        </p>
-      </li>
-      {rules.map(({ icon: Icon, title, text, tag }) => (
-        <li key={title} className="rule-info">
+    <>
+      <ul className="stay-rules">
+        <li className="rule-time">
           <div className="rule-icon">
-            <Icon size={22} aria-hidden="true" />
+            <Clock3 size={22} aria-hidden="true" />
           </div>
-          <span className="rule-tag">{tag}</span>
-          <h3>{title}</h3>
-          <p>{text}</p>
+          <h3>{en ? "Your arrival & departure" : "Ваш заезд и выезд"}</h3>
+          <dl className="rule-times">
+            <div>
+              <dt>{en ? "Check-in" : "Заезд"}</dt>
+              <dd>
+                {SITE.checkIn.from}
+                <span> — {SITE.checkIn.to}</span>
+              </dd>
+            </div>
+            <div>
+              <dt>{en ? "Check-out by" : "Выезд до"}</dt>
+              <dd>{SITE.checkOut}</dd>
+            </div>
+          </dl>
+          <p className="rule-time-note">
+            {en ? "24-hour reception" : "Стойка регистрации работает 24/7"}
+          </p>
         </li>
-      ))}
-    </ul>
+        {rules.map(({ icon: Icon, title, text, tag }) => (
+          <li key={title} className="rule-info">
+            <div className="rule-icon">
+              <Icon size={22} aria-hidden="true" />
+            </div>
+            <span className="rule-tag">{tag}</span>
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </li>
+        ))}
+      </ul>
+      <ArrivalChecklist en={en} />
+    </>
   );
 }

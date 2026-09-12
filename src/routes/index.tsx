@@ -1,4 +1,7 @@
 import { BookingButton } from "@/components/booking-context";
+import { SectionNavigation } from "@/components/section-navigation";
+import { LocationActions } from "@/components/location-actions";
+import { ReviewBrowser } from "@/components/review-browser";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Baby,
@@ -31,8 +34,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RoomExplorer } from "@/components/room-explorer";
-import { HomeMotion } from "@/components/home-motion";
-import { StayDetails } from "@/components/stay-details";
+import { SpatialHero } from "@/components/spatial-hero";
 import { AmenitySpaces } from "@/components/amenity-spaces";
 import { StayRules } from "@/components/stay-rules";
 import { QuickFaq } from "@/components/quick-faq";
@@ -128,39 +130,12 @@ const amenityIcons = [
 ] as const;
 
 function HomePage() {
-  const price = SITE.priceFrom.toLocaleString("ru-RU");
   return (
     <main className="home-page">
-      <HomeMotion />
       {/* Первый экран */}
       <section className="home-hero bg-background">
         <div className="mx-auto grid max-w-6xl gap-5 px-5 py-4 lg:grid-cols-[1.08fr_1fr] lg:items-center lg:gap-12 lg:px-8 lg:py-14">
-          <div className="hero-photo hero-collage relative order-first lg:order-none">
-            <Photo
-              photo={PHOTOS.hero}
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              className="aspect-[16/10] w-full rounded-2xl object-cover shadow-photo lg:aspect-[4/3] lg:rounded-[1.75rem]"
-              priority
-            />
-            <div
-              className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 rounded-b-2xl bg-gradient-to-t from-black/45 to-transparent lg:rounded-b-[1.75rem]"
-              aria-hidden="true"
-            />
-            <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-3 text-white">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-white/90">
-                  Койко-место
-                </p>
-                <p className="font-display text-2xl font-bold leading-none lg:text-3xl">
-                  от {price} ₸
-                </p>
-              </div>
-              <span className="hidden rounded-full bg-white/15 px-3 py-1.5 text-xs font-semibold backdrop-blur sm:inline-flex">
-                Стойка 24/7
-              </span>
-            </div>
-            <StayDetails />
-          </div>
+          <SpatialHero />
 
           <div className="lg:order-first">
             <p className="design-eyebrow">ХОСТЕЛ И АПАРТАМЕНТЫ / АЛМАТЫ</p>
@@ -232,7 +207,7 @@ function HomePage() {
 
       <RoomExplorer />
       {/* Факты */}
-      <section className="border-b border-border">
+      <section className="home-facts border-b border-border">
         <ul className="mx-auto grid max-w-6xl grid-cols-2 gap-px bg-border lg:grid-cols-4">
           {facts.map(({ icon: Icon, value, label }) => (
             <li key={label} className="bg-background px-4 py-5 lg:px-8 lg:py-6">
@@ -244,14 +219,7 @@ function HomePage() {
         </ul>
       </section>
 
-      <nav className="home-section-nav" aria-label="Разделы главной страницы">
-        <a href="#hostel-amenities">Комфорт</a>
-        <a href="#location">Расположение</a>
-        <a href="#home-audiences">Для кого</a>
-        <a href="#home-rules">Заселение</a>
-        <a href="#guest-stories">Отзывы</a>
-        <a href="#home-faq">Вопросы</a>
-      </nav>
+      <SectionNavigation />
 
       {/* Удобства */}
       <section className="amenities-section home-section" id="hostel-amenities">
@@ -349,6 +317,7 @@ function HomePage() {
               <MapPin size={16} aria-hidden="true" /> LUXX APARTS / АЛМАТЫ
             </p>
             <MapEmbed className="h-[300px] lg:h-[540px]" />
+            <LocationActions />
           </div>
         </div>
       </section>
@@ -493,35 +462,7 @@ function HomePage() {
               Все отзывы
             </Link>
           </div>
-          <div className="stories-grid">
-            {REVIEWS.slice(0, 3).map((r) => (
-              <blockquote key={r.author + r.date} className="guest-story">
-                <div className="story-top">
-                  <span className="story-quote" aria-hidden="true">
-                    “
-                  </span>
-                  <p className="story-score">
-                    <Star className="size-4 fill-current" aria-hidden="true" />
-                    {r.score} / {r.scale}
-                  </p>
-                </div>
-                <p className="story-text">«{r.text}»</p>
-                <footer className="story-author">
-                  <span className="author-initial" aria-hidden="true">
-                    {r.author.slice(0, 1)}
-                  </span>
-                  <div>
-                    <strong>{r.author}</strong>
-                    <span>{r.date}</span>
-                  </div>
-                  <a href={r.url} target="_blank" rel="noreferrer" className="underline">
-                    {r.source}
-                    <ExternalLink size={12} aria-hidden="true" />
-                  </a>
-                </footer>
-              </blockquote>
-            ))}
-          </div>
+          <ReviewBrowser />
         </div>
       </section>
 

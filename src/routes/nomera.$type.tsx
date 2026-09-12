@@ -4,6 +4,7 @@ import { BedDouble, Check, ShowerHead, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnswerSection, ContentPage, QaList } from "@/components/content-page";
 import { Gallery } from "@/components/gallery";
+import { RoomTour } from "@/components/room-tour";
 import { ROOM_PHOTOS } from "@/lib/photos";
 import {
   ROOM_TYPES,
@@ -114,6 +115,9 @@ function RoomTypePage() {
       </AnswerSection>
 
       <AnswerSection title="Как выглядит номер?">
+        <div className="room-detail-tour">
+          <RoomTour slug={room.slug} />
+        </div>
         <Gallery photos={photos} />
         <p>Фото с карточки хостела на Hostelworld, {SITE.factsUpdated}.</p>
       </AnswerSection>

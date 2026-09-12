@@ -1,4 +1,6 @@
 import { BookingButton } from "@/components/booking-context";
+import { LocationActions } from "./location-actions";
+import { DesignMotion } from "./design-motion";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { ArrowUpRight, Globe, Mail, Menu, MessageCircle, Phone, X } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
@@ -61,30 +63,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
     };
   }, [open]);
 
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.animate(
-              [
-                { transform: "translateY(12px)", opacity: 0.82 },
-                { transform: "translateY(0)", opacity: 1 },
-              ],
-              { duration: 380, easing: "cubic-bezier(.2,.7,.2,1)" },
-            );
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.08 },
-    );
-    document
-      .querySelectorAll("main > section:not(:first-child), .answer-section, .photo-tour")
-      .forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
-  }, [pathname]);
+  // Decorative reveals are owned by DesignMotion to avoid competing animations.
 
   // Цели аналитики: любой клик по ссылке tel: или wa.me на любой странице.
   useEffect(() => {
@@ -120,6 +99,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
         setBookingSelection(selection);
       }}
     >
+      <DesignMotion pathname={pathname} en={en} />
       <div
         className="site-shell min-h-screen bg-background text-foreground"
         onClickCapture={(event) => {
@@ -313,6 +293,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
                     {t.desk247}
                   </span>
                 </address>
+                <LocationActions en={en} compact />
                 <div className="footer-contacts mt-4 flex flex-wrap gap-2">
                   <Button asChild size="sm">
                     <a href={SITE.whatsapp} target="_blank" rel="noreferrer">

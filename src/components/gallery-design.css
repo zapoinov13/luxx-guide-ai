@@ -1,0 +1,446 @@
+.site-shell .lgv-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 16px;
+}
+.site-shell .lgv-grid > li {
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+.lgv-compact {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.lgv-compact > li:first-child {
+  grid-column: 1/-1;
+}
+.lgv-editorial {
+  display: block;
+  columns: 3;
+  column-gap: 18px;
+}
+.site-shell .lgv-editorial > li {
+  break-inside: avoid;
+  margin-bottom: 18px;
+}
+.lgv-tile {
+  display: block;
+  position: relative;
+  width: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #dee6d9;
+  cursor: zoom-in;
+  border: 1px solid #a9ba9f66;
+  box-shadow: 0 10px 24px -18px #21463060;
+  isolation: isolate;
+  transition:
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s;
+}
+.lgv-tile > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--photo-ratio, 1.5);
+  object-fit: cover;
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.lgv-compact .lgv-tile > img {
+  aspect-ratio: 4/3;
+}
+.lgv-compact > li:first-child .lgv-tile > img {
+  aspect-ratio: 16/9;
+}
+.lgv-tile-open {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  color: #eef5e8;
+  background: #173426d9;
+  border: 1px solid #c5d4bd55;
+  transition:
+    transform 0.3s,
+    opacity 0.3s;
+}
+.lgv-tile:focus-visible {
+  outline: 3px solid #527b43;
+  outline-offset: 4px;
+}
+.lgv-empty {
+  padding: 24px;
+  background: #e4ebdc;
+  border-radius: 16px;
+  color: #264431;
+}
+.lgv-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: #06130eec;
+  backdrop-filter: blur(12px);
+}
+.lgv-dialog {
+  position: fixed;
+  inset: 16px;
+  z-index: 81;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 1450px;
+  margin: auto;
+  padding: 20px 24px;
+  max-height: calc(100dvh - 32px);
+  border: 1px solid #64816966;
+  border-radius: 24px;
+  background: #10241b;
+  color: #edf3e8;
+  overflow: auto;
+  font-family: var(--font-sans);
+}
+.lgv-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-shrink: 0;
+}
+.lgv-header h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.3;
+  margin: 0;
+}
+.lgv-header p {
+  font-size: 0.78rem;
+  color: #bfcfbb;
+  margin: 5px 0 0;
+}
+.lgv-close,
+.lgv-arrow {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border: 1px solid #c0d0b955;
+  border-radius: 12px;
+  background: #203e2bdb;
+  color: #f0f6ed;
+  cursor: pointer;
+}
+.lgv-stage {
+  position: relative;
+  flex: 1 0 250px;
+  min-height: 250px;
+  max-height: 70dvh;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #091910;
+  touch-action: pan-y;
+}
+.lgv-stage[data-zoom="true"] {
+  touch-action: none;
+  cursor: grab;
+}
+.lgv-stage[data-zoom="true"]:active {
+  cursor: grabbing;
+}
+.lgv-image-wrap {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+.lgv-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.lgv-arrow {
+  position: absolute;
+  top: calc(50% - 22px);
+  z-index: 2;
+  border-radius: 50%;
+  box-shadow: 0 8px 30px #07120b50;
+}
+.lgv-prev {
+  left: 18px;
+}
+.lgv-next {
+  right: 18px;
+}
+.lgv-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-shrink: 0;
+}
+.lgv-caption {
+  display: flex;
+  gap: 16px;
+  font-size: 0.8rem;
+  align-items: baseline;
+  min-width: 0;
+}
+.lgv-caption > span {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: #b2c6a5;
+}
+.lgv-caption p {
+  margin: 0;
+  line-height: 1.5;
+}
+.lgv-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.lgv-actions button {
+  min-height: 42px;
+  min-width: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border: 1px solid #76917466;
+  border-radius: 10px;
+  background: #1c3928;
+  color: #edf4e8;
+  font-size: 0.78rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.lgv-thumbs {
+  display: flex;
+  gap: 9px;
+  overflow-x: auto;
+  flex-shrink: 0;
+  padding: 5px 3px 8px;
+  scrollbar-width: thin;
+  scrollbar-color: #839d72 #14291d;
+}
+.lgv-thumbs > button {
+  position: relative;
+  width: 75px;
+  height: 52px;
+  border-radius: 9px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 2px solid transparent;
+  opacity: 0.58;
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+  cursor: pointer;
+}
+.lgv-thumbs > button[aria-pressed="true"] {
+  border-color: #c6ddb3;
+  opacity: 1;
+  transform: translateY(-2px);
+}
+.lgv-thumbs > button img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.lgv-help {
+  color: #b7c8af;
+  font-size: 0.7rem;
+  line-height: 1.5;
+  margin: 0;
+  text-align: center;
+  flex-shrink: 0;
+}
+.lgv-load {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 12px 18px;
+  border: 1px solid #a4b79355;
+  border-radius: 12px;
+  background: #153023ed;
+  color: #eff5ea;
+  font-size: 0.8rem;
+  text-align: center;
+  max-width: 90%;
+}
+.lgv-dialog button:focus-visible {
+  outline: 3px solid #d3e7bd;
+  outline-offset: 3px;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .lgv-tile:hover {
+    transform: perspective(1400px) translateY(-5px) rotateX(1deg);
+    box-shadow: 0 24px 45px -28px #1c3f2855;
+  }
+  .lgv-tile:hover > img {
+    transform: scale(1.035);
+  }
+  .lgv-tile:hover .lgv-tile-open {
+    transform: translate(-2px, -2px);
+  }
+  .lgv-thumbs > button:hover {
+    opacity: 1;
+  }
+  .lgv-close:hover,
+  .lgv-arrow:hover,
+  .lgv-actions button:hover {
+    background: #32513a;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .lgv-overlay {
+    animation: lgv-fade 0.22s both;
+  }
+  .lgv-dialog {
+    animation: lgv-open 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+@keyframes lgv-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes lgv-open {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (max-width: 1023px) {
+  .lgv-editorial {
+    columns: 2;
+  }
+  .site-shell .lgv-grid {
+    gap: 12px;
+  }
+}
+@media (max-width: 639px) {
+  .lgv-editorial {
+    columns: 1;
+  }
+  .site-shell .lgv-editorial > li {
+    margin-bottom: 15px;
+  }
+  .lgv-tile {
+    border-radius: 14px;
+  }
+  .lgv-tile-open {
+    width: 38px;
+    height: 38px;
+    right: 10px;
+    bottom: 10px;
+  }
+  .lgv-dialog {
+    inset: 5px;
+    padding: 15px 10px 10px;
+    border-radius: 16px;
+    gap: 10px;
+    max-height: calc(100dvh - 10px);
+  }
+  .lgv-header {
+    padding: 0 4px;
+  }
+  .lgv-header h2 {
+    font-size: 1.1rem;
+  }
+  .lgv-header p {
+    font-size: 0.7rem;
+  }
+  .lgv-stage {
+    min-height: 230px;
+    flex-basis: 240px;
+  }
+  .lgv-prev {
+    left: 6px;
+  }
+  .lgv-next {
+    right: 6px;
+  }
+  .lgv-bottom {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .lgv-caption {
+    gap: 10px;
+    font-size: 0.72rem;
+  }
+  .lgv-actions {
+    justify-content: center;
+  }
+  .lgv-thumbs > button {
+    width: 65px;
+    height: 46px;
+  }
+  .lgv-help {
+    font-size: 0.65rem;
+  }
+  .lgv-compact {
+    gap: 8px !important;
+  }
+  .lgv-compact .lgv-tile {
+    border-radius: 10px;
+  }
+}
+@media (max-height: 600px) and (min-width: 768px) {
+  .lgv-dialog {
+    inset: 6px;
+    padding: 10px 18px;
+    gap: 8px;
+    max-height: calc(100dvh - 12px);
+  }
+  .lgv-stage {
+    min-height: 130px;
+    flex-basis: 150px;
+  }
+  .lgv-header p,
+  .lgv-help {
+    display: none;
+  }
+  .lgv-thumbs > button {
+    width: 55px;
+    height: 36px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lgv-dialog,
+  .lgv-overlay {
+    animation: none !important;
+  }
+  .lgv-tile,
+  .lgv-tile > img,
+  .lgv-tile-open,
+  .lgv-thumbs > button {
+    transition: none !important;
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .lgv-overlay {
+    backdrop-filter: none;
+    background: #081a10;
+  }
+}

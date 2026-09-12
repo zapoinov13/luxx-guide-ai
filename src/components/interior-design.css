@@ -1,0 +1,314 @@
+/* Shared interior-page design, inheriting the existing brand rather than replacing content. */
+.depth-photo {
+  position: relative;
+  perspective: 1200px;
+  min-width: 0;
+  padding: 12px 8px 15px;
+}
+.depth-photo-back {
+  position: absolute;
+  inset: 20px 0 0 18px;
+  border: 1px solid #98ae8b;
+  background: #dae4d2;
+  border-radius: 23px;
+  transform: rotate(3deg);
+  pointer-events: none;
+}
+.depth-photo-surface {
+  position: relative;
+  transform-style: preserve-3d;
+  overflow: hidden;
+  border: 6px solid #f2f5ec;
+  border-radius: 23px;
+  box-shadow: 0 22px 55px -24px #263f2959;
+}
+.depth-photo-surface > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 0 !important;
+}
+.depth-photo-edge {
+  position: absolute;
+  inset: 0;
+  border: 1px solid #ffffff44;
+  border-radius: 17px;
+  pointer-events: none;
+}
+.site-shell .content-page .content-hero {
+  background: radial-gradient(ellipse at 90% 50%, #cddcc650, transparent 70%), #eef1e7;
+  border-color: #cdd8c4;
+}
+.site-shell .content-page .content-hero-layout {
+  gap: 50px;
+  padding-top: 40px;
+  padding-bottom: 44px;
+  max-width: 1280px;
+}
+.site-shell .content-page .content-hero h1 {
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 1.12;
+  font-size: clamp(2rem, 3.8vw, 3.4rem);
+}
+.site-shell .content-page .content-hero .speakable {
+  font-size: 1rem;
+  line-height: 1.75;
+}
+.site-shell .content-page .content-page-body {
+  max-width: 1280px;
+}
+.site-shell .content-page .content-page-body > div {
+  max-width: 880px;
+}
+.site-shell .content-page .answer-section h2 {
+  letter-spacing: -0.035em;
+}
+.room-detail-tour {
+  margin: 16px 0 25px;
+  padding: 0;
+  border-radius: 16px;
+  background: #1d3b28;
+}
+.room-detail-tour .rx-tour-trigger {
+  margin: 0;
+  min-height: 90px;
+  background: radial-gradient(ellipse at 10% 30%, #66835b55, transparent 75%), #1b3625;
+  border-color: #8da88155;
+  color: #edf5e4;
+}
+.room-detail-tour .rx-tour-trigger strong {
+  font-size: 1.08rem;
+}
+.room-detail-tour .rx-tour-trigger small {
+  color: #c0d0b8;
+}
+.room-detail-tour .rx-tour-trigger svg {
+  color: #d4e5c2;
+}
+.site-shell .content-page .room-detail-tour button {
+  font-family: var(--font-sans);
+  text-decoration: none;
+}
+.site-shell .photo-page .photo-page-hero {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 44px 40px 55px;
+  align-items: center;
+  gap: 50px;
+}
+.site-shell .photo-page .photo-page-intro h1 {
+  font-size: clamp(2.4rem, 4.5vw, 4.3rem);
+  line-height: 1.06;
+  letter-spacing: -0.055em;
+}
+.site-shell .photo-page .photo-kicker,
+.site-shell .photo-page .photo-cover-label {
+  display: none;
+}
+.site-shell .photo-page .photo-page-cover {
+  overflow: visible;
+  min-width: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: none;
+}
+.site-shell .photo-page .photo-page-cover > .depth-photo {
+  height: auto;
+  min-height: 0;
+}
+.site-shell .photo-page .photo-page-cover .depth-photo-surface > img {
+  aspect-ratio: 4/3;
+}
+.site-shell .photo-page .photo-count {
+  right: 20px;
+  bottom: 20px;
+  border-radius: 14px;
+  padding: 14px 20px;
+  background: #1b342aee;
+  border: 1px solid #c2d0b355;
+  color: #edf4e7;
+  z-index: 1;
+  box-shadow: 0 10px 28px #08160b22;
+}
+.site-shell .photo-page .photo-count strong {
+  font-size: 2rem;
+}
+.site-shell .photo-zone-nav {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 20px 28px;
+  background: var(--background);
+  border-bottom: 1px solid var(--border);
+  gap: 10px;
+}
+.site-shell .photo-zone-nav a {
+  min-height: 52px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--secondary);
+  text-decoration: none;
+  color: var(--foreground);
+  font-size: 0.85rem;
+}
+.site-shell .photo-zone-nav a > span {
+  display: none;
+}
+.site-shell .photo-collections {
+  max-width: 1280px;
+  margin: auto;
+  padding: 0 28px;
+}
+.site-shell .photo-collection {
+  scroll-margin-top: 170px;
+  padding-top: 55px;
+  padding-bottom: 12px;
+}
+.site-shell .photo-collection-heading {
+  display: block;
+  position: relative;
+  padding-right: 80px;
+  margin-bottom: 26px;
+}
+.site-shell .photo-collection-heading .collection-number {
+  display: none;
+}
+.site-shell .photo-collection-heading h2 {
+  font-size: clamp(1.7rem, 3vw, 2.5rem);
+  line-height: 1.16;
+  letter-spacing: -0.04em;
+}
+.site-shell .photo-collection-heading p {
+  max-width: 700px;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-top: 14px;
+}
+.site-shell .photo-collection-heading .collection-count {
+  position: absolute;
+  right: 0;
+  top: 9px;
+  font-size: 0.8rem;
+  color: var(--muted-foreground);
+}
+@media (max-width: 1023px) {
+  .site-shell .content-page .content-hero-layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 30px 24px;
+  }
+  .depth-photo {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .site-shell .content-page .content-page-body {
+    padding-top: 30px;
+  }
+  .site-shell .photo-page .photo-page-hero {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    padding: 30px 24px;
+  }
+  .site-shell .photo-zone-nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 18px 24px;
+  }
+  .site-shell .photo-collections {
+    padding: 0 24px;
+  }
+  .site-shell .photo-page .photo-page-cover .depth-photo {
+    max-width: 750px;
+  }
+  .site-shell .photo-collection {
+    scroll-margin-top: 190px;
+  }
+}
+@media (max-width: 639px) {
+  .site-shell .content-page .content-hero-layout {
+    padding: 25px 20px;
+    gap: 22px;
+  }
+  .site-shell .content-page .content-hero h1 {
+    font-size: 2rem;
+  }
+  .site-shell .content-page .content-hero .speakable {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .depth-photo {
+    padding: 8px 6px 12px;
+  }
+  .depth-photo-surface {
+    border-width: 4px;
+    border-radius: 17px;
+  }
+  .depth-photo-back {
+    inset: 14px 0 0 14px;
+    border-radius: 17px;
+  }
+  .room-detail-tour .rx-tour-trigger strong {
+    font-size: 0.95rem;
+  }
+  .site-shell .photo-page .photo-page-hero {
+    padding: 26px 20px;
+    gap: 22px;
+  }
+  .site-shell .photo-page .photo-page-intro h1 {
+    font-size: 2.5rem;
+  }
+  .site-shell .photo-page .photo-count {
+    right: 14px;
+    bottom: 14px;
+    padding: 10px 14px;
+    font-size: 0.6rem;
+  }
+  .site-shell .photo-page .photo-count strong {
+    font-size: 1.6rem;
+  }
+  .site-shell .photo-zone-nav {
+    padding: 15px 16px;
+    gap: 7px;
+    position: relative;
+    top: auto;
+  }
+  .site-shell .photo-zone-nav a {
+    font-size: 0.73rem;
+    padding: 10px;
+    min-height: 48px;
+    gap: 8px;
+  }
+  .site-shell .photo-collections {
+    padding: 0 16px;
+  }
+  .site-shell .photo-collection {
+    padding-top: 35px;
+    scroll-margin-top: 95px;
+  }
+  .site-shell .photo-collection-heading {
+    padding-right: 0;
+  }
+  .site-shell .photo-collection-heading h2 {
+    font-size: 1.65rem;
+  }
+  .site-shell .photo-collection-heading p {
+    font-size: 0.88rem;
+  }
+  .site-shell .photo-collection-heading .collection-count {
+    position: static;
+    display: block;
+    margin-top: 10px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .depth-photo-surface {
+    transform: none !important;
+  }
+}
+html[data-luxx-motion="off"] .depth-photo-surface {
+  transform: none !important;
+}
