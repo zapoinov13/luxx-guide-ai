@@ -89,7 +89,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
             aria-label="Мобильная навигация"
             className="border-t border-border bg-background px-5 py-3 xl:hidden"
           >
-            {NAV.map(([to, label]) => (
+            {[...NAV, ...EXTRA_NAV].map(([to, label]) => (
               <Link
                 key={to}
                 to={to}
@@ -102,13 +102,25 @@ export function SiteShell({ children }: { children: ReactNode }) {
                 {label}
               </Link>
             ))}
-            <Link
-              to="/bronirovanie"
-              onClick={() => setOpen(false)}
-              className="block py-3 text-base font-semibold text-primary"
-            >
-              Забронировать напрямую
-            </Link>
+            <div className="grid gap-2 py-4">
+              <Button asChild size="lg" onClick={() => setOpen(false)}>
+                <Link to="/bronirovanie">Забронировать напрямую</Link>
+              </Button>
+              <div className="grid grid-cols-2 gap-2">
+                <Button asChild variant="outline" size="lg">
+                  <a href={SITE.whatsapp} target="_blank" rel="noreferrer">
+                    <MessageCircle />
+                    WhatsApp
+                  </a>
+                </Button>
+                <Button asChild variant="outline" size="lg">
+                  <a href={`tel:${SITE.phoneHref}`}>
+                    <Phone />
+                    Позвонить
+                  </a>
+                </Button>
+              </div>
+            </div>
           </nav>
         )}
       </header>
