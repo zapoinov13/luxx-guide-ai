@@ -11,7 +11,7 @@ import { localeOf, localePair, type Locale } from "./i18n";
 
 /** Адрес сайта. Когда появится свой домен — заменить здесь, и все canonical,
  *  og:url, sitemap и JSON-LD станут ссылаться на него. */
-export const SITE_URL = "https://luxx-guide-ai.lovable.app";
+export const SITE_URL = "https://luxx-aparts.kz";
 
 export type QA = [question: string, answer: string];
 

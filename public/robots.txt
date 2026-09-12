@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 Disallow: /admin/
-Sitemap: https://luxx-guide-ai.lovable.app/sitemap.xml
+Sitemap: https://luxx-aparts.kz/sitemap.xml

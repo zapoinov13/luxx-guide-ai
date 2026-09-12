@@ -99,7 +99,13 @@ docs/
 wa.me), `call` (клик по `tel:`), `booking_form` (отправка формы на `/bronirovanie`). Логика — в
 `src/lib/analytics.ts`, клики ловятся одним обработчиком в `site-shell.tsx`.
 
-## Как переехать на свой домен
+## Домен и хостинг
+
+Боевой адрес — https://luxx-aparts.kz (домен на ps.kz, хостинг Vercel, деплой из `main`).
+Vercel собирает проект командой `vite build`; конфиг для Vercel Nitro пишет сам, см. хук
+`presetCompiled` в `vite.config.ts`.
+
+Если адрес поменяется:
 
 1. Поменять `SITE_URL` в `src/lib/site.ts`.
 2. Поменять домен в `public/robots.txt` и `public/llms.txt`.
@@ -129,4 +135,4 @@ Booking закрыт от автоматического скачивания, �
 Проект подключён к [Lovable](https://lovable.dev). Правки, запушенные в `main`, синхронизируются в редактор Lovable, поэтому историю коммитов не переписываем (без force push, rebase и amend уже отправленных коммитов).
 
 - Редактор: https://lovable.dev/projects/f77f67be-cebe-470e-9330-526f7680b7bf
-- Опубликованная версия: https://luxx-guide-ai.lovable.app
+- Копия Lovable: https://luxx-guide-ai.lovable.app (боевой сайт — https://luxx-aparts.kz на Vercel)
