@@ -183,14 +183,11 @@ function HomePage() {
               Хостел и апартаменты <span className="whitespace-nowrap">Luxx Aparts</span> в Алматы
             </h1>
             <p className="mt-3 max-w-xl text-base leading-7 text-muted-foreground lg:mt-5 lg:text-lg lg:leading-8">
-              Недорогой хостел на улице Толе би 286/8: {SITE.rooms} номера, капсульные койко-места
-              от {price} ₸ и отдельные комнаты с окном.
-              <span className="hidden sm:inline">
-                {" "}
-                Общая кухня, стирка, Wi-Fi, коворкинг, стойка круглосуточно.{" "}
-                {SITE.distanceToStation}, автовокзал Сайран на той же улице.
-              </span>{" "}
-              Бронируйте напрямую в WhatsApp без предоплаты.
+              Недорогой хостел на улице Толе би 286/8
+              <br />
+              44 номера, капсульные койко-места 
+              <br />
+              от 6 000 ₸ и отдельные комнаты с окном. Бронируйте напрямую без предоплаты.
             </p>
             <div className="mt-5 grid gap-3 sm:flex sm:flex-wrap lg:mt-7">
               <Button asChild size="lg" className="w-full sm:w-auto">
