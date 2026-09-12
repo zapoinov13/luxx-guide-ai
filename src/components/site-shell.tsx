@@ -2,6 +2,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { ArrowUpRight, Globe, Mail, Menu, MessageCircle, Phone, X } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
+import { BookingModal } from "@/components/booking-modal";
 import { goalForLink, trackGoal } from "@/lib/analytics";
 import { UI, localeOf, switchTarget } from "@/lib/i18n";
 import { EXTRA_NAV, NAV, SITE } from "@/lib/site";
@@ -18,6 +19,12 @@ const PLATFORMS = [
 
 export function SiteShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
+  const [bookingSelection, setBookingSelection] = useState<{
+    en: boolean;
+    room?: string | undefined;
+    variant?: string | undefined;
+  } | null>(null);
+  const bookingTrigger = useRef<HTMLElement | null>(null);
   const menuButton = useRef<HTMLButtonElement>(null);
   const pathname = useRouterState({ select: (st) => st.location.pathname });
   const locale = localeOf(pathname);
@@ -104,7 +111,35 @@ export function SiteShell({ children }: { children: ReactNode }) {
   );
 
   return (
-    <div className="site-shell min-h-screen bg-background text-foreground">
+    <div
+      className="site-shell min-h-screen bg-background text-foreground"
+      onClickCapture={(event) => {
+        if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
+          return;
+        const link = (event.target as Element).closest<HTMLAnchorElement>("a[href]");
+        if (!link || link.target === "_blank" || link.hasAttribute("download")) return;
+        const url = new URL(link.href, window.location.href);
+        if (
+          url.origin !== window.location.origin ||
+          !["/bronirovanie", "/en/booking"].includes(url.pathname.replace(/\/$/, ""))
+        )
+          return;
+        event.preventDefault();
+        event.stopPropagation();
+        bookingTrigger.current = open ? menuButton.current : link;
+        setOpen(false);
+        setBookingSelection({
+          en: url.pathname.startsWith("/en/"),
+          room: url.searchParams.get("room") ?? undefined,
+          variant: url.searchParams.get("variant") ?? undefined,
+        });
+      }}
+    >
+      <BookingModal
+        selection={bookingSelection}
+        onClose={() => setBookingSelection(null)}
+        returnFocus={() => bookingTrigger.current?.focus()}
+      />
       <a className="skip-link" href="#site-content">
         {en ? "Skip to content" : "Перейти к содержимому"}
       </a>

@@ -255,7 +255,7 @@ function HomePage() {
           </Link>
         </div>
         <p className="mt-4 text-sm text-muted-foreground sm:hidden">
-          Выберите вариант — форма бронирования откроется с уже отмеченным номером.
+          Выберите вариант — укажите даты в открывшемся окне бронирования.
         </p>
         <p className="mt-4 hidden max-w-2xl text-muted-foreground sm:block">
           Койко-место в капсуле {price} ₸, одноместный номер от 10 000 ₸, двухместный 15 000 ₸ за

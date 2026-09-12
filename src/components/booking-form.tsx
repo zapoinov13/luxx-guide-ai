@@ -1,5 +1,5 @@
 import { Check, MessageCircle, Phone } from "lucide-react";
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useId, useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -65,6 +65,7 @@ const fieldClass =
   "h-11 w-full rounded-xl border border-input bg-background px-3 text-base text-foreground shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
 export function BookingForm({ locale, options, preset, labels }: Props) {
+  const formId = useId();
   const intl = locale === "en" ? "en-US" : "ru-RU";
   const fmt = (n: number) => n.toLocaleString(intl);
   const humanDate = (iso: string) => {
@@ -132,9 +133,9 @@ export function BookingForm({ locale, options, preset, labels }: Props) {
   return (
     <form onSubmit={onSubmit} className="grid gap-5 sm:grid-cols-2">
       <div className="grid gap-2">
-        <Label htmlFor="checkIn">{labels.checkIn}</Label>
+        <Label htmlFor={formId + "-checkIn"}>{labels.checkIn}</Label>
         <Input
-          id="checkIn"
+          id={formId + "-checkIn"}
           type="date"
           required
           value={form.checkIn}
@@ -143,9 +144,9 @@ export function BookingForm({ locale, options, preset, labels }: Props) {
         />
       </div>
       <div className="grid gap-2">
-        <Label htmlFor="checkOut">{labels.checkOut}</Label>
+        <Label htmlFor={formId + "-checkOut"}>{labels.checkOut}</Label>
         <Input
-          id="checkOut"
+          id={formId + "-checkOut"}
           type="date"
           required
           min={form.checkIn}
@@ -155,9 +156,9 @@ export function BookingForm({ locale, options, preset, labels }: Props) {
         />
       </div>
       <div className="grid gap-2">
-        <Label htmlFor="guests">{labels.guests}</Label>
+        <Label htmlFor={formId + "-guests"}>{labels.guests}</Label>
         <Input
-          id="guests"
+          id={formId + "-guests"}
           type="number"
           min="1"
           max="20"
@@ -168,9 +169,9 @@ export function BookingForm({ locale, options, preset, labels }: Props) {
         />
       </div>
       <div className="grid gap-2">
-        <Label htmlFor="room">{labels.room}</Label>
+        <Label htmlFor={formId + "-room"}>{labels.room}</Label>
         <select
-          id="room"
+          id={formId + "-room"}
           value={form.room}
           onChange={(e) => update("room")(e.target.value)}
           className={fieldClass}
@@ -183,9 +184,9 @@ export function BookingForm({ locale, options, preset, labels }: Props) {
         </select>
       </div>
       <div className="grid gap-2">
-        <Label htmlFor="name">{labels.name}</Label>
+        <Label htmlFor={formId + "-name"}>{labels.name}</Label>
         <Input
-          id="name"
+          id={formId + "-name"}
           autoComplete="name"
           required
           value={form.name}
@@ -194,9 +195,9 @@ export function BookingForm({ locale, options, preset, labels }: Props) {
         />
       </div>
       <div className="grid gap-2">
-        <Label htmlFor="phone">{labels.phone}</Label>
+        <Label htmlFor={formId + "-phone"}>{labels.phone}</Label>
         <Input
-          id="phone"
+          id={formId + "-phone"}
           type="tel"
           autoComplete="tel"
           inputMode="tel"
@@ -207,9 +208,9 @@ export function BookingForm({ locale, options, preset, labels }: Props) {
         />
       </div>
       <div className="grid gap-2 sm:col-span-2">
-        <Label htmlFor="comment">{labels.comment}</Label>
+        <Label htmlFor={formId + "-comment"}>{labels.comment}</Label>
         <Textarea
-          id="comment"
+          id={formId + "-comment"}
           rows={3}
           placeholder={labels.commentPlaceholder}
           value={form.comment}
