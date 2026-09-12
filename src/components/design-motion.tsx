@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { animate, inView, motion, useScroll, useSpring } from "motion/react";
+import { inView, motion, useScroll, useSpring } from "motion/react";
 import { Pause, Play } from "lucide-react";
 import { useMotionPreference } from "./use-motion-preference";
 import "./immersive-design.css";
@@ -14,17 +14,20 @@ export function DesignMotion({ pathname, en }: { pathname: string; en: boolean }
 
   useEffect(() => {
     if (reduced) return;
-    const controls: { stop: () => void }[] = [];
+    const controls: Animation[] = [];
     const cleanups: (() => void)[] = [];
     const heroes = document.querySelectorAll<HTMLElement>(
       ".home-hero h1, .home-hero .speakable, .home-hero .hero-explore-link, .content-hero h1, .content-hero .speakable, .photo-page-intro h1",
     );
     heroes.forEach((element, i) => {
       controls.push(
-        animate(
-          element,
-          { opacity: [0.25, 1], y: [26, 0] },
-          { duration: 0.8, delay: 0.1 + i * 0.1, ease: [0.16, 1, 0.3, 1] },
+        // WAAPI does not mutate inline styles while a lazy route is hydrating.
+        element.animate(
+          [
+            { opacity: 0.25, transform: "translateY(26px)" },
+            { opacity: 1, transform: "translateY(0)" },
+          ],
+          { duration: 800, delay: 100 + i * 100, easing: "cubic-bezier(0.16, 1, 0.3, 1)" },
         ),
       );
     });
@@ -37,10 +40,12 @@ export function DesignMotion({ pathname, en }: { pathname: string; en: boolean }
           element,
           () => {
             controls.push(
-              animate(
-                element,
-                { opacity: [0.35, 1], y: [32, 0] },
-                { duration: 0.75, delay: (i % 3) * 0.04, ease: [0.16, 1, 0.3, 1] },
+              element.animate(
+                [
+                  { opacity: 0.35, transform: "translateY(32px)" },
+                  { opacity: 1, transform: "translateY(0)" },
+                ],
+                { duration: 750, delay: (i % 3) * 40, easing: "cubic-bezier(0.16, 1, 0.3, 1)" },
               ),
             );
           },
@@ -50,11 +55,7 @@ export function DesignMotion({ pathname, en }: { pathname: string; en: boolean }
     });
     return () => {
       cleanups.forEach((cleanup) => cleanup());
-      controls.forEach((control) => control.stop());
-      [...heroes, ...elements].forEach((element) => {
-        element.style.removeProperty("opacity");
-        element.style.removeProperty("transform");
-      });
+      controls.forEach((control) => control.cancel());
     };
   }, [pathname, reduced]);
 
