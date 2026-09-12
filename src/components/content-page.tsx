@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { ChevronRight, MessageCircle, Phone } from "lucide-react";
+import { ChevronDown, ChevronRight, MessageCircle, Phone } from "lucide-react";
 import type { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { Photo, type PhotoRef } from "@/components/photo";
@@ -122,15 +122,26 @@ export function AnswerSection({ title, children }: { title: string; children: Re
   );
 }
 
-/** Список «вопрос → ответ», совпадающий с разметкой FAQPage на той же странице. */
+/**
+ * Список «вопрос → ответ» как раскрывающиеся строки: вопросы видны списком,
+ * ответ разворачивается по нажатию. Текст ответов остаётся в HTML (<details>),
+ * поэтому его читают поисковики, ИИ-краулеры и разметка FAQPage той же страницы.
+ * Первый вопрос открыт, чтобы блок не выглядел пустым.
+ */
 export function QaList({ items }: { items: readonly QA[] }) {
   return (
-    <>
-      {items.map(([question, answer]) => (
-        <AnswerSection key={question} title={question}>
-          <p>{answer}</p>
-        </AnswerSection>
+    <div className="divide-y divide-border rounded-2xl border border-border lg:rounded-3xl">
+      {items.map(([question, answer], i) => (
+        <details key={question} open={i === 0} className="group px-4 sm:px-6">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 [&::-webkit-details-marker]:hidden sm:py-5">
+            <h2 className="font-display text-base font-bold sm:text-lg">{question}</h2>
+            <span className="grid size-8 shrink-0 place-items-center rounded-full bg-secondary text-foreground transition-transform group-open:rotate-180">
+              <ChevronDown className="size-4" aria-hidden="true" />
+            </span>
+          </summary>
+          <p className="pb-5 text-base leading-7 text-muted-foreground sm:pr-16">{answer}</p>
+        </details>
       ))}
-    </>
+    </div>
   );
 }

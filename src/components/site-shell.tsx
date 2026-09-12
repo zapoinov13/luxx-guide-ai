@@ -23,6 +23,8 @@ export function SiteShell({ children }: { children: ReactNode }) {
   const en = locale === "en";
   const t = UI[locale];
   const nav: readonly (readonly [string, string])[] = en ? NAV_EN : NAV;
+  // В мобильном меню русской версии есть и «Фото хостела»; у английской фото-страницы пока нет.
+  const mobileNav: readonly (readonly [string, string])[] = en ? NAV_EN : [...NAV, ...EXTRA_NAV];
   const home = en ? "/en" : "/";
   const booking = en ? "/en/booking" : "/bronirovanie";
   const other = switchTarget(pathname, en ? "ru" : "en");
@@ -126,7 +128,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
             aria-label={t.mobileNav}
             className="border-t border-border bg-background px-5 py-3 xl:hidden"
           >
-            {nav.map(([to, label]) => (
+            {mobileNav.map(([to, label]) => (
               <Link
                 key={to}
                 to={to}
@@ -139,13 +141,25 @@ export function SiteShell({ children }: { children: ReactNode }) {
                 {label}
               </Link>
             ))}
-            <Link
-              to={booking}
-              onClick={() => setOpen(false)}
-              className="block py-3 text-base font-semibold text-primary"
-            >
-              {t.bookDirect}
-            </Link>
+            <div className="grid gap-2 py-4">
+              <Button asChild size="lg" onClick={() => setOpen(false)}>
+                <Link to={booking}>{t.bookDirect}</Link>
+              </Button>
+              <div className="grid grid-cols-2 gap-2">
+                <Button asChild variant="outline" size="lg">
+                  <a href={SITE.whatsapp} target="_blank" rel="noreferrer">
+                    <MessageCircle />
+                    WhatsApp
+                  </a>
+                </Button>
+                <Button asChild variant="outline" size="lg">
+                  <a href={`tel:${SITE.phoneHref}`}>
+                    <Phone />
+                    {t.call}
+                  </a>
+                </Button>
+              </div>
+            </div>
           </nav>
         )}
       </header>
