@@ -112,24 +112,33 @@ const nitroOptions = {
 void HOST;
 
 /**
- * TanStack пишет картинки в sitemap.xml без объявления пространства имён image
- * (unbound prefix), и Google такой файл отклоняет. Дописываем xmlns:image в urlset
- * и убираем пустые xmlns="" у <image:image>. Хук идёт после buildApp TanStack.
+ * Две правки в готовом sitemap.xml:
+ * 1) TanStack пишет пространство имён как https://www.sitemaps.org/... — в стандарте
+ *    оно всегда http://www.sitemaps.org/schemas/sitemap/0.9, иначе Google и Яндекс
+ *    отклоняют файл («неподдерживаемый формат»);
+ * 2) картинки пишутся без объявления xmlns:image (unbound prefix) и с пустым xmlns="".
+ * Хук идёт после buildApp TanStack.
  */
+const SITEMAP_NS = "http://www.sitemaps.org/schemas/sitemap/0.9";
+
 const fixSitemapFile = (file: string) => {
   if (!existsSync(file)) return false;
-  let xml = readFileSync(file, "utf8");
-  if (!xml.includes("<image:image") || xml.includes("xmlns:image=")) return false;
-  xml = xml
-    .replace(/<image:image xmlns="">/g, "<image:image>")
-    .replace(
-      '<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9"',
-      '<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"',
+  const xml = readFileSync(file, "utf8");
+  let out = xml
+    .replace(/https:\/\/www\.sitemaps\.org\/schemas\/sitemap\/0\.9/g, SITEMAP_NS)
+    .replace(/<image:image xmlns="">/g, "<image:image>");
+  if (out.includes("<image:image") && !out.includes("xmlns:image=")) {
+    out = out.replace(
+      `<urlset xmlns="${SITEMAP_NS}"`,
+      `<urlset xmlns="${SITEMAP_NS}" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"`,
     );
-  writeFileSync(file, xml);
-  console.log(`[sitemap] Added image namespace to ${file}`);
+  }
+  if (out === xml) return false;
+  writeFileSync(file, out);
+  console.log(`[sitemap] Fixed namespaces in ${file}`);
   return true;
 };
+
 
 const SITEMAP_FILES = [".vercel/output/static", ".output/public", "dist/client"].map(
   (dir) => `${dir}/sitemap.xml`,
