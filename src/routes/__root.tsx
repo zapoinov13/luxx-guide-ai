@@ -99,7 +99,13 @@ export const Route = createRootRoute({
       { name: "description", content: SITE.whoWeAre },
       { name: "author", content: SITE.name },
       { name: "theme-color", content: "#1c1f2b" },
+      // Гео-метки для локального поиска и ИИ-ответов: город, страна, координаты.
+      { name: "geo.region", content: "KZ-ALA" },
+      { name: "geo.placename", content: "Алматы" },
+      { name: "geo.position", content: `${SITE.geo.lat};${SITE.geo.lng}` },
+      { name: "ICBM", content: `${SITE.geo.lat}, ${SITE.geo.lng}` },
       ...verificationMeta(),
+
     ],
     links: [
       { rel: "stylesheet", href: appCss },
