@@ -59,11 +59,8 @@ function BookingPageEn() {
           <li>A night arrival can be agreed right away.</li>
         </ul>
         <p>
-          The hostel is also listed on{" "}
-          <a href={SITE.links.booking} target="_blank" rel="noreferrer">
-            Booking.com
-          </a>
-          , but the terms there may differ.
+          The desk quotes your dates in WhatsApp: the price is never higher than on the platforms,
+          and you pay no aggregator commission.
         </p>
       </AnswerSection>
 

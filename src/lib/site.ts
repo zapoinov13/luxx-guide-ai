@@ -22,9 +22,9 @@ export const SITE = {
   /** Фраза «кто мы» из ТЗ, раздел 3. Используется дословно. */
   whoWeAre:
     "Luxx Aparts — хостел и апартаменты в Алматы на Толе би 286/8: 44 номера, общая кухня, круглосуточная стойка, Wi-Fi, 7 км от вокзала Алматы-2",
-  phoneDisplay: "+7 771 877 7765",
-  phoneHref: "+77718777765",
-  whatsapp: "https://wa.me/77718777765",
+  phoneDisplay: "+7 777 187 77 65",
+  phoneHref: "+77771877765",
+  whatsapp: "https://wa.me/77771877765",
   email: "luxxaparts@gmail.com",
   address: "ул. Толе би 286/8, 2 этаж, Алматы",
   streetAddress: "улица Толе би 286/8, 2 этаж",
@@ -600,8 +600,10 @@ export const imageObject = (img: {
 });
 
 /**
- * Средняя оценка для разметки: только по реальным отзывам, берём площадку с
- * наибольшим числом отзывов (RATINGS[0]). Обновлять вместе с RATINGS раз в месяц.
+ * НЕ ПОДКЛЮЧАТЬ к hostelSchema. Оценки RATINGS собраны на Booking, Ostrovok и
+ * картах, а не на самом сайте: выдавать их за собственный aggregateRating —
+ * self-serving-разметка, за которую Google выдаёт ручную санкцию на сниппеты.
+ * Функция оставлена для случая, когда на сайте появятся свои отзывы.
  */
 export const aggregateRatingSchema = () => {
   const r = RATINGS[0];
@@ -626,7 +628,6 @@ export const hostelSchema = () => ({
   photo: HOSTEL_IMAGES.map(imageObject),
   logo: absolute("/favicon.png"),
   description: SITE.whoWeAre,
-  aggregateRating: aggregateRatingSchema(),
   telephone: SITE.phoneDisplay,
   email: SITE.email,
   address: {

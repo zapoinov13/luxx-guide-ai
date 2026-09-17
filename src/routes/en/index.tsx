@@ -150,12 +150,9 @@ function HomePageEn() {
             >
               {RATINGS.slice(0, 3).map((r) => (
                 <li key={r.source}>
-                  <a
-                    href={r.url}
-                    target="_blank"
-                    rel="noreferrer"
+                  <span
                     title={`${sourceEn(r.source)}: ${r.score.replace(",", ".")} out of ${r.scale}, ${pluralReviewsEn(r.count)}`}
-                    className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-border/70 bg-background px-2.5 py-1 text-xs shadow-card transition-colors hover:border-primary/40 sm:px-3 sm:py-1.5 sm:text-sm"
+                    className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-border/70 bg-background px-2.5 py-1 text-xs shadow-card sm:px-3 sm:py-1.5 sm:text-sm"
                   >
                     <Star
                       className="size-3.5 fill-primary text-primary sm:size-4"
@@ -166,7 +163,7 @@ function HomePageEn() {
                       {r.source === "Яндекс Карты" ? "Yandex" : r.source}
                       <span className="hidden 2xl:inline">, {pluralReviewsEn(r.count)}</span>
                     </span>
-                  </a>
+                  </span>
                 </li>
               ))}
             </ul>
@@ -419,8 +416,8 @@ function HomePageEn() {
                 </BookingButton>
               </Button>
               <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
-                <a href={SITE.links.booking} target="_blank" rel="noreferrer">
-                  Booking.com
+                <a href={SITE.whatsapp} target="_blank" rel="noreferrer">
+                  Message on WhatsApp
                   <ExternalLink />
                 </a>
               </Button>

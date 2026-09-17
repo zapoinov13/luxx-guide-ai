@@ -63,13 +63,7 @@ function ReviewsPage() {
       <AnswerSection title="Какие оценки у хостела на площадках?">
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
           {RATINGS.map((r) => (
-            <a
-              key={r.source}
-              href={r.url}
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-2xl border border-border p-5 transition-colors hover:bg-secondary"
-            >
+            <div key={r.source} className="rounded-2xl border border-border p-5">
               <p className="flex items-center gap-1 font-display text-2xl font-bold text-foreground">
                 <Star className="size-5 fill-primary text-primary" aria-hidden="true" />
                 {r.score}
@@ -78,7 +72,7 @@ function ReviewsPage() {
               <p className="mt-1 text-sm">
                 {r.source}, {pluralReviews(r.count)}
               </p>
-            </a>
+            </div>
           ))}
         </div>
       </AnswerSection>
@@ -94,10 +88,7 @@ function ReviewsPage() {
               </p>
               <p className="mt-3 text-foreground">«{r.text}»</p>
               <footer className="mt-3 text-sm">
-                {r.author}, {r.date} ·{" "}
-                <a href={r.url} target="_blank" rel="noreferrer">
-                  {r.source}
-                </a>
+                {r.author}, {r.date} · {r.source}
               </footer>
             </blockquote>
           ))}
