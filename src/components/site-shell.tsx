@@ -12,13 +12,12 @@ import { UI, localeOf, switchTarget } from "@/lib/i18n";
 import { EXTRA_NAV, NAV, SITE } from "@/lib/site";
 import { NAV_EN, EN, sourceEn } from "@/lib/site-en";
 
+// Только карты и соцсети: они подтверждают объект для поиска и не уводят
+// гостя в агрегатор с комиссией. Агрегаторы остаются в sameAs разметки.
 const PLATFORMS = [
-  ["Booking", SITE.links.booking],
   ["Яндекс Карты", SITE.links.yandexMaps],
   ["2GIS", SITE.links.twoGis],
   ["Instagram", SITE.links.instagram],
-  ["Hostelworld", SITE.links.hostelworld],
-  ["Ostrovok", SITE.links.ostrovok],
 ] as const;
 
 export function SiteShell({ children }: { children: ReactNode }) {

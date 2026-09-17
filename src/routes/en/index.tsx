@@ -419,8 +419,8 @@ function HomePageEn() {
                 </BookingButton>
               </Button>
               <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
-                <a href={SITE.links.booking} target="_blank" rel="noreferrer">
-                  Booking.com
+                <a href={SITE.whatsapp} target="_blank" rel="noreferrer">
+                  Message on WhatsApp
                   <ExternalLink />
                 </a>
               </Button>

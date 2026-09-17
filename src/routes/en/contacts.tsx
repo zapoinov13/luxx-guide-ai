@@ -82,17 +82,14 @@ function ContactsPageEn() {
 
         <AnswerSection title="Where else can I find Luxx Aparts?">
           <p>
-            The hostel is listed on maps and booking platforms, with photos and news on Instagram.
-            Prices and terms on the platforms may differ from direct booking.
+            The hostel is listed on maps, with photos and news on Instagram. Booking direct is
+            better: the same price, no aggregator commission.
           </p>
           <div className="flex flex-wrap gap-3">
             {[
               ["2GIS", SITE.links.twoGis],
               ["Instagram", SITE.links.instagram],
               ["Yandex Maps", SITE.links.yandexMaps],
-              ["Booking.com", SITE.links.booking],
-              ["Hostelworld", SITE.links.hostelworld],
-              ["Ostrovok", SITE.links.ostrovok],
             ].map(([label, href]) => (
               <Button key={label} asChild variant="outline" size="sm">
                 <a href={href} target="_blank" rel="noreferrer">

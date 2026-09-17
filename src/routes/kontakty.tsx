@@ -81,17 +81,14 @@ function ContactsPage() {
 
         <AnswerSection title="Где ещё есть Luxx Aparts?">
           <p>
-            Карточки хостела на картах и площадках бронирования, фото и новости — в Instagram. Цены
-            и условия на площадках могут отличаться от прямых.
+            Карточки хостела на картах, фото и новости — в Instagram. Бронировать выгоднее
+            напрямую: цена та же, комиссии агрегатора нет.
           </p>
           <div className="flex flex-wrap gap-3">
             {[
               ["2GIS", SITE.links.twoGis],
               ["Instagram", SITE.links.instagram],
               ["Яндекс Карты", SITE.links.yandexMaps],
-              ["Booking", SITE.links.booking],
-              ["Hostelworld", SITE.links.hostelworld],
-              ["Ostrovok", SITE.links.ostrovok],
             ].map(([label, href]) => (
               <Button key={label} asChild variant="outline" size="sm">
                 <a href={href} target="_blank" rel="noreferrer">
