@@ -93,4 +93,3 @@ tags: поездка одной, без машины, маршрут, Алмат
 - [Метрополитен Алматы: режим работы](https://metroalmaty.kz/ru/operating-mode) и [оплата проезда](https://metroalmaty.kz/ru/payment): работа с 06:20 до 00:00, поездка 120 ₸, смарт-карта 180 ₸ до 60 поездок.
 - [Парк Кок-Тобе: канатная дорога](https://koktobe.com/cableway) и [прайс-лист](https://koktobe.com/price-list): нижняя станция на Достык 104Б, линия 1 620 м, 6 минут, билеты 6 000 и 10 000 ₸, автобус парка 2 000 и 3 000 ₸.
 - [Visit Almaty](https://visitalmaty.kz/), городской туристский портал: экстренные номера 112, 101, 102, 103.
-- [UK Foreign Office, Kazakhstan travel advice](https://www.gov.uk/foreign-travel-advice/kazakhstan/safety-and-security): рекомендации по такси и передвижению ночью.
