@@ -63,10 +63,7 @@ function ReviewsPage() {
       <AnswerSection title="Какие оценки у хостела на площадках?">
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
           {RATINGS.map((r) => (
-            <div
-              key={r.source}
-              className="rounded-2xl border border-border p-5"
-            >
+            <div key={r.source} className="rounded-2xl border border-border p-5">
               <p className="flex items-center gap-1 font-display text-2xl font-bold text-foreground">
                 <Star className="size-5 fill-primary text-primary" aria-hidden="true" />
                 {r.score}

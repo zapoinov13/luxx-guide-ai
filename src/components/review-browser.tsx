@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowUpRight, Quote, Star } from "lucide-react";
+import { Quote, Star } from "lucide-react";
 import { REVIEWS } from "@/lib/site";
 
 export function ReviewBrowser() {
@@ -51,10 +51,7 @@ export function ReviewBrowser() {
                 <strong>{review.author}</strong>
                 <span>{review.date}</span>
               </div>
-              <a href={review.url} target="_blank" rel="noreferrer">
-                {review.source}
-                <ArrowUpRight size={15} aria-hidden="true" />
-              </a>
+              <a>{review.source}</a>
             </footer>
           </blockquote>
         ))}
