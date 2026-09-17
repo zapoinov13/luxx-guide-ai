@@ -21,7 +21,12 @@ export type PostMeta = {
   readingMinutes: number;
 };
 
-export type Post = PostMeta & { html: string; text: string };
+export type Post = PostMeta & {
+  html: string;
+  text: string;
+  /** Пары «вопрос — ответ» для FAQPage: заголовки-вопросы статьи и текст под ними. */
+  faq: [question: string, answer: string][];
+};
 
 const files = import.meta.glob("/content/blog/*.md", {
   query: "?raw",
@@ -49,11 +54,37 @@ const parseFrontmatter = (raw: string): { data: Record<string, string>; body: st
   return { data, body: match[2] ?? "" };
 };
 
+/**
+ * FAQPage для статьи: берём заголовки второго уровня, заканчивающиеся вопросом,
+ * и текст под ними до следующего заголовка. Ничего не сочиняем — только то,
+ * что уже написано в статье. Это та структура, которую ИИ-движки вытаскивают
+ * в ответ дословно.
+ */
+const extractFaq = (body: string): [string, string][] => {
+  const sections = body.split(/^##\s+/m).slice(1);
+  const pairs: [string, string][] = [];
+  for (const section of sections) {
+    const breakAt = section.indexOf("\n");
+    if (breakAt === -1) continue;
+    const question = section.slice(0, breakAt).trim();
+    if (!question.endsWith("?")) continue;
+    const answer = plainText(section.slice(breakAt)).slice(0, 900).trim();
+    if (answer.length < 40) continue;
+    pairs.push([question, answer]);
+  }
+  return pairs;
+};
+
 const plainText = (markdown: string) =>
   markdown
     .replace(/```[\s\S]*?```/g, " ")
-    .replace(/[#>*_`~-]+/g, " ")
     .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+    // Разметку снимаем построчно, чтобы не съесть дефис внутри слова:
+    // «койко-место» и «SIM-карта» должны остаться собой.
+    .replace(/^\s{0,3}#{1,6}\s+/gm, " ")
+    .replace(/^\s{0,3}[-*+]\s+/gm, " ")
+    .replace(/^\s{0,3}>\s?/gm, " ")
+    .replace(/[*_`~]/g, "")
     .replace(/\s+/g, " ")
     .trim();
 
@@ -83,6 +114,7 @@ const toPost = (path: string, raw: string): Post => {
     readingMinutes: Math.max(1, Math.round(words / 180)),
     html: marked.parse(body, { async: false, gfm: true, renderer }) as string,
     text,
+    faq: extractFaq(body),
   };
 };
 
@@ -91,7 +123,7 @@ const POSTS: Post[] = Object.entries(files)
   .sort((a, b) => (a.date < b.date ? 1 : -1));
 
 export const getPosts = (): PostMeta[] =>
-  POSTS.map(({ html: _html, text: _text, ...meta }) => meta);
+  POSTS.map(({ html: _html, text: _text, faq: _faq, ...meta }) => meta);
 
 export const getPost = (slug: string): Post | undefined => POSTS.find((p) => p.slug === slug);
 
