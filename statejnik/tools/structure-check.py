@@ -72,7 +72,11 @@ def check_structure(text, cfg):
     # 4. CTA на оффер
     cta_url = get(cfg, "cta.url", "")
     if cta_url:
-        if cta_url not in text:
+        # Внутри сайта ссылка на оффер пишется относительным путём (/bronirovanie),
+        # а не полным адресом. Считаем оба варианта правильными.
+        cta_path = "/" + cta_url.split("://", 1)[-1].split("/", 1)[-1] if "://" in cta_url else cta_url
+        found = cta_url in text or (len(cta_path) > 1 and f"]({cta_path})" in text)
+        if not found:
             issues.append(f"нет ссылки на оффер (cta.url: {cta_url})")
     else:
         if not re.search(r"\]\(https?://", text):

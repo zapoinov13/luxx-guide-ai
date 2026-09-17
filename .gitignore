@@ -33,3 +33,5 @@ dist-ssr
 
 # Vercel (Build Output API)
 .vercel
+.gstack/
+__pycache__/
