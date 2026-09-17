@@ -4,7 +4,7 @@ import { ArrowLeft, ChevronRight, Clock3, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Photo } from "@/components/photo";
 import { formatDate, getPost, getPosts } from "@/lib/blog";
-import { SITE, absolute, jsonLd, pageHead } from "@/lib/site";
+import { SITE, absolute, faqSchema, jsonLd, pageHead } from "@/lib/site";
 import { AUTHOR } from "./blog.avtor";
 
 const articleSchema = (post: NonNullable<ReturnType<typeof getPost>>) => ({
@@ -67,7 +67,13 @@ export const Route = createFileRoute("/blog/$slug")({
           : []),
       ],
       links: base.links,
-      scripts: jsonLd(crumbs(post), articleSchema(post)),
+      scripts: jsonLd(
+        crumbs(post),
+        articleSchema(post),
+        // Заголовки-вопросы статьи отдаём отдельным FAQPage: так ответ
+        // вытаскивают и сниппеты Google, и ИИ-движки. Меньше двух пар — не отдаём.
+        ...(post.faq.length >= 2 ? [faqSchema(post.faq)] : []),
+      ),
     };
   },
   component: BlogPostPage,
