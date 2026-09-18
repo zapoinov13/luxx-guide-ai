@@ -35,11 +35,11 @@ describe("immersive design", () => {
         expect(existsSync(`public/photos/${photo.id}-1600.webp`)).toBe(true);
       }
   });
-  test("decorative asset exists and heavy WebGL code is lazy-loaded", () => {
+  test("decorative asset exists and the room tour avoids distorted WebGL presentation", () => {
     expect(existsSync("public/design/luxx-key.webp")).toBe(true);
     const code = readFileSync("src/components/room-tour.tsx", "utf8");
-    expect(code).toContain('lazy(() => import("./room-tour-scene"))');
-    expect(code).toContain("Not a 360°");
+    expect(code).not.toContain('import("./room-tour-scene")');
+    expect(code).toContain("без искажений и дорисовки");
   });
   test("manual and system reduced-motion fallbacks are present", () => {
     const css = readFileSync("src/components/immersive-design.css", "utf8");

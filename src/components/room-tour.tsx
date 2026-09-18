@@ -1,4 +1,4 @@
-import { Component, lazy, Suspense, useMemo, useRef, useState, type ReactNode } from "react";
+import { useMemo, useRef, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import {
   ArrowLeft,
@@ -6,45 +6,22 @@ import {
   ArrowUpRight,
   Expand,
   Image,
-  Layers3,
   Minus,
   Plus,
-  RotateCcw,
   X,
 } from "lucide-react";
 import { Photo } from "./photo";
 import { ROOM_PHOTOS } from "@/lib/photos";
-import { useMotionPreference } from "./use-motion-preference";
 import "./room-tour.css";
 
-const Scene = lazy(() => import("./room-tour-scene"));
-class SceneBoundary extends Component<
-  { children: ReactNode; onError: () => void },
-  { failed: boolean }
-> {
-  override state = { failed: false };
-  static getDerivedStateFromError() {
-    return { failed: true };
-  }
-  override componentDidCatch() {
-    this.props.onError();
-  }
-  override render() {
-    return this.state.failed ? null : this.props.children;
-  }
-}
 const sharedIds = new Set(["02", "12", "13", "28"]);
 
-/** Real pictures inside a virtual 3D exhibition. Never presented as 360 photography. */
+/** A focused, distortion-free viewer for the property's real photographs. */
 export function RoomTour({ slug, en = false }: { slug: string; en?: boolean }) {
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState(0);
   const [zoom, setZoom] = useState(false);
-  const [mode, setMode] = useState<"3d" | "flat">("flat");
   const [zone, setZone] = useState<"room" | "shared">("room");
-  const [failed, setFailed] = useState(false);
-  const [ready, setReady] = useState(false);
-  const reduced = useMotionPreference();
   const start = useRef<{ x: number; y: number } | null>(null);
   const photos = useMemo(() => {
     const all = ROOM_PHOTOS[slug] ?? ROOM_PHOTOS["dvukhmestny"]!;
@@ -58,21 +35,10 @@ export function RoomTour({ slug, en = false }: { slug: string; en?: boolean }) {
     setStep(next);
     setZoom(false);
   };
-  const fail = () => {
-    setFailed(true);
-    setMode("flat");
-  };
   const changeZone = (value: "room" | "shared") => {
     setZone(value);
     setStep(0);
     setZoom(false);
-    setReady(false);
-  };
-  const setView = (value: "3d" | "flat") => {
-    setMode(value);
-    setZoom(false);
-    setFailed(false);
-    setReady(false);
   };
   const poster = (
     <Photo
@@ -91,19 +57,16 @@ export function RoomTour({ slug, en = false }: { slug: string; en?: boolean }) {
           setStep(0);
           setZone("room");
           setZoom(false);
-          setFailed(false);
-          setReady(false);
-          setMode(!reduced && window.matchMedia("(min-width: 768px)").matches ? "3d" : "flat");
         }
       }}
     >
       <Dialog.Trigger className="rx-tour-trigger">
         <span className="rt-trigger-icon" aria-hidden="true">
-          <Layers3 size={24} />
+          <Image size={24} />
         </span>
         <span>
           <strong>{en ? "Enter the room tour" : "Открыть рум-тур"}</strong>
-          <small>{en ? "Real photos in a 3D gallery" : "Реальные фото в 3D-пространстве"}</small>
+          <small>{en ? "See every detail in real photos" : "Рассмотрите номер на реальных фото"}</small>
         </span>
         <ArrowUpRight size={25} aria-hidden="true" />
       </Dialog.Trigger>
@@ -122,7 +85,7 @@ export function RoomTour({ slug, en = false }: { slug: string; en?: boolean }) {
           <header className="rt-header">
             <div>
               <span className="rt-brand">LUXX APARTS</span>
-              <Dialog.Title>{en ? "Take a closer look" : "Почувствуйте пространство"}</Dialog.Title>
+              <Dialog.Title>{en ? "Take a closer look" : "Рассмотрите номер подробно"}</Dialog.Title>
             </div>
             <Dialog.Close className="rt-close" aria-label={en ? "Close tour" : "Закрыть фототур"}>
               <X aria-hidden="true" />
@@ -130,8 +93,8 @@ export function RoomTour({ slug, en = false }: { slug: string; en?: boolean }) {
           </header>
           <Dialog.Description className="rt-disclosure">
             {en
-              ? "A virtual gallery of real photographs. Not a 360° scan or a reconstructed floor plan."
-              : "Виртуальная галерея реальных фотографий. Не 360°-съёмка и не реконструкция планировки."}
+              ? "Full-size, unaltered photographs of the room and shared spaces."
+              : "Крупные фотографии номера и общих зон без искажений и дорисовки."}
           </Dialog.Description>
           <div className="rt-toolbar">
             <div className="rt-segment" role="group" aria-label={en ? "Spaces" : "Пространства"}>
@@ -150,24 +113,13 @@ export function RoomTour({ slug, en = false }: { slug: string; en?: boolean }) {
                 {en ? "Shared spaces" : "Общие зоны"}
               </button>
             </div>
-            <div
-              className="rt-segment"
-              role="group"
-              aria-label={en ? "Viewing mode" : "Режим просмотра"}
-            >
-              <button type="button" aria-pressed={mode === "3d"} onClick={() => setView("3d")}>
-                <Layers3 size={16} aria-hidden="true" /> 3D
-              </button>
-              <button type="button" aria-pressed={mode === "flat"} onClick={() => setView("flat")}>
-                <Image size={16} aria-hidden="true" />
-                {en ? "Photos" : "Фото"}
-              </button>
-            </div>
+            <span className="rt-count" aria-live="polite">
+              {index + 1} / {photos.length}
+            </span>
           </div>
           <div
             className="rt-stage"
             data-zoom={zoom}
-            data-mode={mode}
             onPointerDown={(event) => {
               if (event.button !== 0 || (event.target as HTMLElement).closest("button")) return;
               start.current = { x: event.clientX, y: event.clientY };
@@ -185,43 +137,9 @@ export function RoomTour({ slug, en = false }: { slug: string; en?: boolean }) {
               if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy)) go(step + (dx < 0 ? 1 : -1));
             }}
           >
-            {open && mode === "3d" ? (
-              <>
-                <SceneBoundary onError={fail}>
-                  <Suspense
-                    fallback={
-                      <div className="rt-loading">
-                        {poster}
-                        <span role="status">
-                          {en ? "Opening the gallery…" : "Открываем галерею…"}
-                        </span>
-                      </div>
-                    }
-                  >
-                    <Scene
-                      photos={photos}
-                      index={index}
-                      zoom={zoom}
-                      reduced={reduced}
-                      onFail={fail}
-                      onReady={() => setReady(true)}
-                    />
-                  </Suspense>
-                </SceneBoundary>
-                {!ready && (
-                  <div className="rt-loading rt-loading-overlay">
-                    {poster}
-                    <span role="status">
-                      {en ? "Loading photographs…" : "Загружаем фотографии…"}
-                    </span>
-                  </div>
-                )}
-              </>
-            ) : (
-              <div key={photos[index]!.id} className="rt-flat">
-                {poster}
-              </div>
-            )}
+            <div key={photos[index]!.id} className="rt-flat">
+              {poster}
+            </div>
             <button
               type="button"
               className="rt-stage-arrow rt-stage-prev"
@@ -243,22 +161,8 @@ export function RoomTour({ slug, en = false }: { slug: string; en?: boolean }) {
                 {zoom ? <Minus size={17} /> : <Plus size={17} />}
                 {zoom ? (en ? "Fit" : "Целиком") : en ? "Closer" : "Приблизить"}
               </button>
-              <button
-                type="button"
-                onClick={() => go(0)}
-                aria-label={en ? "Reset tour" : "В начало тура"}
-              >
-                <RotateCcw size={17} />
-              </button>
             </div>
           </div>
-          {failed && (
-            <p className="rt-error" role="status">
-              {en
-                ? "3D is unavailable on this device. All photos are still available."
-                : "3D недоступно на этом устройстве. Все фотографии доступны в обычном режиме."}
-            </p>
-          )}
           <div className="rt-caption" aria-live="polite" aria-atomic="true">
             <p>
               {en
@@ -288,8 +192,8 @@ export function RoomTour({ slug, en = false }: { slug: string; en?: boolean }) {
           </div>
           <p className="rt-help">
             {en
-              ? "Swipe or use arrow keys. In 3D, move your mouse to explore the depth."
-              : "Листайте пальцем или стрелками. В 3D двигайте мышью, чтобы почувствовать глубину."}
+              ? "Swipe, use the arrow keys or choose a thumbnail."
+              : "Листайте пальцем, стрелками или выберите миниатюру."}
           </p>
         </Dialog.Content>
       </Dialog.Portal>
