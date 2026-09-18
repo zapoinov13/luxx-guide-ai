@@ -51,7 +51,7 @@ export function ReviewBrowser() {
                 <strong>{review.author}</strong>
                 <span>{review.date}</span>
               </div>
-              <a>{review.source}</a>
+              <span className="story-source">{review.source}</span>
             </footer>
           </blockquote>
         ))}

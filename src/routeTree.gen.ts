@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as BronirovanieRouteImport } from './routes/bronirovanie'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as FotoRouteImport } from './routes/foto'
+import { Route as PolitikaKonfidencialnostiRouteImport } from './routes/politika-konfidencialnosti'
 import { Route as HostelNaMesyacRouteImport } from './routes/hostel-na-mesyac'
 import { Route as HostelRyadomSAvtovokzalomSayranRouteImport } from './routes/hostel-ryadom-s-avtovokzalom-sayran'
 import { Route as KakDobratsyaRouteImport } from './routes/kak-dobratsya'
@@ -55,6 +56,11 @@ const FaqRoute = FaqRouteImport.update({
 const FotoRoute = FotoRouteImport.update({
   id: '/foto',
   path: '/foto',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PolitikaKonfidencialnostiRoute = PolitikaKonfidencialnostiRouteImport.update({
+  id: '/politika-konfidencialnosti',
+  path: '/politika-konfidencialnosti',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HostelNaMesyacRoute = HostelNaMesyacRouteImport.update({
@@ -179,6 +185,7 @@ export interface FileRoutesByFullPath {
   '/bronirovanie': typeof BronirovanieRoute
   '/faq': typeof FaqRoute
   '/foto': typeof FotoRoute
+  '/politika-konfidencialnosti': typeof PolitikaKonfidencialnostiRoute
   '/hostel-na-mesyac': typeof HostelNaMesyacRoute
   '/hostel-ryadom-s-avtovokzalom-sayran': typeof HostelRyadomSAvtovokzalomSayranRoute
   '/kak-dobratsya': typeof KakDobratsyaRoute
@@ -208,6 +215,7 @@ export interface FileRoutesByTo {
   '/bronirovanie': typeof BronirovanieRoute
   '/faq': typeof FaqRoute
   '/foto': typeof FotoRoute
+  '/politika-konfidencialnosti': typeof PolitikaKonfidencialnostiRoute
   '/hostel-na-mesyac': typeof HostelNaMesyacRoute
   '/hostel-ryadom-s-avtovokzalom-sayran': typeof HostelRyadomSAvtovokzalomSayranRoute
   '/kak-dobratsya': typeof KakDobratsyaRoute
@@ -238,6 +246,7 @@ export interface FileRoutesById {
   '/bronirovanie': typeof BronirovanieRoute
   '/faq': typeof FaqRoute
   '/foto': typeof FotoRoute
+  '/politika-konfidencialnosti': typeof PolitikaKonfidencialnostiRoute
   '/hostel-na-mesyac': typeof HostelNaMesyacRoute
   '/hostel-ryadom-s-avtovokzalom-sayran': typeof HostelRyadomSAvtovokzalomSayranRoute
   '/kak-dobratsya': typeof KakDobratsyaRoute
@@ -269,6 +278,7 @@ export interface FileRouteTypes {
     | '/bronirovanie'
     | '/faq'
     | '/foto'
+    | '/politika-konfidencialnosti'
     | '/hostel-na-mesyac'
     | '/hostel-ryadom-s-avtovokzalom-sayran'
     | '/kak-dobratsya'
@@ -298,6 +308,7 @@ export interface FileRouteTypes {
     | '/bronirovanie'
     | '/faq'
     | '/foto'
+    | '/politika-konfidencialnosti'
     | '/hostel-na-mesyac'
     | '/hostel-ryadom-s-avtovokzalom-sayran'
     | '/kak-dobratsya'
@@ -327,6 +338,7 @@ export interface FileRouteTypes {
     | '/bronirovanie'
     | '/faq'
     | '/foto'
+    | '/politika-konfidencialnosti'
     | '/hostel-na-mesyac'
     | '/hostel-ryadom-s-avtovokzalom-sayran'
     | '/kak-dobratsya'
@@ -410,6 +422,13 @@ declare module '@tanstack/react-router' {
       path: '/foto'
       fullPath: '/foto'
       preLoaderRoute: typeof FotoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/politika-konfidencialnosti': {
+      id: '/politika-konfidencialnosti'
+      path: '/politika-konfidencialnosti'
+      fullPath: '/politika-konfidencialnosti'
+      preLoaderRoute: typeof PolitikaKonfidencialnostiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/hostel-na-mesyac': {
@@ -581,6 +600,7 @@ const rootRouteChildren: RootRouteChildren = {
   BronirovanieRoute: BronirovanieRoute,
   FaqRoute: FaqRoute,
   FotoRoute: FotoRoute,
+  PolitikaKonfidencialnostiRoute: PolitikaKonfidencialnostiRoute,
   HostelNaMesyacRoute: HostelNaMesyacRoute,
   HostelRyadomSAvtovokzalomSayranRoute: HostelRyadomSAvtovokzalomSayranRoute,
   KakDobratsyaRoute: KakDobratsyaRoute,
