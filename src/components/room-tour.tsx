@@ -6,8 +6,6 @@ import {
   ArrowUpRight,
   Expand,
   Image,
-  Minus,
-  Plus,
   X,
 } from "lucide-react";
 import { Photo } from "./photo";
@@ -20,7 +18,6 @@ const sharedIds = new Set(["02", "12", "13", "28"]);
 export function RoomTour({ slug, en = false }: { slug: string; en?: boolean }) {
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState(0);
-  const [zoom, setZoom] = useState(false);
   const [zone, setZone] = useState<"room" | "shared">("room");
   const start = useRef<{ x: number; y: number } | null>(null);
   const photos = useMemo(() => {
@@ -33,12 +30,10 @@ export function RoomTour({ slug, en = false }: { slug: string; en?: boolean }) {
   const index = ((step % photos.length) + photos.length) % photos.length;
   const go = (next: number) => {
     setStep(next);
-    setZoom(false);
   };
   const changeZone = (value: "room" | "shared") => {
     setZone(value);
     setStep(0);
-    setZoom(false);
   };
   const poster = (
     <Photo
@@ -56,7 +51,6 @@ export function RoomTour({ slug, en = false }: { slug: string; en?: boolean }) {
         if (value) {
           setStep(0);
           setZone("room");
-          setZoom(false);
         }
       }}
     >
@@ -117,84 +111,81 @@ export function RoomTour({ slug, en = false }: { slug: string; en?: boolean }) {
               {index + 1} / {photos.length}
             </span>
           </div>
-          <div
-            className="rt-stage"
-            data-zoom={zoom}
-            onPointerDown={(event) => {
-              if (event.button !== 0 || (event.target as HTMLElement).closest("button")) return;
-              start.current = { x: event.clientX, y: event.clientY };
-              event.currentTarget.setPointerCapture(event.pointerId);
-            }}
-            onPointerCancel={() => {
-              start.current = null;
-            }}
-            onPointerUp={(event) => {
-              const origin = start.current;
-              start.current = null;
-              if (!origin) return;
-              const dx = event.clientX - origin.x;
-              const dy = event.clientY - origin.y;
-              if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy)) go(step + (dx < 0 ? 1 : -1));
-            }}
-          >
-            <div key={photos[index]!.id} className="rt-flat">
-              {poster}
-            </div>
-            <button
-              type="button"
-              className="rt-stage-arrow rt-stage-prev"
-              onClick={() => go(step - 1)}
-              aria-label={en ? "Previous photo" : "Предыдущее фото"}
+          <div className="rt-viewer">
+            <div
+              className="rt-stage"
+              onPointerDown={(event) => {
+                if (event.button !== 0 || (event.target as HTMLElement).closest("button")) return;
+                start.current = { x: event.clientX, y: event.clientY };
+                event.currentTarget.setPointerCapture(event.pointerId);
+              }}
+              onPointerCancel={() => {
+                start.current = null;
+              }}
+              onPointerUp={(event) => {
+                const origin = start.current;
+                start.current = null;
+                if (!origin) return;
+                const dx = event.clientX - origin.x;
+                const dy = event.clientY - origin.y;
+                if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy))
+                  go(step + (dx < 0 ? 1 : -1));
+              }}
             >
-              <ArrowLeft size={22} />
-            </button>
-            <button
-              type="button"
-              className="rt-stage-arrow rt-stage-next"
-              onClick={() => go(step + 1)}
-              aria-label={en ? "Next photo" : "Следующее фото"}
-            >
-              <ArrowRight size={22} />
-            </button>
-            <div className="rt-stage-actions">
-              <button type="button" onClick={() => setZoom(!zoom)} aria-pressed={zoom}>
-                {zoom ? <Minus size={17} /> : <Plus size={17} />}
-                {zoom ? (en ? "Fit" : "Целиком") : en ? "Closer" : "Приблизить"}
-              </button>
-            </div>
-          </div>
-          <div className="rt-caption" aria-live="polite" aria-atomic="true">
-            <p>
-              {en
-                ? `${zone === "room" ? "Room" : "Shared space"} photo ${index + 1} of ${photos.length}`
-                : photos[index]!.alt}
-            </p>
-          </div>
-          <div
-            className="rt-filmstrip"
-            role="group"
-            aria-label={en ? "Choose a photograph" : "Выберите фотографию"}
-          >
-            {photos.map((photo, n) => (
+              <div key={photos[index]!.id} className="rt-flat">
+                {poster}
+              </div>
               <button
                 type="button"
-                key={photo.id}
-                aria-label={en ? `Photo ${n + 1}` : photo.alt}
-                aria-pressed={index === n}
-                onClick={() => go(n)}
+                className="rt-stage-arrow rt-stage-prev"
+                onClick={() => go(step - 1)}
+                aria-label={en ? "Previous photo" : "Предыдущее фото"}
               >
-                <Photo photo={photo} sizes="100px" />
-                <span className="rt-thumb-selected" aria-hidden="true">
-                  <Expand size={16} />
-                </span>
+                <ArrowLeft size={22} />
               </button>
-            ))}
+              <button
+                type="button"
+                className="rt-stage-arrow rt-stage-next"
+                onClick={() => go(step + 1)}
+                aria-label={en ? "Next photo" : "Следующее фото"}
+              >
+                <ArrowRight size={22} />
+              </button>
+            </div>
+            <div className="rt-details">
+              <div className="rt-caption" aria-live="polite" aria-atomic="true">
+                <span>{index + 1} / {photos.length}</span>
+                <p>
+                  {en
+                    ? `${zone === "room" ? "Room" : "Shared space"} photograph`
+                    : photos[index]!.alt}
+                </p>
+              </div>
+              <div
+                className="rt-filmstrip"
+                role="group"
+                aria-label={en ? "Choose a photograph" : "Выберите фотографию"}
+              >
+                {photos.map((photo, n) => (
+                  <button
+                    type="button"
+                    key={photo.id}
+                    aria-label={en ? `Photo ${n + 1}` : photo.alt}
+                    aria-pressed={index === n}
+                    onClick={() => go(n)}
+                  >
+                    <Photo photo={photo} sizes="140px" />
+                    <span className="rt-thumb-selected" aria-hidden="true">
+                      <Expand size={16} />
+                    </span>
+                  </button>
+                ))}
+              </div>
+              <p className="rt-help">
+                {en ? "Swipe or choose a photograph." : "Листайте или выберите фотографию."}
+              </p>
+            </div>
           </div>
-          <p className="rt-help">
-            {en
-              ? "Swipe, use the arrow keys or choose a thumbnail."
-              : "Листайте пальцем, стрелками или выберите миниатюру."}
-          </p>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
