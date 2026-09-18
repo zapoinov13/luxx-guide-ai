@@ -361,11 +361,6 @@ export function SiteShell({ children }: { children: ReactNode }) {
                 <Link to={other} hrefLang={en ? "ru" : "en"} className="hover:text-foreground">
                   {t.switchLabel}
                 </Link>
-                {!en && (
-                  <a href="/blog/rss.xml" className="hover:text-foreground">
-                    RSS
-                  </a>
-                )}
               </p>
             </div>
           </div>
