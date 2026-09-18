@@ -56,12 +56,12 @@
   position: fixed;
   inset: 18px;
   z-index: 81;
-  max-width: 1320px;
+  max-width: 1180px;
   max-height: calc(100dvh - 36px);
   margin: auto;
   display: flex;
   flex-direction: column;
-  padding: 24px 28px 16px;
+  padding: 22px;
   background: #10261e;
   color: #eff4ec;
   border: 1px solid #70897766;
@@ -152,15 +152,26 @@
 }
 .rt-stage {
   position: relative;
-  flex: 1 1 560px;
-  min-height: 300px;
-  max-height: 68dvh;
+  min-width: 0;
+  min-height: 420px;
   overflow: hidden;
   border: 1px solid #7c968244;
   border-radius: 12px;
   background: #07130e;
   touch-action: pan-y;
   isolation: isolate;
+}
+.rt-viewer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 180px;
+  gap: 18px;
+  min-height: 0;
+  flex: 1;
+}
+.rt-details {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
 }
 .rt-flat,
 .rt-loading {
@@ -170,19 +181,17 @@
   place-items: center;
 }
 .rt-photo {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  width: auto !important;
+  height: auto !important;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: scale-down !important;
   background: #07130e !important;
   user-select: none;
   -webkit-user-drag: none;
 }
 .rt-flat {
   padding: 0;
-}
-.rt-stage[data-zoom="true"] .rt-flat .rt-photo {
-  transform: scale(1.5);
 }
 .rt-loading-overlay {
   z-index: 1;
@@ -217,54 +226,34 @@
 .rt-stage-next {
   right: 18px;
 }
-.rt-stage-actions {
-  position: absolute;
-  bottom: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 6px;
-  z-index: 2;
-}
-.rt-stage-actions button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 10px 14px;
-  min-width: 44px;
-  min-height: 44px;
-  border: 1px solid #c9d7bd66;
-  border-radius: 10px;
-  background: #122c23ee;
-  color: #fff;
-  font-size: 0.8rem;
-  white-space: nowrap;
-}
 .rt-caption {
-  padding: 12px 0 10px;
+  padding: 2px 0 16px;
   flex-shrink: 0;
   font-size: 0.83rem;
   color: #d2decf;
   min-height: 42px;
 }
+.rt-caption > span {
+  display: block;
+  margin-bottom: 7px;
+  color: #aebfae;
+  font-variant-numeric: tabular-nums;
+}
 .rt-caption p {
   margin: 0;
 }
 .rt-filmstrip {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
-  overflow-x: auto;
-  padding: 4px 4px 8px;
-  flex-shrink: 0;
+  overflow-y: auto;
+  padding: 2px 4px 8px 0;
   scrollbar-width: thin;
 }
 .rt-filmstrip button {
   position: relative;
-  width: 104px;
-  height: 68px;
-  flex-shrink: 0;
+  width: 100%;
+  aspect-ratio: 4 / 3;
   border-radius: 9px;
   overflow: hidden;
   border: 2px solid transparent;
@@ -298,7 +287,7 @@
   font-size: 0.72rem;
   color: #aebfae;
   text-align: center;
-  margin: 5px 0 0;
+  margin: auto 0 0;
   flex-shrink: 0;
 }
 .rt-error {
@@ -323,6 +312,10 @@
   }
   .rt-dialog {
     animation: rt-arrive 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .rt-viewer {
+    display: flex;
+    flex-direction: column;
   }
   .rt-flat {
     animation: rt-photo-enter 0.45s ease-out both;
@@ -387,19 +380,23 @@
     gap: 5px;
   }
   .rt-stage {
-    min-height: 260px;
-    flex-basis: 320px;
-    max-height: 60dvh;
+    min-height: 0;
+    height: min(54dvh, 520px);
+    flex: 0 0 auto;
   }
   .rt-flat {
     padding: 0;
   }
   .rt-filmstrip {
+    display: flex;
     justify-content: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
   }
   .rt-filmstrip button {
     width: 82px;
     height: 58px;
+    aspect-ratio: auto;
   }
   .rt-stage-prev {
     left: 8px;
