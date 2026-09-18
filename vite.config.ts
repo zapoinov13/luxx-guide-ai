@@ -184,6 +184,7 @@ export default defineConfig({
       page("/faq", 0.8, "monthly"),
       page("/kontakty", 0.8, "monthly"),
       page("/foto", 0.6, "monthly", undefined, ALL_IMAGES),
+      page("/politika-konfidencialnosti", 0.3, "yearly"),
       // Английская версия (ТЗ, раздел 2): те же страницы под /en/…, hreflang выше.
       page("/en", 0.8, "weekly", undefined, HOME_IMAGES),
       page("/en/rooms", 0.7, "weekly", undefined, ROOMS_IMAGES),

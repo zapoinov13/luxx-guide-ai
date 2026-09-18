@@ -70,7 +70,6 @@ tags: женский хостел, поездка одной, безопасно
 
 ## Источники
 
-- [Booking.com — типы номеров объекта размещения](https://www.booking.com/hotel/kr/blue-boat-hostel-nampodong.en-gb.html): номенклатура Female Dormitory и Mixed Dormitory.
 - [Hostelworld — типы комнат в хостелах](https://www.hostelworld.com/blog/hostel-room-types/) и [хостелы Алматы](https://www.hostelworld.com/hostels/asia/kazakhstan/almaty/).
 - [eGov.kz — въезд и выезд иностранных граждан](https://egov.kz/cms/ru/articles/exit-entry_of_foreign_nationals): уведомление миграционной службы, безвизовый режим.
 - [eQonaq](https://eqonaq.kz/) — государственная система учёта гостей мест размещения.

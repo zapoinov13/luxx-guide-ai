@@ -467,7 +467,7 @@
 .site-shell .platform-scores {
   gap: 12px;
 }
-.site-shell .platform-scores a {
+.site-shell .platform-scores a, .platform-scores .platform-score {
   border: 1px solid #8eaa704f;
   background: #e4f0d509;
   border-radius: 15px;
@@ -534,7 +534,7 @@
 .site-shell .review-browser .story-author span {
   color: #677a58;
 }
-.site-shell .review-browser .story-author a {
+.site-shell .review-browser .story-author a, .story-author .story-source {
   color: #3e6536;
   font-size: 0.73rem;
   display: inline-flex;
@@ -1047,7 +1047,7 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 9px;
   }
-  .site-shell .platform-scores a {
+  .site-shell .platform-scores a, .platform-scores .platform-score {
     min-width: 0;
     padding: 14px;
   }
