@@ -79,6 +79,7 @@ export const PAGE_DATES: Record<string, string> = {
   "/blog/avtor": "2026-09-11",
   "/hostel-ryadom-s-avtovokzalom-sayran": "2026-09-12",
   "/hostel-na-mesyac": "2026-09-12",
+  "/hostel-posutochno-v-almaty": "2026-09-18",
   "/en": "2026-09-12",
   "/en/rooms": "2026-09-12",
   "/en/booking": "2026-09-12",
@@ -456,6 +457,7 @@ export const EXTRA_NAV = [
   ["/foto", "Фото хостела"],
   ["/hostel-ryadom-s-avtovokzalom-sayran", "Рядом с автовокзалом Сайран"],
   ["/hostel-na-mesyac", "Проживание на месяц"],
+  ["/hostel-posutochno-v-almaty", "Посуточно"],
   ["/politika-konfidencialnosti", "Политика конфиденциальности"],
 ] as const;
 

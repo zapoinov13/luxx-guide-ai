@@ -14,6 +14,7 @@ import { Route as BronirovanieRouteImport } from './routes/bronirovanie'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as FotoRouteImport } from './routes/foto'
 import { Route as HostelNaMesyacRouteImport } from './routes/hostel-na-mesyac'
+import { Route as HostelPosutochnoVAlmatyRouteImport } from './routes/hostel-posutochno-v-almaty'
 import { Route as HostelRyadomSAvtovokzalomSayranRouteImport } from './routes/hostel-ryadom-s-avtovokzalom-sayran'
 import { Route as KakDobratsyaRouteImport } from './routes/kak-dobratsya'
 import { Route as KontaktyRouteImport } from './routes/kontakty'
@@ -61,6 +62,11 @@ const FotoRoute = FotoRouteImport.update({
 const HostelNaMesyacRoute = HostelNaMesyacRouteImport.update({
   id: '/hostel-na-mesyac',
   path: '/hostel-na-mesyac',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HostelPosutochnoVAlmatyRoute = HostelPosutochnoVAlmatyRouteImport.update({
+  id: '/hostel-posutochno-v-almaty',
+  path: '/hostel-posutochno-v-almaty',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HostelRyadomSAvtovokzalomSayranRoute =
@@ -187,6 +193,7 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/foto': typeof FotoRoute
   '/hostel-na-mesyac': typeof HostelNaMesyacRoute
+  '/hostel-posutochno-v-almaty': typeof HostelPosutochnoVAlmatyRoute
   '/hostel-ryadom-s-avtovokzalom-sayran': typeof HostelRyadomSAvtovokzalomSayranRoute
   '/kak-dobratsya': typeof KakDobratsyaRoute
   '/kontakty': typeof KontaktyRoute
@@ -217,6 +224,7 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/foto': typeof FotoRoute
   '/hostel-na-mesyac': typeof HostelNaMesyacRoute
+  '/hostel-posutochno-v-almaty': typeof HostelPosutochnoVAlmatyRoute
   '/hostel-ryadom-s-avtovokzalom-sayran': typeof HostelRyadomSAvtovokzalomSayranRoute
   '/kak-dobratsya': typeof KakDobratsyaRoute
   '/kontakty': typeof KontaktyRoute
@@ -248,6 +256,7 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/foto': typeof FotoRoute
   '/hostel-na-mesyac': typeof HostelNaMesyacRoute
+  '/hostel-posutochno-v-almaty': typeof HostelPosutochnoVAlmatyRoute
   '/hostel-ryadom-s-avtovokzalom-sayran': typeof HostelRyadomSAvtovokzalomSayranRoute
   '/kak-dobratsya': typeof KakDobratsyaRoute
   '/kontakty': typeof KontaktyRoute
@@ -280,6 +289,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/foto'
     | '/hostel-na-mesyac'
+    | '/hostel-posutochno-v-almaty'
     | '/hostel-ryadom-s-avtovokzalom-sayran'
     | '/kak-dobratsya'
     | '/kontakty'
@@ -310,6 +320,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/foto'
     | '/hostel-na-mesyac'
+    | '/hostel-posutochno-v-almaty'
     | '/hostel-ryadom-s-avtovokzalom-sayran'
     | '/kak-dobratsya'
     | '/kontakty'
@@ -340,6 +351,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/foto'
     | '/hostel-na-mesyac'
+    | '/hostel-posutochno-v-almaty'
     | '/hostel-ryadom-s-avtovokzalom-sayran'
     | '/kak-dobratsya'
     | '/kontakty'
@@ -371,6 +383,7 @@ export interface RootRouteChildren {
   FaqRoute: typeof FaqRoute
   FotoRoute: typeof FotoRoute
   HostelNaMesyacRoute: typeof HostelNaMesyacRoute
+  HostelPosutochnoVAlmatyRoute: typeof HostelPosutochnoVAlmatyRoute
   HostelRyadomSAvtovokzalomSayranRoute: typeof HostelRyadomSAvtovokzalomSayranRoute
   KakDobratsyaRoute: typeof KakDobratsyaRoute
   KontaktyRoute: typeof KontaktyRoute
@@ -431,6 +444,13 @@ declare module '@tanstack/react-router' {
       path: '/hostel-na-mesyac'
       fullPath: '/hostel-na-mesyac'
       preLoaderRoute: typeof HostelNaMesyacRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hostel-posutochno-v-almaty': {
+      id: '/hostel-posutochno-v-almaty'
+      path: '/hostel-posutochno-v-almaty'
+      fullPath: '/hostel-posutochno-v-almaty'
+      preLoaderRoute: typeof HostelPosutochnoVAlmatyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/hostel-ryadom-s-avtovokzalom-sayran': {
@@ -603,6 +623,7 @@ const rootRouteChildren: RootRouteChildren = {
   FaqRoute: FaqRoute,
   FotoRoute: FotoRoute,
   HostelNaMesyacRoute: HostelNaMesyacRoute,
+  HostelPosutochnoVAlmatyRoute: HostelPosutochnoVAlmatyRoute,
   HostelRyadomSAvtovokzalomSayranRoute: HostelRyadomSAvtovokzalomSayranRoute,
   KakDobratsyaRoute: KakDobratsyaRoute,
   KontaktyRoute: KontaktyRoute,

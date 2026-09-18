@@ -139,7 +139,6 @@ const fixSitemapFile = (file: string) => {
   return true;
 };
 
-
 const SITEMAP_FILES = [".vercel/output/static", ".output/public", "dist/client"].map(
   (dir) => `${dir}/sitemap.xml`,
 );
@@ -175,6 +174,7 @@ export default defineConfig({
       ),
       page("/hostel-ryadom-s-avtovokzalom-sayran", 0.7, "monthly"),
       page("/hostel-na-mesyac", 0.7, "monthly"),
+      page("/hostel-posutochno-v-almaty", 0.8, "monthly"),
       page("/bronirovanie", 0.9, "monthly"),
       page("/udobstva", 0.8, "monthly"),
       page("/kak-dobratsya", 0.8, "monthly"),
