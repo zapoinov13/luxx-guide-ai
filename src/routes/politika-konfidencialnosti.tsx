@@ -78,7 +78,7 @@ function PrivacyPage() {
       <AnswerSection title="Кто отвечает за обработку данных?">
         <p>
           Хостел Luxx Aparts, {SITE.address}. Контакты и режим работы стойки: на странице{" "}
-          <Link to="/kontakty">«Контакты»</Link>, правила проживания:{" "}}
+          <Link to="/kontakty">«Контакты»</Link>, правила проживания:{" "}
           <Link to="/pravila">здесь</Link>.
         </p>
       </AnswerSection>
