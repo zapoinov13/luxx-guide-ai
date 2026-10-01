@@ -95,7 +95,7 @@ export function PhotoTour({
         </span>
         <div className="tour-caption" aria-live="polite" aria-atomic="true">
           <span>
-            0{index + 1} / 0{stops.length} — {en ? stop.detailEn : stop.detail}
+            0{index + 1} / 0{stops.length}: {en ? stop.detailEn : stop.detail}
           </span>
           <h3>{en ? stop.en : stop.ru}</h3>
         </div>

@@ -312,7 +312,7 @@ export function Walkthrough({ children }: { children: ReactNode }) {
                   <Dialog.Overlay className="wt-content-overlay" />
                   <Dialog.Content className="wt-content-dialog">
                     <div className="wt-content-toolbar">
-                      <Dialog.Title>Luxx Aparts — номера, удобства и информация</Dialog.Title>
+                      <Dialog.Title>Luxx Aparts: номера, удобства и информация</Dialog.Title>
                       <button
                         className="wt-link"
                         onClick={() => {
@@ -405,7 +405,7 @@ export function Walkthrough({ children }: { children: ReactNode }) {
                 Назад
               </button>
               <p>
-                {ready ? "Скролл / свайп — вперёд и назад" : "Загружаем пространство"}
+                {ready ? "Скролл / свайп: вперёд и назад" : "Загружаем пространство"}
                 <small>Глубина по реальным фото · не обмерный 3D-тур</small>
               </p>
               <button
@@ -449,7 +449,7 @@ export function Walkthrough({ children }: { children: ReactNode }) {
           </p>
         )}
         <div className="wt-resume">
-          <span>Luxx Aparts — фото, номера и бронирование</span>
+          <span>Luxx Aparts: фото, номера и бронирование</span>
           <button ref={resume} onClick={enter}>
             Войти в пространственный маршрут
           </button>

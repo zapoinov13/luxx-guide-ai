@@ -24,7 +24,7 @@ function NotFoundComponent() {
         <p className="text-sm font-semibold text-primary">Ошибка 404</p>
         <h1 className="mt-2 font-display text-3xl font-bold sm:text-4xl">Страница не найдена</h1>
         <p className="mt-4 text-muted-foreground">
-          Такой страницы нет или её перенесли. Самое нужное — по ссылкам ниже, а свободные места и
+          Такой страницы нет или её перенесли. Самое нужное: по ссылкам ниже, а свободные места и
           цену на ваши даты быстрее всего узнать в WhatsApp.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">

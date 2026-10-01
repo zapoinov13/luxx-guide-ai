@@ -9,7 +9,7 @@ export function StayRules({ en = false }: { en?: boolean }) {
       title: en ? "Bring your ID" : "Возьмите документы",
       text: en
         ? "A photo ID; foreign guests need a passport."
-        : "Удостоверение личности с фото. Иностранным гостям — паспорт.",
+        : "Удостоверение личности с фото. Иностранным гостям: паспорт.",
       tag: en ? "AT CHECK-IN" : "ПРИ ЗАСЕЛЕНИИ",
     },
     {
@@ -17,7 +17,7 @@ export function StayRules({ en = false }: { en?: boolean }) {
       title: en ? "Travelling with children" : "Если вы с детьми",
       text: en
         ? "Guests under 18 only with a parent or guardian."
-        : "Гости до 18 лет — только с родителем или опекуном.",
+        : "Гости до 18 лет: только с родителем или опекуном.",
       tag: en ? "UNDER 18" : "ДО 18 ЛЕТ",
     },
     {
@@ -42,7 +42,7 @@ export function StayRules({ en = false }: { en?: boolean }) {
               <dt>{en ? "Check-in" : "Заезд"}</dt>
               <dd>
                 {SITE.checkIn.from}
-                <span> — {SITE.checkIn.to}</span>
+                <span>: {SITE.checkIn.to}</span>
               </dd>
             </div>
             <div>

@@ -47,8 +47,8 @@ export function BookingModal({
             </Dialog.Title>
             <Dialog.Description className="mt-2 text-sm text-muted-foreground">
               {en
-                ? "Choose dates and a room. No prepayment — the desk confirms availability."
-                : "Выберите даты и номер. Без предоплаты — наличие подтвердит администратор."}
+                ? "Choose dates and a room. No prepayment: the desk confirms availability."
+                : "Выберите даты и номер. Без предоплаты: наличие подтвердит администратор."}
             </Dialog.Description>
             <Dialog.Close
               aria-label={en ? "Close booking" : "Закрыть бронирование"}
