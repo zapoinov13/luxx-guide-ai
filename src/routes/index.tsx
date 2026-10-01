@@ -164,18 +164,18 @@ function HomePage() {
               ))}
             </ul>
             <h1 className="mt-4 font-display text-[1.9rem] font-bold leading-[1.1] sm:text-5xl lg:mt-5 lg:text-[2.75rem] lg:leading-[1.08] xl:text-[3rem]">
-              Большой город.
+              Бронируйте хостелы
               <br />
-              <span className="hero-serif">Ваш уютный</span>
+              <span className="hero-serif">в Алматы онлайн</span>
               <br />
-              маленький мир.
+              по самым выгодным ценам.
             </h1>
             <p className="speakable mt-3 max-w-xl text-base leading-7 text-muted-foreground lg:mt-5 lg:text-lg lg:leading-8">
-              Хостел и апартаменты Luxx Aparts в Алматы.
+              Стоимость проживания в хостелах Алматы варьируется
               <br />
-              44 номера, капсульные койко-места 
+              в зависимости от вида комнаты и расположения. В среднем:
               <br />
-              от 6 000 ₸ и отдельные комнаты с окном. Бронируйте напрямую без предоплаты.
+              общий номер — от 6 000 ₸.
             </p>
             <div className="mt-5 grid gap-3 sm:flex sm:flex-wrap lg:mt-7">
               <Button asChild size="lg" className="w-full sm:w-auto">
