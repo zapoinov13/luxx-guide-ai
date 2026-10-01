@@ -93,7 +93,7 @@ function AuthorPage() {
       <AnswerSection title="Как связаться с хостелом?">
         <p>
           Телефон и WhatsApp <a href={`tel:${SITE.phoneHref}`}>{SITE.phoneDisplay}</a>, адрес{" "}
-          {SITE.address}. Стойка работает круглосуточно. Все контакты —{" "}
+          {SITE.address}. Стойка работает круглосуточно. Все контакты:{" "}}
           <Link to="/kontakty">на странице «Контакты»</Link>.
         </p>
       </AnswerSection>
