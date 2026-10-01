@@ -62,7 +62,7 @@ function ContactsPage() {
               <strong>{SITE.address}</strong>
               <br />
               {SITE.complex}, второй этаж, индекс {SITE.postalCode}. Маршруты от вокзалов и
-              аэропорта — на странице <Link to="/kak-dobratsya">«Как добраться»</Link>.
+              аэропорта: на странице <Link to="/kak-dobratsya">«Как добраться»</Link>.
             </p>
           </div>
           <MapEmbed className="h-[300px] lg:h-[360px]" />
@@ -81,7 +81,7 @@ function ContactsPage() {
 
         <AnswerSection title="Где ещё есть Luxx Aparts?">
           <p>
-            Карточки хостела на картах, фото и новости — в Instagram. Бронировать выгоднее
+            Карточки хостела на картах, фото и новости: в Instagram. Бронировать выгоднее
             напрямую: цена та же, комиссии агрегатора нет.
           </p>
           <div className="flex flex-wrap gap-3">

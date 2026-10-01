@@ -175,7 +175,7 @@ function HomePage() {
               <br />
               в зависимости от вида комнаты и расположения. В среднем:
               <br />
-              общий номер — от 6 000 ₸.
+              общий номер: от 6 000 ₸.
             </p>
             <div className="mt-5 grid gap-3 sm:flex sm:flex-wrap lg:mt-7">
               <Button asChild size="lg" className="w-full sm:w-auto">
@@ -232,7 +232,7 @@ function HomePage() {
             </h2>
             <p className="mt-4 text-muted-foreground">
               Приготовить завтрак, поработать в тишине, освежить вещи после дороги. Всё для
-              привычного ритма — даже в новом городе.
+              привычного ритма: даже в новом городе.
             </p>
             <AmenitySpaces />
           </div>
@@ -327,7 +327,7 @@ function HomePage() {
       <section className="home-section home-audiences" id="home-audiences">
         <div className="home-audiences-inner mx-auto grid max-w-6xl gap-10 px-5 py-12 lg:px-8 lg:py-20">
           <div>
-            <p className="home-kicker">03 / КАЖДОМУ — СВОЙ РИТМ</p>
+            <p className="home-kicker">03 / КАЖДОМУ · СВОЙ РИТМ</p>
             <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl lg:text-4xl">
               Кому подходит Luxx Aparts?
             </h2>

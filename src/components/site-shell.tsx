@@ -141,7 +141,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
           <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5 lg:px-8">
             <Link
               to={home}
-              aria-label={en ? "Luxx Aparts, home" : "Luxx Aparts — главная"}
+              aria-label={en ? "Luxx Aparts, home" : "Luxx Aparts: главная"}
               className="flex shrink-0 items-center gap-2.5"
             >
               <img
