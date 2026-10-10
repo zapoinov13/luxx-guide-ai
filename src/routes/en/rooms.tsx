@@ -13,7 +13,7 @@ export const Route = createFileRoute("/en/rooms")({
   head: () => ({
     ...pageHead(
       `Luxx Aparts Almaty rooms and prices: beds from ${fmtEn(SITE.priceFrom)} ₸`,
-      `Hostel prices in Almaty: dorm bed ${fmtEn(SITE.priceFrom)} ₸, single room from ${fmtEn(10000)} ₸, double room ${fmtEn(15000)} ₸ per room. What is included, monthly stays, payment.`,
+      `Hostel prices in Almaty: dorm bed ${fmtEn(SITE.priceFrom)} ₸, single room from ${fmtEn(11000)} ₸, double room ${fmtEn(16000)} ₸ per room. What is included, monthly stays, payment.`,
       "/en/rooms",
     ),
     scripts: jsonLd(
@@ -26,11 +26,11 @@ export const Route = createFileRoute("/en/rooms")({
 });
 
 const PRICE_ROWS = [
-  { name: "Bed in the male dorm", capacity: "1 guest", price: 6000 },
-  { name: "Bed in the female dorm", capacity: "1 guest", price: 6000 },
-  { name: "Single room without a window", capacity: "1 guest", price: 10000 },
-  { name: "Single room with a window", capacity: "1 guest", price: 11000 },
-  { name: "Double room with a window", capacity: "2 guests", price: 15000 },
+  { name: "Bed in the male dorm", capacity: "1 guest", price: 7000 },
+  { name: "Bed in the female dorm", capacity: "1 guest", price: 7000 },
+  { name: "Single room without a window", capacity: "1 guest", price: 11000 },
+  { name: "Single room with a window", capacity: "1 guest", price: 12000 },
+  { name: "Double room with a window", capacity: "2 guests", price: 16000 },
 ] as const;
 
 function RoomsPageEn() {
@@ -39,7 +39,7 @@ function RoomsPageEn() {
     <ContentPage
       eyebrow="Rooms and prices"
       title="Luxx Aparts rooms and prices in Almaty"
-      intro={`A stay at Luxx Aparts costs from ${price} to ${fmtEn(SITE.priceTo)} ₸ per night: a bed in the male or female dorm ${price} ₸, a single room ${fmtEn(10000)} ₸ without a window or ${fmtEn(11000)} ₸ with a window, a double room ${fmtEn(15000)} ₸ per room. ${SITE.rooms} rooms in total, the bathroom is shared on the floor. Bed linen, Wi-Fi, kitchen and laundry are included.`}
+      intro={`A stay at Luxx Aparts costs from ${price} to ${fmtEn(SITE.priceTo)} ₸ per night: a bed in the male or female dorm ${price} ₸, a single room ${fmtEn(11000)} ₸ without a window or ${fmtEn(12000)} ₸ with a window, a double room ${fmtEn(16000)} ₸ per room. ${SITE.rooms} rooms in total, the bathroom is shared on the floor. Bed linen, Wi-Fi, kitchen and laundry are included.`}
       updated={EN.factsUpdated}
       photo={PHOTOS.dorm}
     >

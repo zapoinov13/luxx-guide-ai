@@ -241,8 +241,8 @@ function HomePageEn() {
           </Link>
         </div>
         <p className="mt-4 max-w-2xl text-muted-foreground">
-          A capsule dorm bed is {price} ₸, a single room from {fmtEn(10000)} ₸, a double room{" "}
-          {fmtEn(15000)} ₸ per room. Weekly and monthly stays are priced individually by the desk.
+          A capsule dorm bed is {price} ₸, a single room from {fmtEn(11000)} ₸, a double room{" "}
+          {fmtEn(16000)} ₸ per room. Weekly and monthly stays are priced individually by the desk.
         </p>
         <RoomCardsEn className="mt-6 lg:mt-8" />
         <p className="mt-4 text-sm text-muted-foreground">
