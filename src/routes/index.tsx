@@ -65,7 +65,7 @@ import { HOME_FAQ } from "@/lib/qa";
 export const Route = createFileRoute("/")({
   head: () => ({
     ...pageHead(
-      "Хостел в Алматы Luxx Aparts: койко-места от 6 000 ₸",
+      "Хостел в Алматы Luxx Aparts: койко-места от 7 000 ₸",
       `Недорогой хостел в Алматы рядом с автовокзалом Сайран: капсулы от ${SITE.priceFrom.toLocaleString("ru-RU")} ₸, отдельные номера, кухня, коворкинг, стойка 24/7. Бронируйте напрямую в WhatsApp.`,
       "/",
     ),
