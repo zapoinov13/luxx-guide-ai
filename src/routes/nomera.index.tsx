@@ -21,7 +21,7 @@ export const Route = createFileRoute("/nomera/")({
   head: () => ({
     ...pageHead(
       `Цены хостела Luxx Aparts в Алматы: койко-место от ${SITE.priceFrom.toLocaleString("ru-RU")} ₸`,
-      `Сколько стоит хостел в Алматы посуточно: койко-место ${SITE.priceFrom.toLocaleString("ru-RU")} ₸ за ночь, одноместный номер от 10 000 ₸, двухместный 15 000 ₸. Что входит в цену, скидки на месяц.`,
+      `Сколько стоит хостел в Алматы посуточно: койко-место ${SITE.priceFrom.toLocaleString("ru-RU")} ₸ за ночь, одноместный номер от 11 000 ₸, двухместный 16 000 ₸. Что входит в цену, скидки на месяц.`,
       "/nomera",
     ),
     scripts: jsonLd(
@@ -39,7 +39,7 @@ function RoomsPage() {
     <ContentPage
       eyebrow="Номера и цены"
       title="Номера и цены хостела Luxx Aparts в Алматы"
-      intro={`Проживание в хостеле Luxx Aparts стоит от ${price} до ${SITE.priceTo.toLocaleString("ru-RU")} ₸: койко-место в мужской или женской комнате ${price} ₸, одноместный номер 10 000 ₸ без окна и 11 000 ₸ с окном, двухместный номер 15 000 ₸ за номер. Всего ${SITE.rooms} номера, санузел общий на этаже. В цену входят бельё, Wi-Fi, кухня и стирка.`}
+      intro={`Проживание в хостеле Luxx Aparts стоит от ${price} до ${SITE.priceTo.toLocaleString("ru-RU")} ₸: койко-место в мужской или женской комнате ${price} ₸, одноместный номер 11 000 ₸ без окна и 12 000 ₸ с окном, двухместный номер 16 000 ₸ за номер. Всего ${SITE.rooms} номера, санузел общий на этаже. В цену входят бельё, Wi-Fi, кухня и стирка.`}
       updated={SITE.factsUpdated}
       photo={PHOTOS.dorm}
     >
