@@ -50,7 +50,7 @@ export const ROOM_TYPES_EN = [
     short: "Capsule beds with curtains in male and female dorms of 10–14 beds",
     capacity: "1 guest",
     bath: "Shared bathroom on the floor",
-    price: `${fmtEn(6000)} ₸ per night`,
+    price: `${fmtEn(7000)} ₸ per night`,
     priceNote: "per bed, September 2026",
     includes: ["Bed linen", "Locker", "Socket and reading lamp", "Kitchen, Wi-Fi, laundry"],
     forWhom: "Solo travellers, students, transit guests",
@@ -61,7 +61,7 @@ export const ROOM_TYPES_EN = [
     short: "Private lockable room, with or without a window",
     capacity: "1 guest",
     bath: "Shared bathroom on the floor",
-    price: `${fmtEn(10000)}–${fmtEn(11000)} ₸ per night`,
+    price: `${fmtEn(11000)}–${fmtEn(12000)} ₸ per night`,
     priceNote: "10,000 ₸ without a window, 11,000 ₸ with a window",
     includes: ["Bed linen", "Air conditioning and heating", "Kitchen, Wi-Fi, laundry"],
     forWhom: "Business travellers and long stays",
@@ -72,7 +72,7 @@ export const ROOM_TYPES_EN = [
     short: "Private room with a double bed and a window",
     capacity: "2 guests",
     bath: "Shared bathroom on the floor",
-    price: `${fmtEn(15000)} ₸ per night`,
+    price: `${fmtEn(16000)} ₸ per night`,
     priceNote: "per room, September 2026",
     includes: ["Bed linen", "Air conditioning and heating", "Kitchen, Wi-Fi, laundry"],
     forWhom: "Couples and families",
@@ -190,7 +190,7 @@ export const RULES_EN: QA[] = [
 export const FAQ_EN: QA[] = [
   [
     "How much does a night cost?",
-    `A dorm bed is ${fmtEn(6000)} ₸, a single room ${fmtEn(10000)} ₸ without a window or ${fmtEn(11000)} ₸ with a window, a double room ${fmtEn(15000)} ₸ per room (prices as of ${EN.factsUpdated}). Weekly and monthly stays are priced individually. No platform commission when you book directly.`,
+    `A dorm bed is ${fmtEn(7000)} ₸, a single room ${fmtEn(11000)} ₸ without a window or ${fmtEn(12000)} ₸ with a window, a double room ${fmtEn(16000)} ₸ per room (prices as of ${EN.factsUpdated}). Weekly and monthly stays are priced individually. No platform commission when you book directly.`,
   ],
   [
     "Are there private rooms?",
@@ -287,11 +287,11 @@ export const hostelSchemaEn = () => ({
 
 /** Booking form: options and labels for /en/booking. */
 export const BOOKING_OPTIONS_EN: readonly BookingOption[] = [
-  { label: "Bed in the male dorm", price: 6000, perBed: true },
-  { label: "Bed in the female dorm", price: 6000, perBed: true },
-  { label: "Single room with a window", price: 11000, perBed: false },
-  { label: "Single room without a window", price: 10000, perBed: false },
-  { label: "Double room", price: 15000, perBed: false },
+  { label: "Bed in the male dorm", price: 7000, perBed: true },
+  { label: "Bed in the female dorm", price: 7000, perBed: true },
+  { label: "Single room with a window", price: 12000, perBed: false },
+  { label: "Single room without a window", price: 11000, perBed: false },
+  { label: "Double room", price: 16000, perBed: false },
   { label: "Not decided yet", price: null, perBed: false },
 ];
 

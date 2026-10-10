@@ -21,7 +21,7 @@ export const Route = createFileRoute("/en/booking")({
   head: () => ({
     ...pageHead(
       "Book Luxx Aparts hostel in Almaty directly",
-      `Book Luxx Aparts hostel in Almaty with no commission: send a WhatsApp request or call ${SITE.phoneDisplay}. Dorm bed ${fmtEn(SITE.priceFrom)} ₸, rooms from ${fmtEn(10000)} ₸, reply 24/7.`,
+      `Book Luxx Aparts hostel in Almaty with no commission: send a WhatsApp request or call ${SITE.phoneDisplay}. Dorm bed ${fmtEn(SITE.priceFrom)} ₸, rooms from ${fmtEn(11000)} ₸, reply 24/7.`,
       "/en/booking",
     ),
     scripts: jsonLd(

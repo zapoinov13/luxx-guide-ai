@@ -3,11 +3,11 @@ import { SITE } from "@/lib/site";
 
 /** Варианты формы. Цены на SITE.factsUpdated: койко-место — за место, номера — за номер. */
 export const OPTIONS: readonly BookingOption[] = [
-  { label: "Койко-место в мужской комнате", price: 6000, perBed: true },
-  { label: "Койко-место в женской комнате", price: 6000, perBed: true },
-  { label: "Одноместный номер с окном", price: 11000, perBed: false },
-  { label: "Одноместный номер без окна", price: 10000, perBed: false },
-  { label: "Двухместный номер", price: 15000, perBed: false },
+  { label: "Койко-место в мужской комнате", price: 7000, perBed: true },
+  { label: "Койко-место в женской комнате", price: 7000, perBed: true },
+  { label: "Одноместный номер с окном", price: 12000, perBed: false },
+  { label: "Одноместный номер без окна", price: 11000, perBed: false },
+  { label: "Двухместный номер", price: 16000, perBed: false },
   { label: "Пока не решил(а)", price: null, perBed: false },
 ];
 
@@ -47,7 +47,7 @@ export const LABELS: BookingLabels = {
   estimateNote: (perBed) =>
     `По базовым ценам на ${SITE.factsUpdated}, ${perBed ? "за каждого гостя" : "за номер целиком"}. Итоговую сумму подтвердит администратор, оплата при заселении.`,
   estimateEmpty:
-    "Укажите даты и формат: покажем ориентировочную стоимость по базовым ценам: койко-место 6 000 ₸, одноместный 10 000–11 000 ₸, двухместный 15 000 ₸.",
+    "Укажите даты и формат: покажем ориентировочную стоимость по базовым ценам: койко-место 7 000 ₸, одноместный 11 000–12 000 ₸, двухместный 16 000 ₸.",
   submit: "Отправить в WhatsApp",
   call: "Позвонить",
   sentText: "Заявка открыта в WhatsApp, осталось нажать «Отправить». Если окно не появилось,",
