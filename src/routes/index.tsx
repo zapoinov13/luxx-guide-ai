@@ -175,7 +175,7 @@ function HomePage() {
               <br />
               в зависимости от вида комнаты и расположения. В среднем:
               <br />
-              общий номер: от 6 000 ₸.
+              общий номер: от 7 000 ₸.
             </p>
             <div className="mt-5 grid gap-3 sm:flex sm:flex-wrap lg:mt-7">
               <Button asChild size="lg" className="w-full sm:w-auto">
