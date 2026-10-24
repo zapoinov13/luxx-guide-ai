@@ -1,14 +1,14 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import {
   ArrowLeft,
   ArrowRight,
   ArrowUpRight,
-  Expand,
   Image,
   X,
 } from "lucide-react";
 import { Photo } from "./photo";
+import { Button } from "./ui/button";
 import { ROOM_PHOTOS } from "@/lib/photos";
 import "./room-tour.css";
 
@@ -20,14 +20,27 @@ export function RoomTour({ slug, en = false }: { slug: string; en?: boolean }) {
   const [step, setStep] = useState(0);
   const [zone, setZone] = useState<"room" | "shared">("room");
   const start = useRef<{ x: number; y: number } | null>(null);
+  const strip = useRef<HTMLDivElement>(null);
   const photos = useMemo(() => {
-    const all = ROOM_PHOTOS[slug] ?? ROOM_PHOTOS["dvukhmestny"]!;
+    const all = ROOM_PHOTOS[slug] ?? ROOM_PHOTOS["dvukhmestny"] ?? [];
     const filtered = all.filter((photo) =>
       zone === "shared" ? sharedIds.has(photo.id) : !sharedIds.has(photo.id),
     );
     return filtered.length ? filtered : all;
   }, [slug, zone]);
   const index = ((step % photos.length) + photos.length) % photos.length;
+  const current = photos[index];
+  const roomPhotos = (ROOM_PHOTOS[slug] ?? ROOM_PHOTOS["dvukhmestny"] ?? []).filter(
+    (photo) => !sharedIds.has(photo.id),
+  );
+  const roomName = en
+    ? ({ "koyko-mesto": "Capsule bed", odnomestny: "Single room", dvukhmestny: "Double room" }[slug] ?? "Room")
+    : ({ "koyko-mesto": "Капсульное место", odnomestny: "Одноместный номер", dvukhmestny: "Двухместный номер" }[slug] ?? "Номер");
+  useEffect(() => {
+    if (!open) return;
+    strip.current?.querySelector('[aria-pressed="true"]')?.scrollIntoView({ block: "nearest", inline: "nearest" });
+  }, [index, zone, open]);
+  if (!current) return null;
   const go = (next: number) => {
     setStep(next);
   };
@@ -37,7 +50,7 @@ export function RoomTour({ slug, en = false }: { slug: string; en?: boolean }) {
   };
   const poster = (
     <Photo
-      photo={photos[index]!}
+      photo={current}
       className="rt-photo"
       sizes="(min-width: 900px) 80vw, 100vw"
       priority
@@ -54,15 +67,18 @@ export function RoomTour({ slug, en = false }: { slug: string; en?: boolean }) {
         }
       }}
     >
-      <Dialog.Trigger className="rx-tour-trigger">
-        <span className="rt-trigger-icon" aria-hidden="true">
-          <Image size={24} />
+      <Dialog.Trigger asChild>
+      <Button variant="ghost" className="rx-tour-trigger">
+        <span className="rt-trigger-preview" aria-hidden="true">
+          {roomPhotos.slice(0, 2).map((photo) => <Photo key={photo.id} photo={photo} sizes="80px" />)}
+          <span><Image size={18} /></span>
         </span>
         <span>
           <strong>{en ? "Enter the room tour" : "Открыть рум-тур"}</strong>
-          <small>{en ? "See every detail in real photos" : "Рассмотрите номер на реальных фото"}</small>
+          <small>{en ? roomName : `${roomPhotos.length} фото номера`}</small>
         </span>
         <ArrowUpRight size={25} aria-hidden="true" />
+      </Button>
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="rt-overlay" />
@@ -79,33 +95,35 @@ export function RoomTour({ slug, en = false }: { slug: string; en?: boolean }) {
           <header className="rt-header">
             <div>
               <span className="rt-brand">LUXX APARTS</span>
-              <Dialog.Title>{en ? "Take a closer look" : "Рассмотрите номер подробно"}</Dialog.Title>
+              <Dialog.Title>{roomName}</Dialog.Title>
             </div>
-            <Dialog.Close className="rt-close" aria-label={en ? "Close tour" : "Закрыть фототур"}>
+            <Dialog.Close asChild>
+            <Button variant="ghost" size="icon" className="rt-close" aria-label={en ? "Close tour" : "Закрыть фототур"} title={en ? "Close tour" : "Закрыть фототур"}>
               <X aria-hidden="true" />
+            </Button>
             </Dialog.Close>
           </header>
-          <Dialog.Description className="rt-disclosure">
+          <Dialog.Description className="sr-only">
             {en
               ? "Full-size, unaltered photographs of the room and shared spaces."
               : "Крупные фотографии номера и общих зон без искажений и дорисовки."}
           </Dialog.Description>
           <div className="rt-toolbar">
             <div className="rt-segment" role="group" aria-label={en ? "Spaces" : "Пространства"}>
-              <button
+              <Button variant="ghost"
                 type="button"
                 aria-pressed={zone === "room"}
                 onClick={() => changeZone("room")}
               >
                 {en ? "Room" : "Номер"}
-              </button>
-              <button
+              </Button>
+              <Button variant="ghost"
                 type="button"
                 aria-pressed={zone === "shared"}
                 onClick={() => changeZone("shared")}
               >
                 {en ? "Shared spaces" : "Общие зоны"}
-              </button>
+              </Button>
             </div>
             <span className="rt-count" aria-live="polite">
               {index + 1} / {photos.length}
@@ -132,42 +150,44 @@ export function RoomTour({ slug, en = false }: { slug: string; en?: boolean }) {
                   go(step + (dx < 0 ? 1 : -1));
               }}
             >
-              <div key={photos[index]!.id} className="rt-flat">
+              <div key={current.id} className="rt-flat">
                 {poster}
               </div>
-              <button
+              <Button variant="ghost" size="icon"
                 type="button"
                 className="rt-stage-arrow rt-stage-prev"
                 onClick={() => go(step - 1)}
                 aria-label={en ? "Previous photo" : "Предыдущее фото"}
+                title={en ? "Previous photo" : "Предыдущее фото"}
               >
                 <ArrowLeft size={22} />
-              </button>
-              <button
+              </Button>
+              <Button variant="ghost" size="icon"
                 type="button"
                 className="rt-stage-arrow rt-stage-next"
                 onClick={() => go(step + 1)}
                 aria-label={en ? "Next photo" : "Следующее фото"}
+                title={en ? "Next photo" : "Следующее фото"}
               >
                 <ArrowRight size={22} />
-              </button>
+              </Button>
             </div>
             <div className="rt-details">
               <div className="rt-caption" aria-live="polite" aria-atomic="true">
-                <span>{index + 1} / {photos.length}</span>
                 <p>
                   {en
                     ? `${zone === "room" ? "Room" : "Shared space"} photograph`
-                    : photos[index]!.alt}
+                    : current.alt}
                 </p>
               </div>
               <div
                 className="rt-filmstrip"
+                ref={strip}
                 role="group"
                 aria-label={en ? "Choose a photograph" : "Выберите фотографию"}
               >
                 {photos.map((photo, n) => (
-                  <button
+                  <Button variant="ghost"
                     type="button"
                     key={photo.id}
                     aria-label={en ? `Photo ${n + 1}` : photo.alt}
@@ -175,15 +195,9 @@ export function RoomTour({ slug, en = false }: { slug: string; en?: boolean }) {
                     onClick={() => go(n)}
                   >
                     <Photo photo={photo} sizes="140px" />
-                    <span className="rt-thumb-selected" aria-hidden="true">
-                      <Expand size={16} />
-                    </span>
-                  </button>
+                  </Button>
                 ))}
               </div>
-              <p className="rt-help">
-                {en ? "Swipe or choose a photograph." : "Листайте или выберите фотографию."}
-              </p>
             </div>
           </div>
         </Dialog.Content>
