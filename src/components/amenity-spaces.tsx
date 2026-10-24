@@ -3,6 +3,8 @@ import { ArrowUpRight, CookingPot, Laptop, Sofa } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Photo } from "@/components/photo";
 import { PHOTOS } from "@/lib/photos";
+import { Button } from "@/components/ui/button";
+import "./amenity-spaces.css";
 
 export function AmenitySpaces({ en = false }: { en?: boolean }) {
   const [selected, setSelected] = useState(0);
@@ -37,14 +39,14 @@ export function AmenitySpaces({ en = false }: { en?: boolean }) {
     },
   ];
   return (
-    <div className="amenity-spaces amenity-switcher">
+    <div className="amenity-spaces amenity-switcher spaces-refresh">
       <div
         className="amenity-tabs"
         role="tablist"
         aria-label={en ? "Shared spaces" : "Общие пространства"}
       >
         {rooms.map(({ tab, icon: Icon }, index) => (
-          <button
+          <Button variant="ghost"
             key={tab}
             type="button"
             role="tab"
@@ -73,10 +75,10 @@ export function AmenitySpaces({ en = false }: { en?: boolean }) {
           >
             <Icon size={18} aria-hidden="true" />
             {tab}
-          </button>
+          </Button>
         ))}
       </div>
-      {rooms.map(({ photo, title, text }, index) => (
+      {rooms.map(({ photo, title, text, tab, icon: Icon }, index) => (
         <div
           key={photo.id}
           role="tabpanel"
@@ -87,18 +89,21 @@ export function AmenitySpaces({ en = false }: { en?: boolean }) {
           className="amenity-tab-panel"
         >
           <figure>
-            <Photo photo={photo} sizes="(min-width:1024px) 45vw,100vw" />
+            <Photo photo={photo} sizes="(min-width:701px) 60vw,100vw" />
             <figcaption>
+              <span className="space-category"><Icon size={20} aria-hidden="true" />{tab}</span>
               <h3>{title}</h3>
               <p>{text}</p>
+              <Button asChild variant="link" className="space-details-link">
+                <Link to={en ? "/en/amenities" : "/udobstva"}>
+                  {en ? "Explore all amenities" : "Подробнее об удобствах"}
+                  <ArrowUpRight size={19} aria-hidden="true" />
+                </Link>
+              </Button>
             </figcaption>
           </figure>
         </div>
       ))}
-      <Link to={en ? "/en/amenities" : "/udobstva"} className="amenities-more">
-        {en ? "Explore all amenities" : "Подробнее об удобствах"}
-        <ArrowUpRight size={19} aria-hidden="true" />
-      </Link>
     </div>
   );
 }

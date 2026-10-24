@@ -10,3 +10,4 @@
 <!-- LOVABLE:END -->
 
 - Keep the room tour as a browser-safe Radix dialog using the shared Photo and Button components; a viewport-bounded photo stage and horizontal thumbnail rail keep controls visible independently of photo orientation and motion preferences.
+- Scope shared-space presentation under `spaces-refresh` in its dedicated stylesheet and use shared Button controls; this prevents legacy home-page grid rules from stretching tabs or concealing photos.

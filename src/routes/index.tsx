@@ -225,17 +225,19 @@ function HomePage() {
       {/* Удобства */}
       <section className="amenities-section home-section" id="hostel-amenities">
         <div className="mx-auto max-w-6xl px-5 py-12 lg:px-8 lg:py-20">
-          <div>
+          <div className="comfort-heading">
+            <div>
             <p className="home-kicker">01 / ПОВСЕДНЕВНЫЙ КОМФОРТ</p>
             <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl lg:text-4xl">
               Что есть в хостеле?
             </h2>
+            </div>
             <p className="mt-4 text-muted-foreground">
               Приготовить завтрак, поработать в тишине, освежить вещи после дороги. Всё для
               привычного ритма: даже в новом городе.
             </p>
-            <AmenitySpaces />
           </div>
+          <AmenitySpaces />
           <ul id="amenities" className="grid grid-cols-2 gap-2.5 sm:gap-3">
             {AMENITIES.map((a, i) => {
               const Icon = amenityIcons[i] ?? Check;
